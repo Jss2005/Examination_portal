@@ -1,0 +1,73 @@
+<% layout("/layouts/boilerplate") -%>
+
+    <h2 class="text-center mt-4">Validate Student Signups</h2>
+
+    <div class="container mt-4">
+        <form action="/validate_student_signups" method="POST">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Username</th>
+                            <th>Roll Number</th>
+                            <th>Image</th>
+                            <th class="text-center">Approve</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% allSignUps.forEach(signup => { %>
+                            <tr>
+                                <td>
+                                    <%= signup.username %>
+                                </td>
+                                <td>
+                                    <%= signup.rollNumber %>
+                                </td>
+                                <td class="text-center">
+                                    <img src="<%= signup.image %>" alt="Student Image" class="img-fluid rounded" style="width: 80px; height: 80px; object-fit: cover;">
+                                </td>
+                                <td class="text-center">
+                                    <input type="checkbox" name="selectedUsers[]" value="<%= signup.username %>|<%= signup.rollNumber %>|<%=signup.password %>|<%= signup.image %>">
+                                </td>
+                            </tr>
+                            <% }); %>
+                    </tbody>
+                </table>
+            </div>
+
+            <% if (allSignUps.length > 0) { %>
+                <div class="d-flex justify-content-center mt-3">
+                    <button type="submit" class="btn btn-success px-4">Submit</button>
+                </div>
+                <% } else { %>
+                    <p class="text-center text-muted">No pending student signups.</p>
+                    <% } %>
+        </form>
+    </div>
+
+    <style>
+        /* Responsive Design */
+        
+        @media (max-width: 768px) {
+            table {
+                font-size: 14px;
+            }
+            img {
+                width: 60px;
+                height: 60px;
+            }
+            .btn {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            table {
+                font-size: 12px;
+            }
+            img {
+                width: 50px;
+                height: 50px;
+            }
+        }
+    </style>

@@ -1,0 +1,108 @@
+<% layout("/layouts/boilerplate") -%>
+
+    <!-- Exam Results -->
+    <div class="container ">
+
+
+
+        <div class="container text-center py-3">
+            <!-- Responsive Image -->
+            <div class="d-flex justify-content-center">
+                <img src="<%= '/assets/logo1.png' %>" alt="logo" class="img-fluid" style="max-height: 200px; width: auto;background-color:green" />
+            </div>
+
+            <h1 class="text-center text-success mb-4">Results</h1>
+
+
+            <!-- Responsive Exam Details -->
+            <div class="text-center mt-3">
+                <p class="fs-5">
+                    HT No: <strong class="text-dark"><%= student.rollNumber %></strong> — Name: <strong class="text-dark"><%= student.name %></strong> —
+                    <span class="d-block d-md-inline"><%= exam.course %> </span>
+                    <span class="d-block d-md-inline"><%= exam.semester %> Semester</span> [
+                    <span class="d-block d-md-inline"><%= exam.regulation %> ]</span>
+                    <span class="d-block d-md-inline"><%= exam.typeOfExam %> Examinations held in <%=exam.month%> <%=exam.year%> </span>
+                </p>
+            </div>
+        </div>
+
+
+
+        <div class="card shadow-lg border-0 rounded-4">
+            <div class="card-body">
+                <%let l=0;%>
+                    <% if (studentResult.length > 0) { %>
+
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped text-center align-middle">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>
+                                            S.NO
+                                        </th>
+                                        <th>SUBNAME</th>
+                                        <th>GRADE</th>
+                                        <th>CP</th>
+                                        <th>CREDITS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% studentResult.forEach(function(result) { %>
+                                        <% l= l+1%>
+                                            <tr>
+                                                <td>
+                                                    <%= l %>
+                                                </td>
+                                                <td>
+                                                    <%= result.branch %>
+                                                </td>
+                                                <td>
+                                                    <%= result.roll_number %>
+                                                </td>
+                                                <td>
+                                                    <%= result.subject %>
+                                                </td>
+                                                <td class="fw-bold">
+                                                    <%= result.grade %>
+                                                </td>
+                                            </tr>
+                                            <% }); %>
+                                </tbody>
+                            </table>
+                        </div>
+                        <% } else { %>
+                            <div class="alert alert-warning text-center fw-bold" role="alert">
+                                No results found for your roll number.
+                            </div>
+                            <% } %>
+            </div>
+        </div>
+
+        <!-- Apply for Re-evaluation -->
+        <% if (studentResult) { %>
+            <% const hasAppliedForRevaluation = student.examRegistrations.some(reg => reg.examId.toString() === exam._id.toString() && reg.applyForRevaluation); %>
+                <% if (!hasAppliedForRevaluation) { %>
+                    <div class="text-center mt-4">
+                        <form action="/exams/<%= exam._id %>/re_evaluation/<%= student._id %>" method="GET" style="display: inline;">
+                            <button type="submit" class="btn btn-warning btn-lg">
+                        <i class="bi bi-pencil-square"></i> Apply for Re-evaluation
+                    </button>
+                        </form>
+                    </div>
+                    <% } else { %>
+                        <div class="text-center mt-4">
+                            <p class="text-info fw-bold">You have already applied for re-evaluation.</p>
+                        </div>
+                        <% } %>
+                            <% } %>
+
+                                <!-- Back to Exams Button -->
+                                <div class="text-center mt-4 mb-4">
+                                    <a href="/exams" class="btn btn-outline-primary btn-md">
+                                        <i class="bi bi-arrow-left-circle"></i> Back to Exams
+                                    </a>
+                                </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

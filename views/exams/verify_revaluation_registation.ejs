@@ -1,0 +1,110 @@
+<% layout("/layouts/boilerplate") -%>
+
+    <h2 class="text-center mt-4">Registered Students for Revaluation</h2>
+
+    <form action="/exams/<%= exam._id %>/revaluation_registrations" method="POST">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered mt-3">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Roll Number</th>
+                        <th>Branch</th>
+                        <th>Email</th>
+                        <th>Image</th>
+                        <th>Revaluation Challan</th>
+                        <th>Signature</th>
+                        <th class="text-center">Approve/Disapprove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% students.forEach(student => { %>
+                        <tr>
+                            <td>
+                                <%= student.name %>
+                            </td>
+                            <td>
+                                <%= student.rollNumber %>
+                            </td>
+                            <td>
+                                <%= student.branch %>
+                            </td>
+                            <td>
+                                <%= student.email %>
+                            </td>
+                            <td class="text-center">
+                                <img src="<%= student.image %>" alt="Student Image" class="img-fluid rounded" style="width: 80px; height: 80px; object-fit: cover;">
+                            </td>
+                            <td class="text-center">
+                                <% let examReg = student.examRegistrations.find(reg => reg.examId.toString() === exam._id.toString()); %>
+                                    <% if (examReg && examReg.revaluation_challan_pdf) { %>
+
+                                        <% let challanUrl = examReg.revaluation_challan_pdf.replace(/\\/g, '/'); %>
+
+                                            <a href="/uploads/<%= challanUrl.split('uploads/')[1] %>" target="_blank" class="btn btn-sm btn-info">View Challan</a>
+                                            <% } else { %>
+                                                <span class="text-muted">Not Available</span>
+                                                <% } %>
+                            </td>
+
+                            <td class="text-center">
+
+                                <% if (examReg && examReg.revaluation_signature) { %>
+
+                                    <% let challanUrl = examReg.revaluation_signature.replace(/\\/g, '/'); %>
+
+                                        <a href="/uploads/<%= challanUrl.split('uploads/')[1] %>" target="_blank" class="btn btn-sm btn-info">View SIgnature</a>
+                                        <% } else { %>
+                                            <span class="text-muted">Not Available</span>
+                                            <% } %>
+                            </td>
+
+                            <td class="text-center">
+                                <input type="hidden" name="studentIds[]" value="<%= student._id %>">
+                                <div class="btn-group d-flex flex-wrap" role="group">
+                                    <input type="radio" class="btn-check" name="status_<%= student._id %>" id="accept_<%= student._id %>" value="accepted" required>
+                                    <label class="btn btn-outline-success w-50" for="accept_<%= student._id %>">Accept</label>
+
+                                    <input type="radio" class="btn-check" name="status_<%= student._id %>" id="reject_<%= student._id %>" value="rejected" required>
+                                    <label class="btn btn-outline-danger w-50" for="reject_<%= student._id %>">Reject</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="text-center mt-3">
+            <button type="submit" class="btn btn-primary px-4">Submit</button>
+        </div>
+    </form>
+
+    <style>
+        /* Responsive Design Adjustments */
+        
+        @media (max-width: 768px) {
+            table {
+                font-size: 14px;
+            }
+            .btn-group {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .btn-group label {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            table {
+                font-size: 12px;
+            }
+            img {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>

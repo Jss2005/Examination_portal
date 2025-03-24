@@ -1,0 +1,96 @@
+<% layout("/layouts/boilerplate") -%>
+
+    <div class="container">
+        <% if(currUser && currUser.role=="Admin"){ %>
+            <div class="text-end">
+                <form method="GET" action="/exams/new" novalidate class="needs-validation">
+                    <button class="btn btn-dark add-btn mt-3 idx-btn">Add a new Exam</button>
+                </form>
+            </div>
+            <% } %>
+
+                <% if(currUser && currUser.role=="clerk"){ %>
+                    <div class="text-end">
+                        <a href="validate_student_signups" class="btn btn-info add-btn mt-3 idx-btn btn-lg">Verify Student Signups</a>
+                    </div>
+                    <% } %>
+
+                        <h3 class="allExams text-center mt-4">Available Exams</h3>
+                        <div class="container-fluid">
+                            <% for(let exam of availableExams) { %>
+                                <div class="row justify-content-center mb-3">
+                                    <div class="col-lg-8 col-md-10 col-sm-12">
+                                        <div class="card p-3" style="background-color: #E7F3FB">
+                                            <a href="/exams/<%=exam._id%>" class="exam-link">
+                                                <div class="card-body text-center">
+                                                    <h5 class="card-title">
+                                                        <%=exam.typeOfExam %> -
+                                                            <%=exam.course%>
+                                                    </h5>
+                                                    <p class="card-text">
+                                                        Notification for
+                                                        <%=exam.regulation%> regulation,
+                                                            <%=exam.semester%> semester is out!
+                                                    </p>
+
+                                                    <% if (exam.notification) { %>
+                                                        <form action="/exams/download" method="POST">
+                                                            <input type="hidden" name="filename" value="<%= exam.notification %>">
+                                                            <button type="submit" class="btn btn-sm btn-success mb-3">Download Notification</button>
+                                                        </form>
+                                                        <% } %>
+
+                                                            <% if(currUser && currUser.role=="Student" && !exam.isResultsDeclared){ %>
+                                                                <% let found = false %>
+                                                                    <% if(currUser.examRegistrations) { %>
+                                                                        <% currUser.examRegistrations.forEach((reg) => { %>
+                                                                            <% if(reg.examId.toString() === exam._id.toString()) { found = true; } %>
+                                                                                <% }); %>
+                                                                                    <% } %>
+                                                                                        <% if(!found) { %>
+                                                                                            <a href="exams/<%=exam._id%>/students/<%=currUser._id%>" class="btn btn-lg btn-outline-primary">Apply Here</a>
+                                                                                            <% } %>
+                                                                                                <% } %>
+
+                                                                                                    <% if(currUser && currUser.examRegistrations) { %>
+                                                                                                        <% currUser.examRegistrations.forEach((reg) => { %>
+                                                                                                            <% if(reg.examId.toString() === exam._id.toString()) { %>
+                                                                                                                <p class="mt-2 <%= reg.status_of_application === 'accepted' ? 'text-success' : reg.status_of_application === 'pending' ? 'text-info' : 'text-danger' %>">
+                                                                                                                    Application Status: <strong><%= reg.status_of_application %></strong>
+                                                                                                                </p>
+                                                                                                                <% if(reg.status_of_application.toString() === "accepted") { %>
+                                                                                                                    <a href="/exams/generate-hall-ticket/<%=currUser._id%>/<%=exam._id%>" class="btn btn-success">Download Hall Ticket</a>
+                                                                                                                    <% } %>
+                                                                                                                        <% } %>
+                                                                                                                            <% }); %>
+                                                                                                                                <% } %>
+
+                                                                                                                                    <% if(currUser && currUser.role=="Student" && exam.isResultsDeclared){ %>
+                                                                                                                                        <a href="exams/<%=exam._id%>/results/<%=currUser._id%>" class="btn btn-outline-primary ">View Results</a>
+                                                                                                                                        <% } %>
+
+
+                                                                                                                                            <% if(currUser && currUser.role=="Student" && exam.isRevaluationResultsDeclared){ %>
+                                                                                                                                                <a href="exams/<%=exam._id%>/revaluation_results/<%=currUser._id%>" class="btn btn-outline-primary ">View Revaluation Results</a>
+                                                                                                                                                <% } %>
+                                                                                                                                                    <% if(currUser && currUser.role=="Admin"){ %>
+                                                                                                                                                        <div>
+                                                                                                                                                            <a href="exams/<%=exam._id%>/postresults" class="btn btn-dark mt-3">Post the Results</a>
+                                                                                                                                                            <a href="exams/<%=exam._id%>/postrevaluationResults" class="btn btn-dark mt-3">Post Revaluation Results</a>
+                                                                                                                                                        </div>
+                                                                                                                                                        <% } %>
+
+                                                                                                                                                            <% if(currUser && currUser.role=="clerk"){ %>
+                                                                                                                                                                <div>
+                                                                                                                                                                    <a href="exams/<%=exam._id%>/registrations" class="btn btn-dark mt-3">Verify Exam Registrations</a>
+                                                                                                                                                                    <a href="exams/<%=exam._id%>/revaluation_registrations" class="btn btn-dark mt-3">Verify Revaluation Registrations</a>
+                                                                                                                                                                </div>
+                                                                                                                                                                <% } %>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% } %>
+                        </div>
+    </div>

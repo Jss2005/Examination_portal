@@ -1,0 +1,38 @@
+<% layout("/layouts/boilerplate") -%>
+
+    <body>
+        <div class="container mt-3">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-md-10 col-sm-12">
+                    <h3 class="text-center">Edit your Exam</h3>
+                    <form method="POST" action="/exams/<%=exam._id%>?_method=PUT" novalidate class="needs-validation">
+                        <div class="mb-3">
+                            <label for="course" class="form-label">Course</label>
+                            <input name="exam[course]" value="<%=exam.course%>" type="text" class="form-control" required/>
+                            <div class="valid-feedback">Course looks good</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="regulation" class="form-label">Regulation</label>
+                            <input name="exam[regulation]" value="<%=exam.regulation%>" type="text" class="form-control" required/>
+                            <div class="invalid-feedback">Please enter correct regulation</div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <label for="semester" class="form-label">Semester</label>
+                                <input name="exam[semester]" value="<%=exam.semester%>" type="text" class="form-control" required/>
+                                <div class="valid-feedback">Semester looks good</div>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="typeOfExam" class="form-label">Type Of Exam</label>
+                                <input name="exam[typeOfExam]" value="<%=exam.typeOfExam%>" type="text" class="form-control" required/>
+                                <div class="invalid-feedback">Type of Exam must be Regular or Supply</div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-dark edit-btn mt-3 w-100">Update Exam</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>

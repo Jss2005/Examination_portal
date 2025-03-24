@@ -1,0 +1,50 @@
+<% layout("/layouts/boilerplate") -%>
+
+    <body>
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-8 col-sm-10">
+                    <h1 class="mb-4 text-center text-wrap text-break">
+                        Post Results for
+                        <%= exam.course %> -
+                            <%= exam.semester %> (
+                                <%= exam.typeOfExam %>)
+                    </h1>
+
+                    <form action="/exams/<%= exam._id %>/postresults" method="POST" enctype="multipart/form-data" class="p-4 shadow-lg rounded-3 bg-light needs-validation" novalidate>
+
+                        <div class="mb-3">
+                            <label for="file" class="form-label fw-bold">Upload Results File:</label>
+                            <input id="file" name="exam[results]" type="file" class="form-control" required />
+                            <div class="invalid-feedback">Please upload a valid file.</div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button class="btn btn-success btn-lg mt-3 ">Declare Results</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bootstrap JS for Validation -->
+        <script>
+            (function() {
+                'use strict';
+                var forms = document.querySelectorAll('.needs-validation');
+                Array.prototype.slice.call(forms).forEach(function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            })();
+        </script>
+
+        <!-- Bootstrap JS Bundle -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </body>

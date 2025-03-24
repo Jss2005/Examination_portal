@@ -1,0 +1,60 @@
+<% layout("/layouts/boilerplate") -%>
+
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <h1 class="text-center mb-4">Sign Up</h1>
+            <div class="col-lg-4 col-md-6 col-sm-8 col-10">
+                <form action="/signup" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+
+                    <!-- Username Field -->
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input name="username" id="username" type="text" class="form-control" required autocomplete="off" />
+                        <div class="invalid-feedback">Please enter a username.</div>
+                    </div>
+
+                    <!-- Roll Number Field -->
+                    <div class="mb-3">
+                        <label for="rollNumber" class="form-label">Roll Number</label>
+                        <input name="rollNumber" id="rollNumber" type="text" class="form-control" required autocomplete="off" />
+                        <div class="invalid-feedback">Please enter your roll number.</div>
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input name="password" id="password" type="password" class="form-control" required autocomplete="off" />
+                        <div class="invalid-feedback">Please enter a password.</div>
+                    </div>
+
+                    <!-- File Upload -->
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Upload your image</label>
+                        <input name="image" type="file" id="image" class="form-control" required accept="image/*" />
+                        <div class="invalid-feedback">Please upload an image.</div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button class="btn btn-success w-100">Sign Up</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                var forms = document.getElementsByClassName('needs-validation');
+                Array.prototype.forEach.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>

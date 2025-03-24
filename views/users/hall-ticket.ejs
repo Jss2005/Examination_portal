@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hall Ticket</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            background-color: #fdf8e1;
+            /* Light yellowish background */
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid #000;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        
+        .header {
+            text-align: center;
+            border-bottom: 1px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .university-name {
+            font-size: 16pt;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        
+        .college-name {
+            font-size: 14pt;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        
+        .autonomous {
+            font-style: italic;
+            margin: 5px 0;
+        }
+        
+        .original-box {
+            position: absolute;
+            top: 50px;
+            right: 0px;
+            border: 1px solid #000;
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 12pt;
+        }
+        
+        .hall-ticket-title {
+            font-size: 14pt;
+            text-align: center;
+            margin: 10px 0;
+        }
+        
+        .hall-ticket-no {
+            text-align: right;
+            margin: 10px 0;
+        }
+        
+        .digit-box {
+            display: inline-block;
+            width: 25px;
+            height: 25px;
+            border: 1px solid #000;
+            text-align: center;
+            margin-right: 2px;
+        }
+        
+        .info-row {
+            margin: 10px 0;
+        }
+        
+        .info-label {
+            width: 200px;
+            display: inline-block;
+            font-weight: bold;
+        }
+        
+        .info-dots {
+            display: inline-block;
+            border-bottom: 1px dotted #000;
+            width: calc(100% - 210px);
+        }
+        
+        .photo-container {
+            position: absolute;
+            top: 100px;
+            right: 5px;
+            border: 1px solid #000;
+            width: 120px;
+            height: 140px;
+            text-align: center;
+        }
+        
+        .photo-container img {
+            max-width: 120px;
+            max-height: 140px;
+        }
+        
+        .exam-particulars {
+            margin: 20px 0;
+        }
+        
+        .exam-title {
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .checkbox-row {
+            display: flex;
+            width: 100%;
+        }
+        
+        .checkbox-item {
+            width: 35%;
+            border: 1px solid #000;
+            padding: 5px;
+            text-align: center;
+        }
+        
+        .subjects-title {
+            font-weight: bold;
+            margin: 15px 0 5px 0;
+        }
+        
+        .subjects-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        
+        .subjects-table th,
+        .subjects-table td {
+            border: 1px solid #000;
+            padding: 5px;
+            text-align: left;
+        }
+        
+        .subjects-table th {
+            background-color: #f2f2f2;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-weight: bold;
+            background-color: #f2f2f2;
+            border: 1px solid #000;
+            padding: 5px;
+            margin: 10px 0;
+        }
+        
+        .exam-table {
+            width: 80%;
+            border-collapse: collapse;
+        }
+        
+        .checkbox-item {
+            border: 1px solid black;
+            padding: 5px;
+            text-align: center;
+            width: 40px;
+        }
+        
+        .spacer {
+            width: 20px;
+            /* Adjust spacing between the two groups */
+        }
+        
+        .signature-row {
+            width: 100%;
+            text-align: center;
+            /* Ensures alignment balance */
+            white-space: nowrap;
+            /* Prevents wrapping */
+        }
+        
+        .signature-box {
+            margin-top: 10%;
+            display: inline-block;
+            width: 48%;
+            /* Adjusted width to fit on the same line */
+            vertical-align: middle;
+            /* Aligns both boxes properly */
+        }
+        
+        .left {
+            text-align: left;
+        }
+        
+        .right {
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+
+        <div class="header">
+            <div class="university-name">Jawaharlal Nehru Technological University Kakinada :: A.P.</div>
+            <div class="college-name">COLLEGE OF ENGINEERING :: KAKINADA</div>
+            <div class="autonomous">(Autonomous)</div>
+            <div class="original-box">ORIGINAL</div>
+        </div>
+
+        <div class="hall-ticket-title">Hall Ticket for
+            <%= exam.semester %>
+                <%= exam.course %> Examinations</div>
+
+        <div class="hall-ticket-no">
+            Hall Ticket No. :
+            <% if(user.rollNumber) { %>
+                <% const digits = user.rollNumber.split(''); %>
+                    <% digits.forEach(digit => { %>
+                        <span class="digit-box"><%= digit %></span>
+                        <% }); %>
+                            <% } %>
+        </div>
+
+        <div style="position: relative;">
+            <div class="info-row">
+                <span class="info-label">1. Name of the Candidate</span>:
+                <span class="info-dots"><%= user.name %></span>
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">2. Father's/Husband's Name</span>:
+                <span class="info-dots"><%= user.fatherName %></span>
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">3. Branch</span>:
+                <span class="info-dots"><%= user.branch %></span>
+            </div>
+
+            <div class="photo-container">
+                <% if (base64Image) { %>
+                    <img src="<%= base64Image %>" alt="Student Photo">
+                    <% } else { %>
+                        <p>Photo Not Available</p>
+                        <% } %>
+            </div>
+        </div>
+
+        <div class="exam-particulars">
+            <div class="exam-title">4. Examination Particulars</div>
+            <div style="font-style: italic; margin-bottom: 10px;">Put tick [✓] in the relevant box.</div>
+
+            <table class="exam-table">
+                <tr>
+                    <td class="checkbox-item">
+                        I Sem
+                        <% if(exam.semester.split("-")[1] === "1") { %><span class="check-mark">✓</span>
+                            <% } %>
+                    </td>
+                    <td class="checkbox-item">
+                        II Sem
+                        <% if(exam.semester.split("-")[1] === "2") { %><span class="check-mark">✓</span>
+                            <% } %>
+                    </td>
+                    <td class="spacer"></td>
+                    <!-- Spacer column -->
+                    <td class="checkbox-item">
+                        Regular
+                        <% if(exam.typeOfExam === "Regular") { %><span class="check-mark">✓</span>
+                            <% } %>
+                    </td>
+                    <td class="checkbox-item">
+                        Supple
+                        <% if(exam.typeOfExam === "Supply") { %><span class="check-mark">✓</span>
+                            <% } %>
+                    </td>
+                    <td class="spacer"></td>
+                    <td class="checkbox-item">
+                        Month :
+                        <%=registration.monthOfExam%>
+
+
+                    </td>
+                    <td class="checkbox-item">
+                        Year :
+                        <%=registration.yearOfExam%>
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+
+        <div class="subjects-title">5. List of Subjects Registered :</div>
+        <table class="subjects-table">
+            <thead>
+                <tr>
+                    <th colspan="4">Name of the Subjects (as per syllabus)</th>
+                </tr>
+                <!-- <tr>
+                    <th colspan="4" class="section-title">THEORY</th>
+                </tr>-->
+            </thead>
+            <tbody>
+                <% 
+                const subjects = registration.subjects;
+                
+                for(let i = 0; i < Math.max(7,subjects.length-7); i++) { 
+                %>
+                    <tr>
+                        <td style="width: 30px; text-align: center;">
+                            <%= i+1 %>
+                        </td>
+                        <td style="width: 45%;">
+                            <%= subjects[i] || '' %>
+                        </td>
+
+                        <% if (i + 7 < subjects.length) { %>
+                            <td style="width: 30px; text-align: center;">
+                                <%= i + 8 %>
+                            </td>
+                            <td>
+                                <%= subjects[i + 7] || '' %>
+                            </td>
+                            <% } else { %>
+                                <td></td>
+                                <td></td>
+                                <% } %>
+                    </tr>
+                    <% } %>
+
+
+            </tbody>
+        </table>
+
+
+        <div class="signature-row">
+            <div class="signature-box left">
+                <div class="signature-line"></div>
+                Signature of the Candidate
+            </div>
+            <div class="signature-box right">
+                <div class="signature-line"></div>
+                Signature of the Principal
+            </div>
+        </div>
+
+
+
+    </div>
+</body>
+
+</html>

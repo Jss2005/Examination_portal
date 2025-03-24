@@ -1,0 +1,42 @@
+<% layout("/layouts/boilerplate") -%>
+
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <h1 class="text-center mb-4">Login</h1>
+            <div class="col-lg-4 col-md-6 col-sm-8 col-10">
+                <form action="/login" method="POST" class="needs-validation" novalidate>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input name="username" id="username" type="text" class="form-control" required autocomplete="off" />
+                        <div class="invalid-feedback">Please enter your username.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input name="password" id="password" type="password" class="form-control" required autocomplete="off" />
+                        <div class="invalid-feedback">Please enter your password.</div>
+                    </div>
+
+                    <button class="btn btn-success w-100">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                var forms = document.getElementsByClassName('needs-validation');
+                Array.prototype.forEach.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
