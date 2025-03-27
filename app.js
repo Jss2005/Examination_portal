@@ -16,6 +16,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const expressLayouts = require('express-ejs-layouts');
+const cors = require("cors")
 
 
 
@@ -40,11 +41,11 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 app.use('/uploads', express.static('uploads'));
-
+app.use(cors())
 const dbURL = process.env.ATLASDB_URL;
 console.log(dbURL)
 
-const store = MongoStore.create({
+/*const store = MongoStore.create({
     mongoUrl: dbURL,
     crypto: {
         secret: process.env.SECRET
@@ -55,10 +56,10 @@ const store = MongoStore.create({
 store.on("error", () => {
     console.log("ERROR in MONGO SESSION STORE ", err)
 })
-
+*/
 
 const sessionOptions = {
-    store,
+    //store,
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
@@ -80,11 +81,11 @@ passport.deserializeUser(User.deserializeUser());
 
 
 
-//const MONGO_URL = "mongodb://127.0.0.1:27017/examination";
+const MONGO_URL = "mongodb://127.0.0.1:27017/examination";
 main().then(() => console.log('Connection successful'))
     .catch(err => console.log(err));
 async function main() {
-    await mongoose.connect(dbURL);
+    await mongoose.connect(MONGO_URL);
 }
 
 

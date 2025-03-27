@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const User = require("./user");
+const { date } = require('joi');
 const Schema = mongoose.Schema;
 
 
@@ -46,6 +47,9 @@ const examSchema = Schema({
     },
     results_excel_sheet: {
         type: String,
+    },
+    results_declared_at: {
+        type: Date
     },
     reEvaluationResults_excel_sheet: {
         type: String,

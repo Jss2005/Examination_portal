@@ -1,4 +1,3 @@
-require('dotenv').config();
 const express = require('express');
 const Exam = require("../models/exam.js");
 const User = require("../models/user.js");
@@ -10,23 +9,10 @@ const { validateExam, isLoggedIn, authorizedRoles, schema } = require("../middle
 const { upload_images } = require('../storage.js');
 const fs = require('fs');
 const path = require('path');
-const CryptoJS = require("crypto-js")
+const bcrypt = require("bcrypt");
 
 const router = express.Router();
 
-
-function encrypt(data) {
-    var ciphertext = CryptoJS.AES.encrypt(data, process.env.ENCRYPTION_KEY).toString();
-    return ciphertext;
-}
-
-function decrypt(ciphertext) {
-    var bytes = CryptoJS.AES.decrypt(ciphertext, process.env.ENCRYPTION_KEY);
-    var originalText = bytes.toString(CryptoJS.enc.Utf8);
-
-    //console.log(originalText); // 'my message'
-    return originalText
-}
 
 router.get("/signup", (req, res) => {
     res.render("users/signup.ejs");
@@ -80,10 +66,17 @@ router.post("/signup", upload_images.single("image"), wrapAsync(async(req, res) 
             throw Error("Wait till the examiner confirms your credentials")
 
         }
+        /*const salt = await bcrypt.genSalt(!0);
+        const hashedPassword = await bcrypt.hash(password, salt);*/
+        const newSignUp = new SignUp({ username, rollNumber });
+        newSignUp.image = `/uploads/images/${req.file.filename}`;
 
-        const encryptedPassword = encrypt(password);
+        const registeredUser = await SignUp.register(newSignUp, password);
 
-        const newSignUp = new SignUp({ username, rollNumber, password: encryptedPassword });
+
+
+        //const newSignUp = new SignUp({ username, rollNumber, password: hashedPassword });
+
 
         console.log(req.file);
         let url = req.file.path;
@@ -92,9 +85,9 @@ router.post("/signup", upload_images.single("image"), wrapAsync(async(req, res) 
         console.log(url, +"   " + filename);
 
         console.log(`Image uploaded successfully: ${req.file.filename}`);
-        newSignUp.image = `/uploads/images/${req.file.filename}`;
 
-        const s = await newSignUp.save();
+
+        //const s = await newSignUp.save();
         req.flash("success", "Your credientials will be verified");
         res.redirect("/signup");
 
@@ -117,20 +110,22 @@ router.post("/validate_student_signups", authorizedRoles("clerk"), wrapAsync(asy
     console.log(req.body.selectedUsers);
     const verifyed_students = req.body.selectedUsers;
     verifyed_students.forEach(async(student) => {
-        let [username, rollNumber, password, image] = student.split("|");
+        const [username, rollNumber, password, image] = student.split("|");
         console.log(username, rollNumber, password, image);
 
         const studentRecord = await SignUp.findOne({ username, rollNumber });
+        const hashedPassword = studentRecord.password;
+
+
+
+        const x = await SignUp.deleteMany({ username, rollNumber, password, image });
+        console.log("Deleted ", x);
 
         const newUser = new User({ username, rollNumber });
         newUser.image = image;
-        password = decrypt(password);
-        console.log(password)
+        const registeredUser = await User.register(newUser, hashedPassword);
 
-        const registeredUser = await User.register(newUser, password);
 
-        const x = await SignUp.deleteMany({ username, rollNumber });
-        console.log("Deleted ", x);
 
     })
     res.redirect("/exams")

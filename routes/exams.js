@@ -293,6 +293,7 @@ router.post("/:id/postresults", authorizedRoles("Admin"), upload.single("exam[re
 
     exam.results_excel_sheet = url;
     exam.isResultsDeclared = true;
+    exam.results_declared_at = Date.now();
     console.log(url, +"   ", filename);
     await exam.save();
     console.log(`File uploaded successfully: ${req.file.filename}`);
@@ -330,7 +331,30 @@ router.get("/:id/results/:studentId", isLoggedIn, authorizedRoles("Student"), wr
         })
 
         console.log(studentResult)
-        return res.render("results/viewresults.ejs", { studentResult, exam, student });
+
+
+        const date = new Date(exam.results_declared_at);
+        date.setDate(date.getDate() + 5); // Add 5 days for revaluation
+
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = String(date.getFullYear()).slice(-2);
+
+        const formattedDate = `${day}/${month}/${year}`;
+
+        // Convert formatted date to a valid Date object for comparison
+        const revaluationDeadline = new Date(`20${year}`, month - 1, day);
+        const currentDate = new Date();
+
+        const revaluationDisabled = currentDate > revaluationDeadline; // Boolean flag
+
+
+        console.log("Revaluation Deadline:", revaluationDeadline);
+        console.log("Current Date:", currentDate);
+        console.log("Is Revaluation Disabled:", revaluationDisabled);
+
+
+        return res.render("results/viewresults.ejs", { studentResult, exam, student, revaluationDisabled, revaluationDeadline: formattedDate });
 
     }
     req.flash("error", "Results are not yet Declared");
@@ -342,6 +366,9 @@ router.get("/:id/re_evaluation/:studentId", isLoggedIn, authorizedRoles("Student
     const { id, studentId } = req.params;
     const student = await User.findById(studentId).populate("examRegistrations", "subjects");
     const exam = await Exam.findById(id);
+
+
+
     if (exam.isResultsDeclared) {
         return res.render("results/apply_for_re_evaluation.ejs", { exam, student });
     } else {

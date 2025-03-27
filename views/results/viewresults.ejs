@@ -4,7 +4,6 @@
     <div class="container ">
 
 
-
         <div class="container text-center py-3">
             <!-- Responsive Image -->
             <div class="d-flex justify-content-center">
@@ -83,8 +82,11 @@
             <% const hasAppliedForRevaluation = student.examRegistrations.some(reg => reg.examId.toString() === exam._id.toString() && reg.applyForRevaluation); %>
                 <% if (!hasAppliedForRevaluation) { %>
                     <div class="text-center mt-4">
+                        <div class="mb-3 mt-3">Last date to apply for revaluation :
+                            <%= revaluationDeadline%>
+                        </div>
                         <form action="/exams/<%= exam._id %>/re_evaluation/<%= student._id %>" method="GET" style="display: inline;">
-                            <button type="submit" class="btn btn-warning btn-lg">
+                            <button type="submit" class="btn btn-warning btn-lg" <%=revaluationDisabled ? 'disabled' : '' %>>
                         <i class="bi bi-pencil-square"></i> Apply for Re-evaluation
                     </button>
                         </form>

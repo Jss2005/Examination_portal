@@ -52,11 +52,13 @@
                             <div class="mb-3">
                                 <label for="student[name]" class="form-label">Student Name</label>
                                 <input type="text" class="form-control" name="student[name]" value="<%= student.name %>" required>
+                                <div class="invalid-feedback">Name is required</div>
                             </div>
 
                             <div class="mb-3">
                                 <label for="student[fatherName]" class="form-label">Father's Name</label>
                                 <input type="text" class="form-control" name="student[fatherName]" value="<%= student.fatherName %>" required>
+                                <div class="invalid-feedback">father's name is required</div>
                             </div>
                         </div>
 
@@ -78,6 +80,7 @@
                         <div class="mb-3 col-md-6">
                             <label for="student[email]" class="form-label">Email</label>
                             <input type="email" class="form-control" name="student[email]" required>
+                            <div class="invalid-feedback">Email is required</div>
                         </div>
                     </div>
 
@@ -93,10 +96,12 @@
                         <div class="mb-3 col-md-4">
                             <label for="student[yearOfExam]" class="form-label">Year of Exam</label>
                             <input type="number" class="form-control" name="student[yearOfExam]" required>
+                            <div class="invalid-feedback">Year of exam is required</div>
                         </div>
                         <div class="mb-3 col-md-4">
                             <label for="student[monthOfExam]" class="form-label">Month of Exam</label>
                             <input type="text" class="form-control" name="student[monthOfExam]" required>
+                            <div class="invalid-feedback">Month of is required</div>
                         </div>
                     </div>
 
@@ -106,7 +111,7 @@
                         <% if (exam && exam.course === "Mtech") { %>
                             <label for="student[branch]" class="form-label">Branch</label>
                             <div class="dropdown">
-                                <select class="form-select custom-dropdown" id="student[branch]" name="student[branch]" onchange="updateSubjects('<%=exam.semester%>', '<%=exam.regulation%>','<%=exam.course%>')">
+                                <select class="form-select custom-dropdown" id="student[branch]" required name="student[branch]" onchange="updateSubjects('<%=exam.semester%>', '<%=exam.regulation%>','<%=exam.course%>')">
                         
                                         <option value="" disabled selected>Select your Branch</option>
                                         <option value="AI&ML">AI&ML</option>
@@ -122,12 +127,13 @@
                                         <option value="CSE">CSE</option>
                                         <option value="CY">CY</option>
                                     </select>
+                                <div class="invalid-feedback">Please select a valid branch.</div>
                             </div>
 
                             <% } else if (exam && exam.course === "Btech") { %>
                                 <label for="student[branch]" class="form-label">Branch</label>
                                 <div class="dropdown">
-                                    <select class="form-select custom-dropdown" id="student[branch]" name="student[branch]" onchange="updateSubjects('<%=exam.semester%>', '<%=exam.regulation%>','<%=exam.course%>')">
+                                    <select class="form-select custom-dropdown" required id="student[branch]" name="student[branch]" onchange="updateSubjects('<%=exam.semester%>', '<%=exam.regulation%>','<%=exam.course%>')">
                         
                                         <option value="" disabled selected>Select your Branch</option>
                                         <option value="CSE">🖥️ CSE</option>
@@ -140,6 +146,7 @@
                                         <option value="Mechanical">🔧 Mechanical</option>
                                         <option value="CSE-ICP">🖥️ CSE-ICP</option>
                                     </select>
+                                    <div class="invalid-feedback">Please select a valid branch.</div>
                                 </div>
                                 <% } %>
                     </div>
@@ -154,26 +161,31 @@
                         <div class="mb-3 col-md-4">
                             <label for="student[DOB]" class="form-label">Date of Birth</label>
                             <input type="date" class="form-control" name="student[DOB]" required>
+                            <div class="invalid-feedback">DOB is required</div>
                         </div>
 
                         <div class="mb-3 col-md-4">
                             <label for="student[amountPaid]" class="form-label">Amount Paid</label>
                             <input type="number" class="form-control" name="student[amountPaid]" required>
+                            <div class="invalid-feedback">Amount paid is required</div>
                         </div>
 
                         <div class="mb-3 col-md-4">
                             <label for="student[challanNumber]" class="form-label">Challan Number</label>
                             <input type="text" class="form-control" name="student[challanNumber]" required>
+                            <div class="invalid-feedback">Challan Number is required</div>
                         </div>
                     </div>
 
                     <div class="mb-3 form-group">
                         <label class="form-label">Upload Challan</label>
                         <input type="file" class="form-control" name="challan" required>
+                        <div class="invalid-feedback">Challan is required</div>
                     </div>
                     <div class="mb-3 form-group">
                         <label class="form-label">Upload Signature</label>
                         <input type="file" class="form-control" name="signature" required>
+                        <div class="invalid-feedback">Signature is required</div>
                     </div>
 
                     <div class="text-center">
@@ -185,6 +197,27 @@
 
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
                 <script src="/js/syllabus.js"></script>
+                <script>
+                    (function() {
+                        'use strict';
+                        window.addEventListener('load', function() {
+                            // Get all forms with the class 'needs-validation'
+                            var forms = document.querySelectorAll('.needs-validation');
+
+                            // Loop over them and prevent submission if invalid
+                            Array.prototype.slice.call(forms).forEach(function(form) {
+                                form.addEventListener('submit', function(event) {
+                                    if (!form.checkValidity()) {
+                                        event.preventDefault();
+                                        event.stopPropagation();
+                                    }
+                                    form.classList.add('was-validated');
+                                }, false);
+                            });
+                        }, false);
+                    })();
+                </script>
+
 
 </body>
 

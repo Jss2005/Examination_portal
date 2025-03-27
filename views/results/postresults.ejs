@@ -4,12 +4,12 @@
         <div class="container mt-5">
             <div class="row justify-content-center">
                 <div class="col-lg-6 col-md-8 col-sm-10">
-                    <h1 class="mb-4 text-center text-wrap text-break">
+                    <h3 class="mb-4 text-center text-wrap text-break">
                         Post Results for
                         <%= exam.course %> -
                             <%= exam.semester %> (
                                 <%= exam.typeOfExam %>)
-                    </h1>
+                    </h3>
 
                     <form action="/exams/<%= exam._id %>/postresults" method="POST" enctype="multipart/form-data" class="p-4 shadow-lg rounded-3 bg-light needs-validation" novalidate>
 
