@@ -3,9 +3,11 @@ const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 const uuid = require("uuid").v4;
 const mime = require("mime-types");
 
+const s3client = new S3Client({
+    region: process.env.AWS_REGION, // Ensure this is set in your environment
+});
 
 exports.s3Uploadv3Image = async(file) => {
-    const s3client = new S3Client();
 
     const params = {
         Bucket: process.env.AWS_BUCKET_NAME,
@@ -19,7 +21,7 @@ exports.s3Uploadv3Image = async(file) => {
 
 
 exports.s3Uploadv3ExamNotifications = async(file) => {
-    const s3client = new S3Client();
+
     const contentType = mime.lookup(file.originalname) || "application/octet-stream";
     const params = {
         Bucket: process.env.AWS_BUCKET_NAME,
@@ -35,7 +37,7 @@ exports.s3Uploadv3ExamNotifications = async(file) => {
 
 
 exports.s3Uploadv3Challan = async(file) => {
-    const s3client = new S3Client();
+
     const contentType = mime.lookup(file.originalname) || "application/octet-stream";
     const params = {
         Bucket: process.env.AWS_BUCKET_NAME,
@@ -50,7 +52,7 @@ exports.s3Uploadv3Challan = async(file) => {
 };
 
 exports.s3Uploadv3Signature = async(file) => {
-    const s3client = new S3Client();
+
     const contentType = mime.lookup(file.originalname) || "application/octet-stream";
     const params = {
         Bucket: process.env.AWS_BUCKET_NAME,
@@ -68,7 +70,7 @@ exports.s3Uploadv3Signature = async(file) => {
 
 
 exports.s3Uploadv3Results = async(file) => {
-    const s3client = new S3Client();
+
 
     const params = {
         Bucket: process.env.AWS_BUCKET_NAME,
@@ -86,7 +88,7 @@ exports.s3Uploadv3Results = async(file) => {
 
 
 exports.getObjectSignedUrl = async(key) => {
-    const s3Client = new S3Client();
+
     const params = {
         Bucket: process.env.AWS_BUCKET_NAME,
         Key: key
