@@ -104,7 +104,7 @@ exports.getObjectSignedUrl = async(key) => {
 
 
     const command = new GetObjectCommand(params);
-    const seconds = 60 * 60
+    const seconds = 60 * 60;
     const url = await getSignedUrl(s3client, command, { expiresIn: seconds });
 
     return url
