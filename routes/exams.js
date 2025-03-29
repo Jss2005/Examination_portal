@@ -584,12 +584,15 @@ router.get('/generate-hall-ticket/:userId/:examId', async(req, res) => {
 
         // Launch Puppeteer in headless mode
         const browser = await puppeteer.launch({
-            headless: "new", // Optimized headless mode
+            headless: "new", // Use "new" instead of true/false
+            executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/google-chrome-stable',
             args: [
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
                 '--disable-gpu',
-                '--disable-dev-shm-usage'
+                '--disable-dev-shm-usage',
+                '--single-process',
+                '--no-zygote'
             ]
         });
 
@@ -615,7 +618,7 @@ router.get('/generate-hall-ticket/:userId/:examId', async(req, res) => {
         // Send PDF as response
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', `inline; filename="Hall_Ticket_${user.name}.pdf"`);
-        console.log("HI")
+
         res.end(pdfBuffer);
 
     } catch (error) {

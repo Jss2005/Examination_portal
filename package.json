@@ -4,7 +4,7 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "postinstall": "npx puppeteer browsers install chrome"
+        "postinstall": "apt-get update && apt-get install -y wget && wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && dpkg -i google-chrome-stable_current_amd64.deb || apt-get -fy install"
     },
     "author": "",
     "license": "ISC",
