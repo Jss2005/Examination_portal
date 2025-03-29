@@ -2,6 +2,10 @@ const { S3Client, PutObjectCommand, GetObjectCommand } = require("@aws-sdk/clien
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 const uuid = require("uuid").v4;
 const mime = require("mime-types");
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
+
 
 const s3client = new S3Client({
     region: process.env.AWS_REGION, // Ensure this is set in your environment
