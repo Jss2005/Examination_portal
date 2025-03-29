@@ -9,6 +9,10 @@ if (process.env.NODE_ENV !== 'production') {
 
 const s3client = new S3Client({
     region: process.env.AWS_REGION, // Ensure this is set in your environment
+    credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    },
 });
 
 exports.s3Uploadv3Image = async(file) => {
