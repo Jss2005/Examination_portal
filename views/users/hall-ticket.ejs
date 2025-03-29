@@ -21,7 +21,9 @@
             border: 1px solid #000;
             padding: 15px;
             box-sizing: border-box;
+            position: relative;
         }
+        /* Header */
         
         .header {
             text-align: center;
@@ -50,13 +52,14 @@
         
         .original-box {
             position: absolute;
-            top: 46px;
-            right: 0px;
+            top: 10px;
+            right: 10px;
             border: 1px solid #000;
             padding: 2px 10px;
             font-weight: bold;
             font-size: 12pt;
         }
+        /* Hall Ticket */
         
         .hall-ticket-title {
             font-size: 10pt;
@@ -68,6 +71,7 @@
             text-align: right;
             margin: 10px 0;
         }
+        /* Roll Number Digits */
         
         .digit-box {
             display: inline-block;
@@ -75,60 +79,77 @@
             height: 25px;
             border: 1px solid #000;
             text-align: center;
+            line-height: 25px;
             margin-right: 2px;
         }
+        /* Candidate Info */
         
         .info-row {
+            display: flex;
+            align-items: center;
             margin: 10px 0;
+            gap: 10px;
         }
         
         .info-label {
-            width: 200px;
-            display: inline-block;
+            flex: 0 0 200px;
             font-weight: bold;
         }
         
         .info-dots {
-            display: inline-block;
+            flex-grow: 1;
             border-bottom: 1px dotted #000;
-            width: calc(100% - 210px);
+            min-height: 20px;
         }
+        /* Photo */
         
         .photo-container {
             position: absolute;
-            top: 100px;
-            right: 5px;
+            top: 80px;
+            right: 10px;
             border: 1px solid #000;
             width: 120px;
             height: 140px;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-color: #fff;
         }
         
         .photo-container img {
-            max-width: 120px;
-            max-height: 140px;
+            max-width: 100%;
+            max-height: 100%;
         }
+        /* Exam Particulars */
         
         .exam-particulars {
-            margin: 20px 0;
+            margin-top: 180px;
+            /* Avoid overlap with photo */
         }
         
         .exam-title {
             font-weight: bold;
             margin: 10px 0;
         }
+        /* Exam Table */
         
-        .checkbox-row {
-            display: flex;
-            width: 100%;
+        .exam-table {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 5px;
+            margin-bottom: 15px;
         }
         
         .checkbox-item {
-            width: 35%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             border: 1px solid #000;
             padding: 5px;
             text-align: center;
         }
+        /* Subjects Table */
         
         .subjects-title {
             font-weight: bold;
@@ -138,7 +159,6 @@
         .subjects-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 10px 0;
         }
         
         .subjects-table th,
@@ -151,48 +171,19 @@
         .subjects-table th {
             background-color: #f2f2f2;
         }
-        
-        .section-title {
-            text-align: center;
-            font-weight: bold;
-            background-color: #f2f2f2;
-            border: 1px solid #000;
-            padding: 5px;
-            margin: 10px 0;
-        }
-        
-        .exam-table {
-            width: 80%;
-            border-collapse: collapse;
-        }
-        
-        .checkbox-item {
-            border: 1px solid black;
-            padding: 5px;
-            text-align: center;
-            width: 40px;
-        }
-        
-        .spacer {
-            width: 20px;
-            /* Adjust spacing between the two groups */
-        }
+        /* Signature Row */
         
         .signature-row {
-            width: 100%;
-            text-align: center;
-            /* Ensures alignment balance */
-            white-space: nowrap;
-            /* Prevents wrapping */
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
         }
         
         .signature-box {
-            margin-top: 10%;
-            display: inline-block;
-            width: 48%;
-            /* Adjusted width to fit on the same line */
-            vertical-align: middle;
-            /* Aligns both boxes properly */
+            width: 45%;
+            text-align: center;
+            border-top: 1px solid #000;
+            padding-top: 10px;
         }
         
         .left {
