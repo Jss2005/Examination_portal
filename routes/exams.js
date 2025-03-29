@@ -12,6 +12,9 @@ const ejs = require('ejs');
 
 const axios = require("axios");
 const fs = require("fs").promises;
+const fs1 = require("fs");
+
+const puppeteer = require('puppeteer');
 
 
 
@@ -555,6 +558,79 @@ router.get('/generate-hall-ticket/:userId/:examId', async(req, res) => {
     try {
         const { userId, examId } = req.params;
 
+        // Fetch user and exam data
+        const user = await User.findById(userId);
+        const exam = await Exam.findById(examId);
+
+        if (!user || !exam) {
+            return res.status(404).send('User or Exam not found');
+        }
+
+        // Find the specific exam registration
+        const registration = user.examRegistrations.find(
+            reg => reg.examId.toString() === examId
+        );
+
+        if (!registration) {
+            return res.status(404).send('Exam registration not found');
+        }
+
+        // Set a placeholder image if user image is missing
+        const base64Image = user.image || "https://images.pexels.com/photos/31346411/pexels-photo-31346411/free-photo-of-mountain-goat-standing-on-rocky-cliff-in-alps.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load";
+
+        // Render EJS template into HTML
+        const templatePath = path.join(__dirname, '../views/users/hall-ticket.ejs');
+        const html = await ejs.renderFile(templatePath, { user, exam, registration, base64Image });
+
+        // Launch Puppeteer in headless mode
+        const browser = await puppeteer.launch({
+            headless: false, // Optimized headless mode
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-gpu',
+                '--disable-dev-shm-usage'
+            ]
+        });
+
+        const page = await browser.newPage();
+        await page.setContent(html, { waitUntil: 'networkidle0' });
+
+        // Generate PDF with proper styling
+        const pdfBuffer = await page.pdf({
+            format: 'A4',
+            printBackground: true, // Ensures styles are applied
+            margin: { top: '10mm', right: '10mm', bottom: '10mm', left: '10mm' },
+            timeout: 60000 // Ensures Puppeteer doesn't exit too soon
+        });
+
+        console.log("PDF Buffer Size:", pdfBuffer.length);
+
+        await browser.close();
+
+        // Optionally, save PDF to local storage (for debugging)
+        fs1.writeFileSync('test.pdf', pdfBuffer);
+        console.log("PDF saved as test.pdf");
+
+        // Send PDF as response
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', `inline; filename="Hall_Ticket_${user.name}.pdf"`);
+        console.log("HI")
+        res.end(pdfBuffer);
+
+    } catch (error) {
+        console.error('Error generating hall ticket:', error);
+        res.status(500).send('Error generating hall ticket');
+    }
+});
+
+
+module.exports = router
+
+/*router.get('/generate-hall-ticket/:userId/:examId', async(req, res) => {
+    try {
+        const { userId, examId } = req.params;
+
         // Find user and exam data
         const user = await User.findById(userId);
         const exam = await Exam.findById(examId);
@@ -623,4 +699,4 @@ router.get('/generate-hall-ticket/:userId/:examId', async(req, res) => {
     }
 });
 
-module.exports = router;
+module.exports = router;*/
