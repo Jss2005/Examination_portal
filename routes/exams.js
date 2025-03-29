@@ -594,7 +594,12 @@ router.get('/generate-hall-ticket/:userId/:examId', async(req, res) => {
                         right: '10mm',
                         bottom: '10mm',
                         left: '10mm'
-                    }
+                    },
+                    footer: {
+                        height: '0mm'
+                    },
+                    renderDelay: 1000,
+                    pageRanges: '1'
                 };
 
                 // Generate PDF
