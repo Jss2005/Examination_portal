@@ -584,7 +584,7 @@ router.get('/generate-hall-ticket/:userId/:examId', async(req, res) => {
 
         // Launch Puppeteer in headless mode
         const browser = await puppeteer.launch({
-            headless: false, // Optimized headless mode
+            headless: "new", // Optimized headless mode
             args: [
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
@@ -609,8 +609,8 @@ router.get('/generate-hall-ticket/:userId/:examId', async(req, res) => {
         await browser.close();
 
         // Optionally, save PDF to local storage (for debugging)
-        fs1.writeFileSync('test.pdf', pdfBuffer);
-        console.log("PDF saved as test.pdf");
+        /*   fs1.writeFileSync('test.pdf', pdfBuffer);
+           console.log("PDF saved as test.pdf");*/
 
         // Send PDF as response
         res.setHeader('Content-Type', 'application/pdf');
