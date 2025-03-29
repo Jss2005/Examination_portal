@@ -39,12 +39,12 @@
                                 <% let examReg = student.examRegistrations.find(reg => reg.examId.toString() === exam._id.toString()); %>
                                     <% if (examReg && examReg.revaluation_challan_pdf) { %>
 
-                                        <% let challanUrl = examReg.revaluation_challan_pdf.replace(/\\/g, '/'); %>
 
-                                            <a href="/uploads/<%= challanUrl.split('uploads/')[1] %>" target="_blank" class="btn btn-sm btn-info">View Challan</a>
-                                            <% } else { %>
-                                                <span class="text-muted">Not Available</span>
-                                                <% } %>
+
+                                        <a href="<%=examReg.revaluation_challan_pdf%>" target="_blank" class="btn btn-sm btn-info">View Challan</a>
+                                        <% } else { %>
+                                            <span class="text-muted">Not Available</span>
+                                            <% } %>
                             </td>
 
                             <td class="text-center">
@@ -53,7 +53,7 @@
 
                                     <% let challanUrl = examReg.revaluation_signature.replace(/\\/g, '/'); %>
 
-                                        <a href="/uploads/<%= challanUrl.split('uploads/')[1] %>" target="_blank" class="btn btn-sm btn-info">View SIgnature</a>
+                                        <a href="<%=examReg.revaluation_signature%>" target="_blank" class="btn btn-sm btn-info">View SIgnature</a>
                                         <% } else { %>
                                             <span class="text-muted">Not Available</span>
                                             <% } %>

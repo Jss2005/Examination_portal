@@ -78,7 +78,7 @@ passport.deserializeUser(User.deserializeUser());
 
 
 
-//const MONGO_URL = "mongodb://127.0.0.1:27017/examination";
+const MONGO_URL = "mongodb://127.0.0.1:27017/examination";
 main().then(() => console.log('Connection successful'))
     .catch(err => console.log(err));
 async function main() {

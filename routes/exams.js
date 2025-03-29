@@ -5,33 +5,23 @@ const wrapAsync = require("../utils/wrapAsync.js");
 const { validateExam, isLoggedIn, authorizedRoles, schema } = require("../middleware.js");
 const ExpressError = require('../utils/ExpressError.js');
 const readxlsxFile = require("read-excel-file/node");
-const fs = require('fs');
+
 const path = require('path');
 const pdf = require('html-pdf');
 const ejs = require('ejs');
-const puppeteer = require('puppeteer'); // Import Puppeteer
+
+const axios = require("axios");
+const fs = require("fs").promises;
 
 
-const { upload, upload_exam_notifications, upload_challans, multipleUpload } = require('../storage.js');
 
+
+const { upload_exam_notifications, multipleUpload, upload_exam_results } = require("../storage.js")
+const { s3Uploadv3ExamNotifications, getObjectSignedUrl, s3Uploadv3Signature, s3Uploadv3Challan, s3Uploadv3Results } = require("../s3service.js")
 
 const router = express.Router();
 
-router.post("/download", (req, res) => {
-    const { filename } = req.body;
-    console.log(filename);
-    if (!filename) {
-        return res.status(400).send("Filename is required!");
-    }
 
-    const filePath = path.join(__dirname, "../" + filename);
-    console.log(filePath);
-    res.download(filePath, (err) => {
-        if (err) {
-            res.status(500).send("File not found!");
-        }
-    });
-});
 
 
 //GET Route
@@ -53,15 +43,17 @@ router.post("/", isLoggedIn, authorizedRoles("Admin"), upload_exam_notifications
     let exam = req.body.exam;
     console.log(exam)
 
-    let url = req.file.path;
-    let filename = req.file.filename;
 
-    console.log(req.file);
+    const resp = await s3Uploadv3ExamNotifications(req.file);
+    console.log(resp);
+    const uri = await getObjectSignedUrl(resp);
+    console.log(uri)
 
 
-    console.log(url, +"   ", filename);
+
+    // console.log(url, +"   ", filename);
     const newExam = new Exam(exam);
-    newExam.notification = url;
+    newExam.notification = uri;
 
     await newExam.save();
     res.redirect('/exams');
@@ -120,8 +112,8 @@ router.get("/:id/registrations", isLoggedIn, authorizedRoles("clerk"), wrapAsync
             branch: student.branch,
             email: student.email,
             image: student.image,
-            challan_pdf: registration ? registration.challan_pdf.replace("public", "") : null,
-            signature: registration ? registration.signature.replace("public", "") : null,
+            challan_pdf: registration.challan_pdf,
+            signature: registration.signature,
             //signature: registration && registration.signature ? 
         };
     });
@@ -232,14 +224,24 @@ router.post("/:id/students/:studentId", isLoggedIn, multipleUpload, wrapAsync(as
     if (!alreadyRegistered) {
 
 
-        console.log(req.files.challan[0].path);
-        console.log(req.files.signature[0].path)
+
+
+        const resp = await s3Uploadv3Signature(req.files.signature[0]);
+        // console.log(resp);
+        const uri = await getObjectSignedUrl(resp);
+        console.log(uri)
+
+        const resp2 = await s3Uploadv3Challan(req.files.challan[0]);
+        console.log(resp2);
+        const uri2 = await getObjectSignedUrl(resp2);
+        console.log(uri2)
+
 
 
         student.examRegistrations.push({
             examId: id,
-            challan_pdf: req.files.challan[0].path,
-            signature: req.files.signature[0].path,
+            challan_pdf: uri2,
+            signature: uri,
             yearOfExam,
             monthOfExam,
             numSubjects,
@@ -278,7 +280,7 @@ router.get("/:id/postresults", authorizedRoles("Admin"), wrapAsync(async(req, re
     res.render("results/postresults.ejs", { exam: exam });
 }))
 
-router.post("/:id/postresults", authorizedRoles("Admin"), upload.single("exam[results]"), wrapAsync(async(req, res) => {
+router.post("/:id/postresults", authorizedRoles("Admin"), upload_exam_results.single("exam[results]"), wrapAsync(async(req, res) => {
     const { id } = req.params; // Exam ID from the route parameter
 
     const exam = await Exam.findById(id);
@@ -286,21 +288,33 @@ router.post("/:id/postresults", authorizedRoles("Admin"), upload.single("exam[re
         return res.status(404).send({ message: "Exam not found." });
     }
 
-    let url = req.file.path;
-    let filename = req.file.filename;
 
-    console.log(req.file);
 
-    exam.results_excel_sheet = url;
+    const resp = await s3Uploadv3Results(req.file);
+    console.log(resp);
+    const uri = await getObjectSignedUrl(resp);
+    console.log(uri)
+
+
+    exam.results_excel_sheet = uri;
     exam.isResultsDeclared = true;
     exam.results_declared_at = Date.now();
-    console.log(url, +"   ", filename);
+
     await exam.save();
+
     console.log(`File uploaded successfully: ${req.file.filename}`);
 
     req.flash("success", "Results Declared Successfully!");
     res.redirect(`/exams`);
 }));
+
+
+
+async function downloadFromS3(s3Url, outputFile) {
+    const response = await axios.get(s3Url, { responseType: "arraybuffer" });
+    await fs.writeFile(outputFile, response.data);
+    return outputFile;
+}
 
 
 router.get("/:id/results/:studentId", isLoggedIn, authorizedRoles("Student"), wrapAsync(async(req, res) => {
@@ -309,11 +323,23 @@ router.get("/:id/results/:studentId", isLoggedIn, authorizedRoles("Student"), wr
     const exam = await Exam.findById(id);
 
     if (exam.isResultsDeclared) {
-        const filePath = path.join(__dirname, "..", exam.results_excel_sheet);
-        const rows = await readxlsxFile(filePath, { schema, sheet: "Sheet1" });
+
+        const s3Url = exam.results_excel_sheet; // Ensure this is a signed S3 URL
+
+        // Create a temporary path to save the file
+        const tempFilePath = path.join(__dirname, "..", "temp_results.xlsx");
+
+        await downloadFromS3(s3Url, tempFilePath);
+        console.log("File downloaded successfully:", tempFilePath);
+
+        const rows = await readxlsxFile(tempFilePath, { schema, sheet: "Sheet1" });
+
+
+
+
         const result = rows.rows;
         console.log(result);
-        console.log("HI");
+
         const studentResult = [];
         result.forEach((row) => {
 
@@ -405,12 +431,23 @@ router.post("/:id/re_evaluation/:studentId", isLoggedIn, authorizedRoles("Studen
     examRegistration.applyForRevaluation = true;
 
 
+    const resp = await s3Uploadv3Signature(req.files.signature[0]);
+    // console.log(resp);
+    const uri = await getObjectSignedUrl(resp);
+    console.log(uri)
+
+    const resp2 = await s3Uploadv3Challan(req.files.challan[0]);
+    console.log(resp2);
+    const uri2 = await getObjectSignedUrl(resp2);
+    console.log(uri2)
+
+
     for (let i = 0; i < subjects.length; i++) {
         examRegistration.reEvaluationSubjects.push(subjects[i]);
     }
 
-    examRegistration.revaluation_challan_pdf = req.files.challan[0].path;
-    examRegistration.revaluation_signature = req.files.signature[0].path;
+    examRegistration.revaluation_challan_pdf = uri2;
+    examRegistration.revaluation_signature = uri;
 
 
 
@@ -436,7 +473,7 @@ router.get("/:id/postrevaluationResults", authorizedRoles("Admin"), wrapAsync(as
     res.render("results/postrevaluationresults.ejs", { exam: exam })
 }));
 
-router.post("/:id/postrevaluationresults", authorizedRoles("Admin"), upload.single("exam[revaluationResults]"), wrapAsync(async(req, res) => {
+router.post("/:id/postrevaluationresults", authorizedRoles("Admin"), upload_exam_results.single("exam[revaluationResults]"), wrapAsync(async(req, res) => {
     const { id } = req.params; // Exam ID from the route parameter
 
     const exam = await Exam.findById(id);
@@ -444,11 +481,15 @@ router.post("/:id/postrevaluationresults", authorizedRoles("Admin"), upload.sing
         return res.status(404).send({ message: "Exam not found." });
     }
 
-    let url = req.file.path;
-    let filename = req.file.filename;
+    const resp = await s3Uploadv3Results(req.file);
+    console.log(resp);
+    const uri = await getObjectSignedUrl(resp);
+    console.log(uri)
+
+
     exam.isRevaluationResultsDeclared = true;
-    exam.reEvaluationResults_excel_sheet = url;
-    console.log(url, +"   ", filename);
+    exam.reEvaluationResults_excel_sheet = uri;
+
     await exam.save();
     console.log(`File uploaded successfully: ${req.file.filename}`);
 
@@ -465,8 +506,15 @@ router.get("/:id/revaluation_results/:studentId", isLoggedIn, authorizedRoles("S
     const exam = await Exam.findById(id);
 
     if (exam.isRevaluationResultsDeclared) {
-        const filePath = path.join(__dirname, "../", exam.reEvaluationResults_excel_sheet);
-        const rows = await readxlsxFile(filePath, { schema, sheet: "Sheet1" });
+        const s3Url = exam.reEvaluationResults_excel_sheet; // Ensure this is a signed S3 URL
+
+        // Create a temporary path to save the file
+        const tempFilePath = path.join(__dirname, "..", "temp1_results.xlsx");
+
+        await downloadFromS3(s3Url, tempFilePath);
+        console.log("File downloaded successfully:", tempFilePath);
+
+        const rows = await readxlsxFile(tempFilePath, { schema, sheet: "Sheet1" });
         const result = rows.rows;
         const studentResult = [];
         result.forEach((row) => {
@@ -488,6 +536,18 @@ router.get("/:id/revaluation_results/:studentId", isLoggedIn, authorizedRoles("S
     req.flash("error", "Results are not yet Declared");
     res.redirect(`/exams`);
 }))
+
+
+async function fetchImageBase64(imageUrl) {
+    try {
+        const response = await axios.get(imageUrl, { responseType: "arraybuffer" });
+        const base64 = Buffer.from(response.data, "binary").toString("base64");
+        return `data:image/jpeg;base64,${base64}`; // Adjust MIME type if necessary
+    } catch (error) {
+        console.error("Error fetching image:", error);
+        return "";
+    }
+}
 
 
 
@@ -514,16 +574,11 @@ router.get('/generate-hall-ticket/:userId/:examId', async(req, res) => {
 
         let base64Image = '';
         if (user.image) {
-            const imagePath = path.join(__dirname, '../public', user.image);
-            if (fs.existsSync(imagePath)) {
-                const imageBuffer = fs.readFileSync(imagePath);
-                base64Image = `data:image/jpeg;base64,${imageBuffer.toString('base64')}`;
-            }
+            base64Image = await fetchImageBase64(user.image);
         }
 
-        console.log("HI")
-        console.log(path.join(__dirname, "../", 'views', 'users', 'hall-ticket.ejs'))
-            // Render the EJS template with data
+
+        // Render the EJS template with data
         ejs.renderFile(
             path.join(__dirname, "../", 'views', "users", 'hall-ticket.ejs'), { user, exam, registration, base64Image },
             (err, html) => {

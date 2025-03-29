@@ -10,7 +10,8 @@ const { validateExam, isLoggedIn, authorizedRoles, schema } = require("../middle
 const { upload_images } = require('../storage.js');
 const fs = require('fs');
 const path = require('path');
-const CryptoJS = require("crypto-js")
+const CryptoJS = require("crypto-js");
+const { s3Uploadv3Image, getObjectSignedUrl } = require('../s3service.js');
 
 const router = express.Router();
 
@@ -31,6 +32,8 @@ function decrypt(ciphertext) {
 router.get("/signup", (req, res) => {
     res.render("users/signup.ejs");
 })
+
+
 
 router.post("/signup", upload_images.single("image"), wrapAsync(async(req, res) => {
     try {
@@ -86,13 +89,13 @@ router.post("/signup", upload_images.single("image"), wrapAsync(async(req, res) 
         const newSignUp = new SignUp({ username, rollNumber, password: encryptedPassword });
 
         console.log(req.file);
-        let url = req.file.path;
-        let filename = req.file.filename;
 
-        console.log(url, +"   " + filename);
+        const results = await s3Uploadv3Image(req.file);
+        console.log(results);
+        const uri = await getObjectSignedUrl(results);
+        console.log(uri)
 
-        console.log(`Image uploaded successfully: ${req.file.filename}`);
-        newSignUp.image = `/uploads/images/${req.file.filename}`;
+        newSignUp.image = uri;
 
         const s = await newSignUp.save();
         req.flash("success", "Your credientials will be verified");
