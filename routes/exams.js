@@ -554,7 +554,7 @@ async function fetchImageBase64(imageUrl) {
 
 
 
-router.get('/generate-hall-ticket/:userId/:examId', async(req, res) => {
+/*router.get('/generate-hall-ticket/:userId/:examId', async(req, res) => {
     try {
         const { userId, examId } = req.params;
 
@@ -611,26 +611,25 @@ router.get('/generate-hall-ticket/:userId/:examId', async(req, res) => {
 
         await browser.close();
 
-        // Optionally, save PDF to local storage (for debugging)
-        /*   fs1.writeFileSync('test.pdf', pdfBuffer);
-           console.log("PDF saved as test.pdf");*/
 
-        // Send PDF as response
-        res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', `inline; filename="Hall_Ticket_${user.name}.pdf"`);
 
-        res.end(pdfBuffer);
+// Send PDF as response
+res.setHeader('Content-Type', 'application/pdf');
+res.setHeader('Content-Disposition', `inline; filename="Hall_Ticket_${user.name}.pdf"`);
 
-    } catch (error) {
-        console.error('Error generating hall ticket:', error);
-        res.status(500).send('Error generating hall ticket');
-    }
+res.end(pdfBuffer);
+
+}
+catch (error) {
+    console.error('Error generating hall ticket:', error);
+    res.status(500).send('Error generating hall ticket');
+}
 });
 
 
-module.exports = router
+module.exports = router */
 
-/*router.get('/generate-hall-ticket/:userId/:examId', async(req, res) => {
+router.get('/generate-hall-ticket/:userId/:examId', async(req, res) => {
     try {
         const { userId, examId } = req.params;
 
@@ -702,4 +701,4 @@ module.exports = router
     }
 });
 
-module.exports = router;*/
+module.exports = router;
