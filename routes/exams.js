@@ -585,7 +585,7 @@ router.get('/generate-hall-ticket/:userId/:examId', async(req, res) => {
         // Launch Puppeteer in headless mode
         const browser = await puppeteer.launch({
             headless: "new", // Use "new" instead of true/false
-            executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/google-chrome-stable',
+            // executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/google-chrome-stable',
             args: [
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
