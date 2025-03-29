@@ -8,8 +8,9 @@
     <style>
         body {
             font-family: 'Times New Roman', Times, serif;
-            font-size: 10pt;
+            font-size: 12pt;
             background-color: #fdf8e1;
+            /* Light yellowish background */
             margin: 0;
             padding: 20px;
         }
@@ -21,9 +22,7 @@
             border: 1px solid #000;
             padding: 15px;
             box-sizing: border-box;
-            position: relative;
         }
-        /* Header */
         
         .header {
             text-align: center;
@@ -52,17 +51,16 @@
         
         .original-box {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 50px;
+            right: 0px;
             border: 1px solid #000;
             padding: 2px 10px;
             font-weight: bold;
             font-size: 12pt;
         }
-        /* Hall Ticket */
         
         .hall-ticket-title {
-            font-size: 10pt;
+            font-size: 14pt;
             text-align: center;
             margin: 10px 0;
         }
@@ -71,7 +69,6 @@
             text-align: right;
             margin: 10px 0;
         }
-        /* Roll Number Digits */
         
         .digit-box {
             display: inline-block;
@@ -79,77 +76,60 @@
             height: 25px;
             border: 1px solid #000;
             text-align: center;
-            line-height: 25px;
             margin-right: 2px;
         }
-        /* Candidate Info */
         
         .info-row {
-            display: flex;
-            align-items: center;
             margin: 10px 0;
-            gap: 10px;
         }
         
         .info-label {
-            flex: 0 0 200px;
+            width: 200px;
+            display: inline-block;
             font-weight: bold;
         }
         
         .info-dots {
-            flex-grow: 1;
+            display: inline-block;
             border-bottom: 1px dotted #000;
-            min-height: 20px;
+            width: calc(100% - 210px);
         }
-        /* Photo */
         
         .photo-container {
             position: absolute;
-            top: 80px;
-            right: 10px;
+            top: 100px;
+            right: 5px;
             border: 1px solid #000;
             width: 120px;
             height: 140px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            background-color: #fff;
+            text-align: center;
         }
         
         .photo-container img {
-            max-width: 100%;
-            max-height: 100%;
+            max-width: 120px;
+            max-height: 140px;
         }
-        /* Exam Particulars */
         
         .exam-particulars {
-            margin-top: 180px;
-            /* Avoid overlap with photo */
+            margin: 20px 0;
         }
         
         .exam-title {
             font-weight: bold;
             margin: 10px 0;
         }
-        /* Exam Table */
         
-        .exam-table {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            gap: 5px;
-            margin-bottom: 15px;
+        .checkbox-row {
+            display: flex;
+            width: 100%;
         }
         
         .checkbox-item {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 35%;
             border: 1px solid #000;
             padding: 5px;
             text-align: center;
         }
-        /* Subjects Table */
         
         .subjects-title {
             font-weight: bold;
@@ -159,6 +139,7 @@
         .subjects-table {
             width: 100%;
             border-collapse: collapse;
+            margin: 10px 0;
         }
         
         .subjects-table th,
@@ -171,19 +152,48 @@
         .subjects-table th {
             background-color: #f2f2f2;
         }
-        /* Signature Row */
+        
+        .section-title {
+            text-align: center;
+            font-weight: bold;
+            background-color: #f2f2f2;
+            border: 1px solid #000;
+            padding: 5px;
+            margin: 10px 0;
+        }
+        
+        .exam-table {
+            width: 80%;
+            border-collapse: collapse;
+        }
+        
+        .checkbox-item {
+            border: 1px solid black;
+            padding: 5px;
+            text-align: center;
+            width: 40px;
+        }
+        
+        .spacer {
+            width: 20px;
+            /* Adjust spacing between the two groups */
+        }
         
         .signature-row {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
+            width: 100%;
+            text-align: center;
+            /* Ensures alignment balance */
+            white-space: nowrap;
+            /* Prevents wrapping */
         }
         
         .signature-box {
-            width: 45%;
-            text-align: center;
-            border-top: 1px solid #000;
-            padding-top: 10px;
+            margin-top: 10%;
+            display: inline-block;
+            width: 48%;
+            /* Adjusted width to fit on the same line */
+            vertical-align: middle;
+            /* Aligns both boxes properly */
         }
         
         .left {
@@ -247,7 +257,7 @@
         </div>
 
         <div class="exam-particulars">
-            <div class="exam-title">4. Examination Particulars :</div>
+            <div class="exam-title">4. Examination Particulars</div>
             <div style="font-style: italic; margin-bottom: 10px;">Put tick [✓] in the relevant box.</div>
 
             <table class="exam-table">
@@ -289,7 +299,7 @@
                 </tr>
             </table>
         </div>
-        <div></div>
+
 
         <div class="subjects-title">5. List of Subjects Registered :</div>
         <table class="subjects-table">
@@ -332,7 +342,7 @@
 
             </tbody>
         </table>
-        <div></div>
+
 
         <div class="signature-row">
             <div class="signature-box left">
