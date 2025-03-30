@@ -22,6 +22,7 @@ const puppeteer = require('puppeteer');
 const { upload_exam_notifications, multipleUpload, upload_exam_results } = require("../storage.js")
 const { s3Uploadv3ExamNotifications, getObjectSignedUrl, s3Uploadv3Signature, s3Uploadv3Challan, s3Uploadv3Results } = require("../s3service.js")
 
+
 const router = express.Router();
 
 
@@ -49,8 +50,9 @@ router.post("/", isLoggedIn, authorizedRoles("Admin"), upload_exam_notifications
 
     const resp = await s3Uploadv3ExamNotifications(req.file);
     console.log(resp);
-    const uri = await getObjectSignedUrl(resp);
-    console.log(uri)
+    /*const uri = await getObjectSignedUrl(resp);
+    console.log(uri)*/
+    const uri = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${resp}`;
 
 
 
@@ -231,12 +233,14 @@ router.post("/:id/students/:studentId", isLoggedIn, multipleUpload, wrapAsync(as
 
         const resp = await s3Uploadv3Signature(req.files.signature[0]);
         // console.log(resp);
-        const uri = await getObjectSignedUrl(resp);
+        const uri = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${resp}`;
+        // const uri = await getObjectSignedUrl(resp);
         console.log(uri)
 
         const resp2 = await s3Uploadv3Challan(req.files.challan[0]);
         console.log(resp2);
-        const uri2 = await getObjectSignedUrl(resp2);
+        const uri2 = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${resp2}`;
+        // const uri2 = await getObjectSignedUrl(resp2);
         console.log(uri2)
 
 
@@ -295,7 +299,8 @@ router.post("/:id/postresults", authorizedRoles("Admin"), upload_exam_results.si
 
     const resp = await s3Uploadv3Results(req.file);
     console.log(resp);
-    const uri = await getObjectSignedUrl(resp);
+    const uri = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${resp}`;
+    //const uri = await getObjectSignedUrl(resp);
     console.log(uri)
 
 
@@ -436,12 +441,14 @@ router.post("/:id/re_evaluation/:studentId", isLoggedIn, authorizedRoles("Studen
 
     const resp = await s3Uploadv3Signature(req.files.signature[0]);
     // console.log(resp);
-    const uri = await getObjectSignedUrl(resp);
+    // const uri = await getObjectSignedUrl(resp);
+    const uri = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${resp}`;
     console.log(uri)
 
     const resp2 = await s3Uploadv3Challan(req.files.challan[0]);
     console.log(resp2);
-    const uri2 = await getObjectSignedUrl(resp2);
+    //const uri2 = await getObjectSignedUrl(resp2);
+    const uri2 = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${resp2}`;
     console.log(uri2)
 
 
@@ -486,7 +493,8 @@ router.post("/:id/postrevaluationresults", authorizedRoles("Admin"), upload_exam
 
     const resp = await s3Uploadv3Results(req.file);
     console.log(resp);
-    const uri = await getObjectSignedUrl(resp);
+    //const uri = await getObjectSignedUrl(resp);
+    const uri = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${resp}`;
     console.log(uri)
 
 

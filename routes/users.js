@@ -90,10 +90,14 @@ router.post("/signup", upload_images.single("image"), wrapAsync(async(req, res) 
 
         console.log(req.file);
 
+
         const results = await s3Uploadv3Image(req.file);
         console.log(results);
-        const uri = await getObjectSignedUrl(results);
-        console.log(uri)
+        console.log();
+        const uri = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${results}`;
+        console.log()
+            /* const uri = await getObjectSignedUrl(results);
+             console.log(uri)*/
 
         newSignUp.image = uri;
 
