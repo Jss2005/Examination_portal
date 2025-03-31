@@ -37,11 +37,12 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th>
-                                            S.NO
+                                            NO
                                         </th>
+                                        <th>SUBCODE</th>
                                         <th>SUBNAME</th>
                                         <th>GRADE</th>
-                                        <th>CP</th>
+                                        <th>GP</th>
                                         <th>CREDITS</th>
                                     </tr>
                                 </thead>
@@ -52,17 +53,22 @@
                                                 <td>
                                                     <%= l %>
                                                 </td>
+
                                                 <td>
-                                                    <%= result.branch %>
+                                                    <%= result.subcode %>
                                                 </td>
-                                                <td>
-                                                    <%= result.roll_number %>
-                                                </td>
+
                                                 <td>
                                                     <%= result.subject %>
                                                 </td>
                                                 <td class="fw-bold">
                                                     <%= result.grade %>
+                                                </td>
+                                                <td>
+                                                    <%= result.gp %>
+                                                </td>
+                                                <td>
+                                                    <%= result.credits %>
                                                 </td>
                                             </tr>
                                             <% }); %>

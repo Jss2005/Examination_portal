@@ -351,14 +351,17 @@ router.get("/:id/results/:studentId", isLoggedIn, authorizedRoles("Student"), wr
         const studentResult = [];
         result.forEach((row) => {
 
-            if (row.roll_number && student.rollNumber && row.roll_number.toString() == student.rollNumber.toString()) {
+            if (row.ROLL_NUMBER && student.rollNumber && row.ROLL_NUMBER.toString() == student.rollNumber.toString()) {
 
                 studentResult.push({
-                    name: row.name,
-                    branch: row.branch,
-                    roll_number: row.roll_number,
-                    subject: row.subject,
-                    grade: row.grade
+                    name: row.NAME,
+                    branch: row.BRANCH,
+                    roll_number: row.ROLL_NUMBER,
+                    subject: row.SUBNAME,
+                    grade: row.GRADE,
+                    subcode: row.SUBCODE,
+                    gp: row.GP,
+                    credits: row.CREDITS
                 })
             }
 
@@ -530,14 +533,17 @@ router.get("/:id/revaluation_results/:studentId", isLoggedIn, authorizedRoles("S
         const studentResult = [];
         result.forEach((row) => {
 
-            if (row.roll_number && student.rollNumber && row.roll_number.toString() == student.rollNumber.toString()) {
+            if (row.ROLL_NUMBER && student.rollNumber && row.ROLL_NUMBER.toString() == student.rollNumber.toString()) {
 
                 studentResult.push({
-                    name: row.name,
-                    branch: row.branch,
-                    roll_number: row.roll_number,
-                    subject: row.subject,
-                    grade: row.grade
+                    name: row.NAME,
+                    branch: row.BRANCH,
+                    roll_number: row.ROLL_NUMBER,
+                    subject: row.SUBNAME,
+                    grade: row.GRADE,
+                    subcode: row.SUBCODE,
+                    gp: row.GP,
+                    credits: row.CREDITS
                 })
             }
         })

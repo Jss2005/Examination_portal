@@ -30,33 +30,40 @@
                         <table class="table table-hover table-striped text-center align-middle">
                             <thead class="table-dark">
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Branch</th>
-                                    <th>Roll Number</th>
-                                    <th>Subject</th>
-                                    <th>Grade</th>
+                                    <th>
+                                        NO
+                                    </th>
+                                    <th>SUBCODE</th>
+                                    <th>SUBNAME</th>
+                                    <th>GRADE</th>
+                                    <th>GP</th>
+                                    <th>CREDITS</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <% studentResult.forEach(function(result) { %>
-                                    <tr>
-                                        <td class="text-wrap text-break">
-                                            <%= result.name %>
-                                        </td>
-                                        <td class="text-wrap text-break">
-                                            <%= result.branch %>
-                                        </td>
-                                        <td>
-                                            <%= result.roll_number %>
-                                        </td>
-                                        <td class="text-wrap text-break">
-                                            <%= result.subject %>
-                                        </td>
-                                        <td class="fw-bold">
-                                            <%= result.grade %>
-                                        </td>
-                                    </tr>
-                                    <% }); %>
+                                    <% l= l+1%>
+                                        <tr>
+                                            <td>
+                                                <%= l %>
+                                            </td>
+                                            <td class="text-wrap text-break">
+                                                <%= result.subcode %>
+                                            </td>
+                                            <td class="text-wrap text-break">
+                                                <%= result.subject %>
+                                            </td>
+                                            <td>
+                                                <%= result.grade %>
+                                            </td>
+                                            <td class="text-wrap text-break">
+                                                <%= result.gp %>
+                                            </td>
+                                            <td class="fw-bold">
+                                                <%= result.credits %>
+                                            </td>
+                                        </tr>
+                                        <% }); %>
                             </tbody>
                         </table>
                     </div>
