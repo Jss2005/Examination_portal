@@ -46,24 +46,40 @@ module.exports.authorizedRoles = (...allowedRoles) => {
 }
 
 module.exports.schema = {
-    'Name': {
-        prop: 'name',
+    'NAME': {
+        prop: 'NAME',
         type: String
     },
-    'Branch': {
-        prop: 'branch',
+    'BRANCH': {
+        prop: 'BRANCH',
         type: String
     },
-    'Roll No': {
-        prop: 'roll_number',
+    'ROLL_NUMBER': {
+        prop: 'ROLL_NUMBER',
         type: String
     },
-    'Subject': {
-        prop: 'subject',
+    'SUBCODE': {
+        prop: 'SUBCODE',
         type: String
     },
-    'Grade': {
-        prop: 'grade',
+    'SUBNAME': {
+        prop: 'SUBNAME',
+        type: String
+    },
+    'GRADE': {
+        prop: 'GRADE',
+        type: String
+    },
+    'GRADE': {
+        prop: 'GRADE',
+        type: String
+    },
+    'GP': {
+        prop: 'GP',
+        type: String
+    },
+    'CREDITS': {
+        prop: 'CREDITS',
         type: String
     }
 

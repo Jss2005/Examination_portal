@@ -341,7 +341,8 @@ router.get("/:id/results/:studentId", isLoggedIn, authorizedRoles("Student"), wr
         console.log("File downloaded successfully:", tempFilePath);
 
         const rows = await readxlsxFile(tempFilePath, { schema, sheet: "Sheet1" });
-
+        // const rows = await readxlsxFile(tempFilePath);
+        console.log(rows)
 
 
 
