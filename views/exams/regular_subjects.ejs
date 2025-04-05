@@ -1,0 +1,159 @@
+<% layout("/layouts/boilerplate") -%>
+
+    <h2 class="text-center mt-4">Registered Students</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered mt-3">
+            <thead class="table-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Image</th>
+                    <th>Roll Number</th>
+                    <th>Branch</th>
+                    <th>Subjects</th>
+                    <th>Status</th>
+
+
+                </tr>
+            </thead>
+            <tbody id="studentTableBody">
+                <% students.forEach(student => { %>
+
+                    <tr>
+                        <td>
+                            <%= student.name %>
+                        </td>
+                        <td class="text-center">
+                            <img src="<%= student.image %>" alt="Student Image" class="student-img">
+                        </td>
+                        <td>
+                            <%= student.rollNumber %>
+                        </td>
+                        <td>
+                            <%= student.branch %>
+                        </td>
+
+
+                        <td>
+                            <% if (student.subjects && student.subjects.length > 0) { %>
+                                <ul class="subject-list">
+                                    <% student.subjects.forEach(subject => { %>
+                                        <li><strong><%= subject %></strong></li>
+                                        <% }) %>
+                                </ul>
+                                <% } else { %>
+                                    <span class="text-muted">No Subjects</span>
+                                    <% } %>
+                        </td>
+
+                        <td class="text-center 
+    <%= student.status_of_application === 'accepted' ? 'text-success' : 
+        student.status_of_application === 'rejected' ? 'text-danger' : 
+        'text-dark' %>">
+                            <%= student.status_of_application %>
+                        </td>
+
+                    </tr>
+
+                    <% }) %>
+            </tbody>
+        </table>
+    </div>
+
+
+
+    <!-- Pagination Controls -->
+    <div class="text-center mt-3">
+        <button id="prevPage" class="btn btn-secondary mx-2">Previous</button>
+        <span id="pageInfo"></span>
+        <button id="nextPage" class="btn btn-secondary mx-2">Next</button>
+    </div>
+
+    <!-- CSS for Styling -->
+    <style>
+        .table-responsive {
+            overflow-x: auto;
+        }
+        
+        .student-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        /* Responsive Adjustments */
+        
+        @media (max-width: 992px) {
+            table {
+                font-size: 14px;
+            }
+            .btn-group label {
+                width: 45%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            table {
+                font-size: 12px;
+            }
+            .student-img {
+                width: 70px;
+                height: 70px;
+            }
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .btn-group label {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            table {
+                font-size: 11px;
+            }
+            .student-img {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>
+
+    <!-- JavaScript for Pagination -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const rowsPerPage = 20; // Number of students per page
+            let currentPage = 1;
+
+            const students = document.querySelectorAll("#studentTableBody tr");
+            const totalPages = Math.ceil(students.length / rowsPerPage);
+
+            function showPage(page) {
+                students.forEach((row, index) => {
+                    row.style.display = (index >= (page - 1) * rowsPerPage && index < page * rowsPerPage) ? "" : "none";
+                });
+
+                document.getElementById("pageInfo").textContent = `Page ${page} of ${totalPages}`;
+                document.getElementById("prevPage").disabled = (page === 1);
+                document.getElementById("nextPage").disabled = (page === totalPages);
+            }
+
+            document.getElementById("prevPage").addEventListener("click", function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    showPage(currentPage);
+                }
+            });
+
+            document.getElementById("nextPage").addEventListener("click", function() {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    showPage(currentPage);
+                }
+            });
+
+            showPage(currentPage); // Show the first page on load
+        });
+    </script>

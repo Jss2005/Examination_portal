@@ -55,6 +55,7 @@ const userSchema = new Schema({
             default: "pending"
 
         },
+
         status_of_revaluation_application: {
             type: String,
             enum: ["accepted", "rejected", "pending"],
@@ -72,6 +73,18 @@ const userSchema = new Schema({
             type: String,
             required: true
         },
+        appliedAt: {
+            type: Date
+        },
+        dateOfPayment: {
+            type: Date
+        },
+        totalSubjects: {
+            type: Number
+        },
+        station: {
+            type: String
+        },
 
         amountPaid: {
             type: Number,
@@ -87,6 +100,8 @@ const userSchema = new Schema({
             type: String
         },
 
+
+
         applyForRevaluation: {
             type: Boolean,
             default: false
@@ -98,9 +113,21 @@ const userSchema = new Schema({
             type: String
         },
         reEvaluationSubjects: [{
-            type: String,
-            required: true
+            name: { type: String },
+            code: { type: String },
+            internal: { type: String },
+            external: { type: String },
+            total: { type: String }
         }],
+        revaluation_bank_name: {
+            type: String,
+        },
+        revaluation_challanNumber: {
+            type: String,
+        },
+        revaluation_amountPaid: {
+            type: String,
+        },
         registeredAt: {
             type: Date,
             default: Date.now(),

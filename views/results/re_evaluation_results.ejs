@@ -8,7 +8,7 @@
             <div class="d-flex justify-content-center">
                 <img src="<%= '/assets/logo1.png' %>" alt="logo" class="img-fluid" style="max-height: 200px; width: auto;background-color:green" />
             </div>
-            <h1 class="text-center text-success mb-4">Revaluation Results</h1>
+
             <!-- Responsive Exam Details -->
             <div class="text-center mt-3">
                 <p class="fs-5">
@@ -21,7 +21,7 @@
             </div>
         </div>
 
-
+        <h1 class="text-center text-success mb-4">Revaluation Results</h1>
 
         <div class="card shadow-lg border-0 rounded-4">
             <div class="card-body">
@@ -31,7 +31,7 @@
                             <thead class="table-dark">
                                 <tr>
                                     <th>
-                                        NO
+                                        NO.
                                     </th>
                                     <th>SUBCODE</th>
                                     <th>SUBNAME</th>
@@ -41,29 +41,31 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <% studentResult.forEach(function(result) { %>
-                                    <% l= l+1%>
-                                        <tr>
-                                            <td>
-                                                <%= l %>
-                                            </td>
-                                            <td class="text-wrap text-break">
-                                                <%= result.subcode %>
-                                            </td>
-                                            <td class="text-wrap text-break">
-                                                <%= result.subject %>
-                                            </td>
-                                            <td>
-                                                <%= result.grade %>
-                                            </td>
-                                            <td class="text-wrap text-break">
-                                                <%= result.gp %>
-                                            </td>
-                                            <td class="fw-bold">
-                                                <%= result.credits %>
-                                            </td>
-                                        </tr>
-                                        <% }); %>
+                                <% let l=0 %>
+                                    <% studentResult.forEach(function(result) { %>
+
+                                        <% l= l+1%>
+                                            <tr>
+                                                <td>
+                                                    <%= l %>
+                                                </td>
+                                                <td class="text-wrap text-break">
+                                                    <%= result.subcode %>
+                                                </td>
+                                                <td class="text-wrap text-break">
+                                                    <%= result.subject %>
+                                                </td>
+                                                <td>
+                                                    <%= result.grade %>
+                                                </td>
+                                                <td class="text-wrap text-break">
+                                                    <%= result.gp %>
+                                                </td>
+                                                <td class="fw-bold">
+                                                    <%= result.credits %>
+                                                </td>
+                                            </tr>
+                                            <% }); %>
                             </tbody>
                         </table>
                     </div>

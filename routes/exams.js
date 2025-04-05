@@ -26,11 +26,30 @@ const { s3Uploadv3ExamNotifications, getObjectSignedUrl, s3Uploadv3Signature, s3
 const router = express.Router();
 
 
-
+const monthOrder = {
+    January: 1,
+    February: 2,
+    March: 3,
+    April: 4,
+    May: 5,
+    June: 6,
+    July: 7,
+    August: 8,
+    September: 9,
+    October: 10,
+    November: 11,
+    December: 12
+};
 
 //GET Route
 router.get("/", wrapAsync(async(req, res) => {
     const availableExams = await Exam.find({});
+    availableExams.sort((a, b) => {
+        const yearDiff = parseInt(b.year) - parseInt(a.year);
+        if (yearDiff !== 0) return yearDiff;
+
+        return monthOrder[b.month] - monthOrder[a.month];
+    });
     res.render("exams/index.ejs", { availableExams });
 }))
 
@@ -84,8 +103,6 @@ router.get("/:id/edit", isLoggedIn, authorizedRoles("Admin"), wrapAsync(async(re
 
 //UPDATE ROUTE
 router.put("/:id", isLoggedIn, authorizedRoles("Admin"), validateExam, wrapAsync(async(req, res) => {
-    /*if (!req.body.listing)
-        throw new ExpressError(400, "Send Valid data for listing") //400-Bad Request by client*/
     let { id } = req.params;
 
     await Exam.findByIdAndUpdate(id, {...req.body.exam });
@@ -109,6 +126,12 @@ router.get("/:id/registrations", isLoggedIn, authorizedRoles("clerk"), wrapAsync
     const currStudents = exam.registeredStudents.map(s => {
         const student = s.studentId;
         const registration = student.examRegistrations.find(reg => reg.examId.equals(id));
+        let d = registration.appliedAt;
+        const date = new Date(d);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+        const year = String(date.getFullYear()).slice(-2); // Get last 2 digits of year
+        d = `${day}/${month}/${year}`;
 
         return {
             _id: student._id,
@@ -119,15 +142,64 @@ router.get("/:id/registrations", isLoggedIn, authorizedRoles("clerk"), wrapAsync
             image: student.image,
             challan_pdf: registration.challan_pdf,
             signature: registration.signature,
-            //signature: registration && registration.signature ? 
+            subjects: registration.subjects,
+            appliedAt: d,
+
+            status_of_application: registration.status_of_application
+                //signature: registration && registration.signature ? 
         };
     });
-    //return res.json(currStudents);
+    currStudents.sort((a, b) => {
+        if (a.branch < b.branch) return -1;
+        if (a.branch > b.branch) return 1;
+        if (a.rollNumber < b.rollNumber) return -1;
+        if (a.rollNumber > b.rollNumber) return 1;
+        return 0;
+    });
+
 
 
     return res.render("exams/verify_registation.ejs", { students: currStudents, exam });
 
 }))
+
+
+
+router.get("/:id/registrations/subjects", isLoggedIn, authorizedRoles("clerk"), wrapAsync(async(req, res) => {
+    const { id } = req.params;
+    const exam = await Exam.findById(id).populate("registeredStudents.studentId");
+
+    const currStudents = exam.registeredStudents.map(s => {
+        const student = s.studentId;
+        const registration = student.examRegistrations.find(reg => reg.examId.equals(id));
+
+        return {
+            _id: student._id,
+            name: student.name,
+            rollNumber: student.rollNumber,
+            image: student.image,
+            branch: student.branch,
+            subjects: registration.subjects,
+
+            status_of_application: registration.status_of_application
+                //signature: registration && registration.signature ? 
+        };
+    });
+    currStudents.sort((a, b) => {
+        if (a.branch < b.branch) return -1;
+        if (a.branch > b.branch) return 1;
+        if (a.rollNumber < b.rollNumber) return -1;
+        if (a.rollNumber > b.rollNumber) return 1;
+        return 0;
+    });
+
+
+
+    return res.render("exams/regular_subjects.ejs", { students: currStudents, exam });
+
+}))
+
+
 
 router.get("/:id/revaluation_registrations", isLoggedIn, authorizedRoles("clerk"), wrapAsync(async(req, res) => {
     const { id } = req.params;
@@ -139,9 +211,46 @@ router.get("/:id/revaluation_registrations", isLoggedIn, authorizedRoles("clerk"
         }
     });
 
+
+    students.sort((a, b) => {
+        if (a.branch < b.branch) return -1;
+        if (a.branch > b.branch) return 1;
+        if (a.rollNumber < b.rollNumber) return -1;
+        if (a.rollNumber > b.rollNumber) return 1;
+        return 0;
+    });
+
+
     const exam = await Exam.findById(id);
     return res.render("exams/verify_revaluation_registation.ejs", { students, exam });
 }))
+
+
+
+router.get("/:id/revaluation_registrations/subjects", isLoggedIn, authorizedRoles("clerk"), wrapAsync(async(req, res) => {
+    const { id } = req.params;
+
+    // Find all students who have registered for this exam and applied for revaluation
+    const students = await User.find({
+        "examRegistrations": {
+            $elemMatch: { examId: id, applyForRevaluation: true }
+        }
+    });
+
+
+    students.sort((a, b) => {
+        if (a.branch < b.branch) return -1;
+        if (a.branch > b.branch) return 1;
+        if (a.rollNumber < b.rollNumber) return -1;
+        if (a.rollNumber > b.rollNumber) return 1;
+        return 0;
+    });
+
+
+    const exam = await Exam.findById(id);
+    return res.render("exams/revaluation_subjects.ejs", { students, exam });
+}))
+
 
 
 router.post("/:id/registrations", isLoggedIn, authorizedRoles("clerk"), wrapAsync(async(req, res) => {
@@ -211,8 +320,9 @@ router.get("/:id/students/:studentId", isLoggedIn, wrapAsync(async(req, res) => 
 
 
 router.post("/:id/students/:studentId", isLoggedIn, multipleUpload, wrapAsync(async(req, res) => {
+
     const { id, studentId } = req.params;
-    const { name, fatherName, email, branch, rollNumber, DOB, gender, yearOfExam, monthOfExam, numSubjects, subjects, amountPaid, challanNumber, image } = req.body.student;
+    const { name, fatherName, email, branch, rollNumber, DOB, gender, yearOfExam, monthOfExam, totalSubjects, subjects, amountPaid, challanNumber, dateOfPayment, image, station, appliedAt } = req.body.student;
 
     //console.log(subjects);
     const student = await User.findByIdAndUpdate(studentId, { name, fatherName, email, branch, DOB, gender });
@@ -227,9 +337,6 @@ router.post("/:id/students/:studentId", isLoggedIn, multipleUpload, wrapAsync(as
     })
 
     if (!alreadyRegistered) {
-
-
-
 
         const resp = await s3Uploadv3Signature(req.files.signature[0]);
         // console.log(resp);
@@ -251,10 +358,14 @@ router.post("/:id/students/:studentId", isLoggedIn, multipleUpload, wrapAsync(as
             signature: uri,
             yearOfExam,
             monthOfExam,
-            numSubjects,
+            totalSubjects,
             subjects,
             amountPaid,
-            challanNumber
+            challanNumber,
+            station,
+            dateOfPayment,
+            appliedAt
+
         })
 
         await student.save();
@@ -420,6 +531,7 @@ router.get("/:id/re_evaluation/:studentId", isLoggedIn, authorizedRoles("Student
 
 
 router.post("/:id/re_evaluation/:studentId", isLoggedIn, authorizedRoles("Student"), multipleUpload, wrapAsync(async(req, res) => {
+    //return res.json(req.body)
     const { id, studentId } = req.params;
     const { student } = req.body;
 
@@ -456,13 +568,14 @@ router.post("/:id/re_evaluation/:studentId", isLoggedIn, authorizedRoles("Studen
     console.log(uri2)
 
 
-    for (let i = 0; i < subjects.length; i++) {
-        examRegistration.reEvaluationSubjects.push(subjects[i]);
-    }
+    examRegistration.reEvaluationSubjects = subjects;
 
     examRegistration.revaluation_challan_pdf = uri2;
     examRegistration.revaluation_signature = uri;
 
+    examRegistration.revaluation_bank_name = student.bank
+    examRegistration.revaluation_challanNumber = student.challanNumber
+    examRegistration.revaluation_amountPaid = student.amountPaid
 
 
 

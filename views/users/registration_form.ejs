@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <style>
+        label {
+            font-weight: bold;
+        }
+        
         .custom-dropdown {
             width: 100%;
             padding: 12px;
@@ -43,20 +47,22 @@
 
         <% if(currUser) { %>
             <div class="container mt-4">
-                <h2 class="text-center">Exam Registration Form</h2>
+                <h2 class="text-center mb-3">Registration Form for
+                    <%=exam.semester%>
+                        <%=exam.course%> Examinations</h2>
 
                 <form action="/exams/<%=exam._id%>/students/<%=currUser._id%>" method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
 
                     <div class="row">
                         <div class="col-md-8">
                             <div class="mb-3">
-                                <label for="student[name]" class="form-label">Student Name</label>
-                                <input type="text" class="form-control" name="student[name]" value="<%= student.name %>" required>
+                                <label for="student[name]" class="form-label">Name of the Candidate (in block letters as per SSC):</label>
+                                <input type="text" class="form-control" name="student[name]" required>
                                 <div class="invalid-feedback">Name is required</div>
                             </div>
 
                             <div class="mb-3">
-                                <label for="student[fatherName]" class="form-label">Father's Name</label>
+                                <label for="student[fatherName]" class="form-label">Father's Name:</label>
                                 <input type="text" class="form-control" name="student[fatherName]" value="<%= student.fatherName %>" required>
                                 <div class="invalid-feedback">father's name is required</div>
                             </div>
@@ -73,19 +79,24 @@
 
                     <div class="row">
                         <div class="mb-3 col-md-6">
-                            <label for="student[rollNumber]" class="form-label">Roll Number</label>
+                            <label for="student[rollNumber]" class="form-label">Hall Ticket No.</label>
                             <input type="text" class="form-control" name="student[rollNumber]" value="<%=currUser.rollNumber%>" required readonly>
                         </div>
 
                         <div class="mb-3 col-md-6">
-                            <label for="student[email]" class="form-label">Email</label>
+                            <label for="student[email]" class="form-label">Email:</label>
                             <input type="email" class="form-control" name="student[email]" required>
                             <div class="invalid-feedback">Email is required</div>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="mb-3 col-md-4">
+                        <div class="mb-3 col-md-3">
+                            <label for="student[DOB]" class="form-label">Date of Birth:</label>
+                            <input type="date" class="form-control" name="student[DOB]" required>
+                            <div class="invalid-feedback">Date is required</div>
+                        </div>
+                        <div class="mb-3 col-md-3">
                             <label for="student[gender]" class="form-label">Gender</label>
                             <select class="form-select" name="student[gender]" required>
                         <option value="Male">Male</option>
@@ -93,22 +104,62 @@
                         <option value="Prefer not to say">Prefer not to say</option>
                     </select>
                         </div>
-                        <div class="mb-3 col-md-4">
+
+
+
+
+                        <div class="mb-3 col-md-3">
                             <label for="student[yearOfExam]" class="form-label">Year of Exam</label>
                             <input type="number" class="form-control" name="student[yearOfExam]" required>
                             <div class="invalid-feedback">Year of exam is required</div>
                         </div>
-                        <div class="mb-3 col-md-4">
+                        <div class="mb-3 col-md-3">
                             <label for="student[monthOfExam]" class="form-label">Month of Exam</label>
                             <input type="text" class="form-control" name="student[monthOfExam]" required>
                             <div class="invalid-feedback">Month of is required</div>
                         </div>
                     </div>
 
+
+
+
+                    <div class="row mt-3">
+                        <h3>Details of Fee paid:</h3>
+                        <div class="mb-3 col-md-3">
+                            <label for="student[challanNumber]" class="form-label">Challan Number /DU No.</label>
+                            <input type="text" class="form-control" name="student[challanNumber]" required>
+                            <div class="invalid-feedback">Challan Number / DU NO. is required</div>
+                        </div>
+
+
+                        <div class="mb-3 col-md-3">
+                            <label for="student[dateOfPayment]" class="form-label">Date of Payment:</label>
+                            <input type="date" class="form-control" name="student[dateOfPayment]" required>
+                            <div class="invalid-feedback">Date is required</div>
+                        </div>
+
+                        <div class="mb-3 col-md-3">
+                            <label for="student[amountPaid]" class="form-label">Amount Paid</label>
+                            <input type="number" class="form-control" name="student[amountPaid]" required>
+                            <div class="invalid-feedback">Amount paid is required</div>
+                        </div>
+                        <div class="mb-3 col-md-3">
+                            <label for="bank" class="form-label">Name & Place of the Bank</label>
+                            <input type="text" class="form-control" name="bank" required value="SBI,Engg. College Branch,Kakinada" readOnly>
+                            <div class="invalid-feedback">Amount paid is required</div>
+                        </div>
+
+
+                    </div>
+
+
+
+
+
+
                     <div class="mb-3">
 
-
-                        <% if (exam && exam.course === "Mtech") { %>
+                        <% if (exam && exam.course === "MTech") { %>
                             <label for="student[branch]" class="form-label">Branch</label>
                             <div class="dropdown">
                                 <select class="form-select custom-dropdown" id="student[branch]" required name="student[branch]" onchange="updateSubjects('<%=exam.semester%>', '<%=exam.regulation%>','<%=exam.course%>')">
@@ -130,7 +181,7 @@
                                 <div class="invalid-feedback">Please select a valid branch.</div>
                             </div>
 
-                            <% } else if (exam && exam.course === "Btech") { %>
+                            <% } else if (exam && exam.course === "BTech") { %>
                                 <label for="student[branch]" class="form-label">Branch</label>
                                 <div class="dropdown">
                                     <select class="form-select custom-dropdown" required id="student[branch]" name="student[branch]" onchange="updateSubjects('<%=exam.semester%>', '<%=exam.regulation%>','<%=exam.course%>')">
@@ -148,45 +199,57 @@
                                     </select>
                                     <div class="invalid-feedback">Please select a valid branch.</div>
                                 </div>
-                                <% } %>
+                                <% } else if (exam && exam.course === "MCA") { %>
+                                    <label for="student[branch]" class="form-label">Branch</label>
+                                    <div class="dropdown">
+                                        <select class="form-select custom-dropdown" required id="student[branch]" name="student[branch]" onchange="updateSubjects('<%=exam.semester%>', '<%=exam.regulation%>','<%=exam.course%>')">
+                            
+                                            <option value="" disabled selected>Select your Branch</option>
+                                            <option value="MCA">🖥️ MCA</option>
+            
+                                        </select>
+                                        <div class="invalid-feedback">Please select a valid branch.</div>
+                                    </div>
+                                    <% } %>
+
+
                     </div>
-
-
-
-                    <div class="mb-3" id="subjects-container" name="student[subjects]" class="form-control">
-                        <label class="form-label">Subjects</label>
-                        <div id="subjects-list"></div>
-                    </div>
-                    <div class="row">
-                        <div class="mb-3 col-md-4">
-                            <label for="student[DOB]" class="form-label">Date of Birth</label>
-                            <input type="date" class="form-control" name="student[DOB]" required>
-                            <div class="invalid-feedback">DOB is required</div>
+                    <div class="row mt-3">
+                        <div class="mb-3 col-md-6 " id="subjects-container" name="student[subjects]" class="form-control">
+                            <label class="form-label">Subjects registered for the Scheduled Examination:</label>
+                            <div id="subjects-list"></div>
                         </div>
-
-                        <div class="mb-3 col-md-4">
-                            <label for="student[amountPaid]" class="form-label">Amount Paid</label>
-                            <input type="number" class="form-control" name="student[amountPaid]" required>
-                            <div class="invalid-feedback">Amount paid is required</div>
-                        </div>
-
-                        <div class="mb-3 col-md-4">
-                            <label for="student[challanNumber]" class="form-label">Challan Number</label>
-                            <input type="text" class="form-control" name="student[challanNumber]" required>
-                            <div class="invalid-feedback">Challan Number is required</div>
+                        <div class="mb-3 col-md-2">
+                            <label for="student[totalSubjects]" class="form-label">Total No. of Subjects:</label>
+                            <input type="number" class="form-control" name="student[totalSubjects]" required>
+                            <div class="invalid-feedback">Enter total number of subjects</div>
                         </div>
                     </div>
+
 
                     <div class="mb-3 form-group">
-                        <label class="form-label">Upload Challan</label>
+                        <label class="form-label">Upload Challan:</label>
                         <input type="file" class="form-control" name="challan" required>
                         <div class="invalid-feedback">Challan is required</div>
                     </div>
                     <div class="mb-3 form-group">
-                        <label class="form-label">Upload Signature</label>
+                        <label class="form-label">Upload Signature:</label>
                         <input type="file" class="form-control" name="signature" required>
                         <div class="invalid-feedback">Signature is required</div>
                     </div>
+
+                    <div class="mb-3 col-md-4">
+                        <label for="student[station]" class="form-label">Station:</label>
+                        <input type="text" class="form-control" name="student[station]" required>
+                        <div class="invalid-feedback">Station is required</div>
+                    </div>
+
+                    <div class="mb-3 col-md-4">
+                        <label for="student[appliedAt]" class="form-label">Date:</label>
+                        <input type="date" class="form-control" name="student[appliedAt]" required>
+                        <div class="invalid-feedback">Date is required</div>
+                    </div>
+
 
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Submit</button>

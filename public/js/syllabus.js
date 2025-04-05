@@ -1,5 +1,5 @@
 const syllabus = {
-    "Btech": {
+    "BTech": {
         "R20": {
             "1-1": {
                 "ECE": [
@@ -14,15 +14,15 @@ const syllabus = {
                     "Physical Fitness Activities"
                 ],
                 "CSE": [
-                    "Mathematics - I",
-                    "Applied Chemistry",
-                    "Communicative English",
-                    "Computer Engineering Workshop",
-                    "Problem Solving and Programming using C",
-                    "English Communication Skills Lab",
-                    "Applied Chemistry Lab",
-                    "Problem Solving and Programming using C Lab",
-                    "Yoga & Physical Fitness Activities"
+                    "R20BS1101 Mathematics - I",
+                    "R20BS1102 Applied Chemistry",
+                    "R20HS1101 Communicative English",
+                    "R20ES1101 Computer Engineering Workshop",
+                    "R20ES1102 Problem Solving and Programming using C",
+                    "R20HS1102 English Communication Skills Lab",
+                    "R20BS1103 Applied Chemistry Lab",
+                    "R20ES1103 Problem Solving and Programming using C Lab",
+                    "R20MC1101 Yoga & Physical Fitness Activities"
                 ],
                 "EEE": [
                     "Mathematics – I (Calculus)",
@@ -36,16 +36,16 @@ const syllabus = {
                     "Physical Fitness Activities"
                 ],
                 "Civil": [
-                    "Mathematics–I",
-                    "Engineering Physics",
-                    "Building Materials & Construction",
-                    "Engineering Graphics",
-                    "Communicative English",
-                    "Engineering Physics Lab",
-                    "Workshop Practice",
-                    "English Communication Skills Lab",
-                    "Physics Virtual Lab",
-                    "Constitution of India"
+                    "BS1101 Mathematics–I",
+                    "BS1102 Engineering Physics",
+                    "ES1101 Building Materials & Construction",
+                    "ES1102 Engineering Graphics",
+                    "HS1101 Communicative English",
+                    "BS1103 Engineering Physics Lab",
+                    "ES1103 Workshop Practice",
+                    "HS1102 English Communication Skills Lab",
+                    "BS1104 Physics Virtual Lab",
+                    "MC1101 Constitution of India"
                 ],
                 "Chemical": [
                     "Mathematics - I",
@@ -75,16 +75,16 @@ const syllabus = {
 
 
                 "Mechanical": [
-                    "Mathematics-I (Calculus)",
-                    "Engineering Physics",
-                    "Engineering Mechanics",
-                    "Problem Solving and Programming using C",
-                    "Engineering Graphics",
-                    "Workshop Practice Lab",
-                    "Engineering Physics Lab",
-                    "Physics Virtual Lab",
-                    "Problem Solving and Programming using C Lab",
-                    "Constitution of India (AICTE Mandate Course)"
+                    "BSC-1 Mathematics-I (Calculus)",
+                    "BSC-2 Engineering Physics",
+                    "ESC-1 Engineering Mechanics",
+                    "ESC-2 Problem Solving and Programming using C",
+                    "ESC-3 Engineering Graphics",
+                    "ESC-L1 Workshop Practice Lab",
+                    "BSC-L1 Engineering Physics Lab",
+                    "BSC-L2 Physics Virtual Lab",
+                    "ESC-L2 Problem Solving and Programming using C Lab",
+                    "MC-1 Constitution of India (AICTE Mandate Course)"
                 ]
 
 
@@ -104,17 +104,17 @@ const syllabus = {
                     "Engineering Exploration Project - Design Thinking"
                 ],
                 "CSE": [
-                    "Mathematics - II",
-                    "Applied Physics",
-                    "Computer Organization",
-                    "Data Structures",
-                    "Object Oriented Programming Through C++",
-                    "Data Structures Lab",
-                    "Applied Physics Lab",
-                    "Object Oriented Programming Through C++ Lab",
-                    "Applied Physics Virtual Laboratory",
-                    "Constitution of India",
-                    "Engineering Exploration Project - Design Thinking"
+                    "R20BS1201 Mathematics - II ",
+                    "R20BS1202 Applied Physics ",
+                    "R20ES1201 Computer Organization",
+                    "R20ES1202 Data Structures",
+                    "R20ES1203 Object Oriented Programming Through C++",
+                    "R20ES1204 Data Structures Lab",
+                    "R20BS1203 Applied Physics Lab",
+                    "R20ES1205 Object Oriented Programming Through C++ Lab",
+                    "R20BS1204 Applied Physics Virtual Laboratory",
+                    "R20MC101 Constitution of India",
+                    "R20PR1201 Engineering Exploration Project - Design Thinking"
                 ],
                 "EEE": [
                     "Mathematics – III (Transforms, PDE and Vector Calculus)",
@@ -130,16 +130,16 @@ const syllabus = {
                     "Engineering Exploration Project- Design Thinking"
                 ],
                 "Civil": [
-                    "Mathematics–II",
-                    "Engineering Chemistry",
-                    "Problem Solving & Programming Using C",
-                    "Engineering Mechanics",
-                    "Surveying",
-                    "Engineering Chemistry Lab",
-                    "Problem Solving & Programming Using C Lab",
-                    "Surveying Field Work-I",
-                    "Environmental Science",
-                    "Physical Fitness Activities"
+                    "BS1201 Mathematics–II",
+                    "BS1202 Engineering Chemistry",
+                    "ES1201 Problem Solving & Programming Using C",
+                    "ES1202 Engineering Mechanics",
+                    "ES1203 Surveying",
+                    "BS1203 Engineering Chemistry Lab",
+                    "ES1204 Problem Solving & Programming Using C Lab",
+                    "ES1205 Surveying Field Work-I",
+                    "MC1201 Environmental Science",
+                    "MC1202 Physical Fitness Activities"
                 ],
                 "Chemical": [
                     "Mathematics – II",
@@ -166,16 +166,16 @@ const syllabus = {
                     "Physical Fitness Activities"
                 ],
                 "Mechanical": [
-                    "Mathematics-II (Linear Algebra and Numerical Methods)",
-                    "Engineering Chemistry",
-                    "Communicative English",
-                    "Basic Electrical & Electronics Engineering",
-                    "Thermodynamics",
-                    "English Communication Skills Lab",
-                    "Engineering Chemistry Lab",
-                    "Basic Electrical & Electronics Engineering Lab",
-                    "Physical Fitness Activities",
-                    "Engineering Exploration Project"
+                    "BSC-3 Mathematics-II (Linear Algebra and Numerical Methods)",
+                    "BSC-4 Engineering Chemistry",
+                    "HSC-1 Communicative English",
+                    "ESC-4 Basic Electrical & Electronics Engineering",
+                    "ESC-5 Thermodynamics",
+                    "HSC-L1 English Communication Skills Lab",
+                    "BSC-L3 Engineering Chemistry Lab",
+                    "ESC-L3 Basic Electrical & Electronics Engineering Lab",
+                    "MC-2 Physical Fitness Activities",
+                    "MC-3 Engineering Exploration Project"
                 ]
             },
             "2-1": {
@@ -192,16 +192,17 @@ const syllabus = {
                     "Indian Traditional Knowledge"
                 ],
                 "CSE": [
-                    "Mathematics - III",
-                    "Mathematical Foundations of Computer Science",
-                    "Operating Systems",
-                    "Advanced Java Programming",
-                    "Database Management Systems",
-                    "Database Management Systems Lab",
-                    "Operating Systems & Linux Lab",
-                    "Advanced Java Programming Lab",
-                    "Mobile App Development",
-                    "Research Methodology"
+                    "R20BS2101 Mathematics - III",
+                    "R20PC2101 Mathematical Foundations of Computer Science",
+                    "R20PC2102 Operating Systems",
+                    "R20PC2103 Advanced Java Programming",
+                    "R20PC2104 Database Management Systems",
+                    "R20PC2105 Database Management Systems Lab",
+                    "R20PC2106 Operating Systems & Linux Lab",
+                    "R20PC2107 Advanced Java Programming Lab",
+                    "R20SO2101 Mobile App Development",
+                    "R20MC2101 Research Methodology ",
+                    "Honors"
                 ],
                 "EEE": [
                     "Mathematics – IV (Complex Variable and Statistical Methods)",
@@ -217,15 +218,16 @@ const syllabus = {
                 ],
 
                 "Civil": [
-                    "Mathematics-III",
-                    "Strength of Materials",
-                    "Fluid Mechanics",
-                    "Structural Analysis – I",
-                    "Concrete Technology",
-                    "Strength of Materials Lab",
-                    "Building Planning & Drawing",
-                    "Concrete Technology Lab",
-                    "Skill Oriented Course (Computer Aided Drawing Lab)"
+                    "BS2101 Mathematics-III",
+                    "PC2101 Strength of Materials",
+                    "PC2102 Fluid Mechanics",
+                    "PC2103 Structural Analysis – I",
+                    "PC2104 Concrete Technology",
+                    "PC2105 Strength of Materials Lab",
+                    "PC2106 Building Planning & Drawing",
+                    "PC2107 Concrete Technology Lab",
+                    "SC2101 Skill Oriented Course (Computer Aided Drawing Lab)",
+                    "Honors"
                 ],
                 "Chemical": [
                     "Mathematics – III",
@@ -255,16 +257,17 @@ const syllabus = {
 
 
                 "Mechanical": [
-                    "Mathematics-III (Transforms, PDE, and Vector Calculus)",
-                    "Mechanics of Solids",
-                    "Production Technology",
-                    "Fluid Mechanics & Hydraulic Machines",
-                    "Kinematics of Machinery",
-                    "Machine Drawing",
-                    "Production Technology Lab",
-                    "Fluid Mechanics and Hydraulic Machines Lab",
-                    "Computer-Aided Drafting and Modeling Lab",
-                    "Essence of Indian Traditional Knowledge (AICTE Mandate Course)"
+                    "BSC-5 Mathematics-III (Transforms, PDE, and Vector Calculus)",
+                    "PCC-1 Mechanics of Solids",
+                    "PCC-2 Production Technology",
+                    "PCC-3 Fluid Mechanics & Hydraulic Machines",
+                    "PCC-4 Kinematics of Machinery",
+                    "PCC-L1 Machine Drawing",
+                    "PCC-L2 Production Technology Lab",
+                    "PCC-L3 Fluid Mechanics and Hydraulic Machines Lab",
+                    "SOC-1 Computer-Aided Drafting and Modeling Lab",
+                    "MC-4 Essence of Indian Traditional Knowledge (AICTE Mandate Course)",
+                    "Honors"
                 ]
 
 
@@ -286,15 +289,16 @@ const syllabus = {
                     "Internship 2 Months (Mandatory) during summer vacation"
                 ],
                 "CSE": [
-                    "Probability and Statistics",
-                    "Formal Languages and Automata Theory",
-                    "Computer Networks",
-                    "Python Programming",
-                    "Managerial Economics and Financial Accountancy",
-                    "R Programming Lab",
-                    "Python Programming Lab",
-                    "Computer Networks Lab",
-                    "Python Programming: NLP"
+                    "R20BS2201 Probability and Statistics",
+                    "R20ES2201 Formal Languages and Automata Theory",
+                    "R20PC2201 Computer Networks",
+                    "R20PC2202 Python Programming",
+                    "R20HS2201 Managerial Economics and Financial Accountancy",
+                    "R20PC2203 R Programming Lab",
+                    "R20PC2204 Python Programming Lab",
+                    "R20PC2205 Computer Networks Lab",
+                    "R20SO2201 Python Programming: NLP",
+                    "Honors"
                 ],
                 "EEE": [
                     "Python Programming",
@@ -309,15 +313,16 @@ const syllabus = {
                 ],
 
                 "Civil": [
-                    "Probability & Statistics (Mathematics - IV)",
-                    "Structural Analysis – II",
-                    "Hydraulics & Hydraulic Machinery",
-                    "Engineering Geology",
-                    "Managerial Economics & Financial Analysis",
-                    "Surveying Field Work - II",
-                    "Fluid Mechanics & Hydraulic Machinery Lab",
-                    "Engineering Geology Lab",
-                    "Skill Oriented Course"
+                    "BS2201 Probability & Statistics (Mathematics - IV)",
+                    "PC2201 Structural Analysis – II",
+                    "PC2202 Hydraulics & Hydraulic Machinery",
+                    "ES2201 Engineering Geology",
+                    "HS2201 Managerial Economics & Financial Analysis",
+                    "PC2203 Surveying Field Work - II",
+                    "PC2204 Fluid Mechanics & Hydraulic Machinery Lab",
+                    "ES2202 Engineering Geology Lab",
+                    "SC2201 Skill Oriented Course",
+                    "Honors"
                 ],
                 "Chemical": [
                     "Management and Organizational Behaviour",
@@ -343,15 +348,16 @@ const syllabus = {
                     "Internship 2 Months (Mandatory) during summer vacation"
                 ],
                 "Mechanical": [
-                    "Mathematics-IV (Complex Variables and Statistical Methods)",
-                    "Materials Science & Engineering",
-                    "Dynamics of Machinery",
-                    "Thermal Engineering-I",
-                    "Managerial Economics & Financial Accounting",
-                    "Theory of Machines Lab",
-                    "Thermal Engineering Lab",
-                    "Materials Testing Lab",
-                    "Python Programming Lab"
+                    "BSC-6 Mathematics-IV (Complex Variables and Statistical Methods)",
+                    "ESC-6 Materials Science & Engineering",
+                    "PCC-5 Dynamics of Machinery",
+                    "PCC-6 Thermal Engineering-I",
+                    "HSC-2 Managerial Economics & Financial Accounting",
+                    "PCC-L4 Theory of Machines Lab",
+                    "PCC-L5 Thermal Engineering Lab",
+                    "ESC-L1 Materials Testing Lab",
+                    "SOC-2 Python Programming Lab",
+                    "Honors"
                 ]
 
 
@@ -370,16 +376,17 @@ const syllabus = {
                     "Summer Internship 2 Months (Mandatory) after second year (to be evaluated during V semester)"
                 ],
                 "CSE": [
-                    "Compiler Design",
-                    "Design and Analysis of Algorithms",
-                    "Data Mining Techniques",
-                    "Open Elective - I",
-                    "Professional Elective - I",
-                    "Data Mining Techniques with R Lab",
-                    "Compiler Design Lab",
-                    "Animation Course: Animation Design",
-                    "Employability Skills - I",
-                    "Summer Internship (Mandatory)"
+                    "R20PC3101 Compiler Design",
+                    "R20PC3102 Design and Analysis of Algorithms",
+                    "R20PC3103 Data Mining Techniques",
+                    "R20OE3101 Open Elective - I",
+                    "R20PE3101 Professional Elective - I",
+                    "R20PC3104 Data Mining Techniques with R Lab",
+                    "R20PC3105 Compiler Design Lab",
+                    "R20SO3101 Animation Course: Animation Design",
+                    "R20MC3101 Employability Skills - I",
+                    "R20PR3101 Summer Internship (Mandatory)",
+                    "Honors"
                 ],
                 "EEE": [
                     "Power Systems-II",
@@ -394,15 +401,16 @@ const syllabus = {
                     "Summer Internship 2 Months (Mandatory)"
                 ],
                 "Civil": [
-                    "Design of Reinforced Concrete Structures",
-                    "Geotechnical Engineering – I",
-                    "Transportation Engineering - I",
-                    "Professional Elective – I (Construction Technology & Management)",
-                    "Open Elective Courses/ Job Oriented Elective - I",
-                    "Geotechnical Engineering Lab",
-                    "Transportation Engineering Lab",
-                    "Skill Advanced Course/ Soft Skill Course",
-                    "Summer Internship"
+                    "PC3101 Design of Reinforced Concrete Structures",
+                    "PC3102 Geotechnical Engineering – I",
+                    "PC3103 Transportation Engineering - I",
+                    "PE3101 Professional Elective – I (Construction Technology & Management)",
+                    "OE3101 Open Elective Courses/ Job Oriented Elective - I",
+                    "PC3104 Geotechnical Engineering Lab",
+                    "PC3105 Transportation Engineering Lab",
+                    "SS3101 Skill Advanced Course/ Soft Skill Course",
+                    "Summer Internship",
+                    "Honors"
                 ],
                 "Chemical": [
                     "Chemical Engineering Thermodynamics-II",
@@ -431,16 +439,17 @@ const syllabus = {
 
 
                 "Mechanical": [
-                    "Thermal Engineering-II",
-                    "Design of Machine Members-I",
-                    "Machining, Machine Tools & Metrology",
-                    "Elective (Sustainable Energy Technologies, Industrial Management, Nano Technology, Thermal Management of Electronic Systems)",
-                    "Elective (Finite Element Methods, Industrial Robotics, Advanced Materials, Renewable Energy Sources, Mechanics of Composites, MOOCs Course)",
-                    "Machine Tools Lab",
-                    "CAE Lab",
-                    "Advanced Communication Skills Lab",
-                    "Environmental Science",
-                    "Evaluation of Summer Internship"
+                    "PCC-7 Thermal Engineering-II",
+                    "PCC-8 Design of Machine Members-I",
+                    "PCC-9 Machining, Machine Tools & Metrology",
+                    "OE-1 Elective (Sustainable Energy Technologies, Industrial Management, Nano Technology, Thermal Management of Electronic Systems)",
+                    "PE-1 Elective (Finite Element Methods, Industrial Robotics, Advanced Materials, Renewable Energy Sources, Mechanics of Composites, MOOCs Course)",
+                    "PCC-L6 Machine Tools Lab",
+                    "PCC-L7 CAE Lab",
+                    "SOC-3 Advanced Communication Skills Lab",
+                    "MC-5 Environmental Science",
+                    "Evaluation of Summer Internship",
+                    "Honors"
                 ]
 
 
@@ -459,16 +468,17 @@ const syllabus = {
                     "Research Methodology"
                 ],
                 "CSE": [
-                    "Machine Learning",
-                    "Big Data Analytics",
-                    "Cryptography and Network Security",
-                    "Professional Elective - II",
-                    "Open Elective - II",
-                    "Big Data Analytics Lab",
-                    "Machine Learning using Python Lab",
-                    "Cryptography and Network Security Lab",
-                    "Data Science: MEAN Stack Technologies Module I",
-                    "Employability Skills - II"
+                    "R20PC3201 Machine Learning",
+                    "R20PC3202 Big Data Analytics",
+                    "R20PCC3203 Cryptography and Network Security",
+                    "R20PE3201 Professional Elective - II",
+                    "R20OE3201 Open Elective - II",
+                    "R20PC3204 Big Data Analytics Lab",
+                    "R20PC3205 Machine Learning using Python Lab",
+                    "R20PC3206 Cryptography and Network Security Lab",
+                    "R20SO3201 Data Science: MEAN Stack Technologies Module I",
+                    "R20MC3201 Employability Skills - II",
+                    "Honors"
                 ],
                 "EEE": [
                     "Microprocessors and Microcontrollers",
@@ -483,15 +493,16 @@ const syllabus = {
                     "Research Methodology"
                 ],
                 "Civil": [
-                    "Design of Steel Structures",
-                    "Water Resources Engineering - I",
-                    "Geotechnical Engineering – II",
-                    "Environmental Engineering",
-                    "Professional Elective – II (Transportation Engineering- II)",
-                    "Open Elective – II",
-                    "Environmental Engineering Lab",
-                    "Skill Advanced Course/ Soft Skill Course",
-                    "Mandatory Course (AICTE)"
+                    "PC3201 Design of Steel Structures",
+                    "PC3202 Water Resources Engineering - I",
+                    "PC3203 Geotechnical Engineering – II",
+                    "PC3204 Environmental Engineering",
+                    "PE3201 Professional Elective – II (Transportation Engineering- II)",
+                    "OE3201 Open Elective – II",
+                    "PC3205 Environmental Engineering Lab",
+                    "SS3201 Skill Advanced Course/ Soft Skill Course",
+                    "MC3201 Mandatory Course (AICTE)",
+                    "Honors"
                 ],
                 "Chemical": [
                     "Chemical Reaction Engineering",
@@ -519,16 +530,17 @@ const syllabus = {
                 ],
 
                 "Mechanical": [
-                    "Heat Transfer",
-                    "Design of Machine Members-II",
-                    "Introduction to Artificial Intelligence and Machine Learning",
-                    "Elective (Automobile Engineering, Smart Manufacturing, Mechanics of Solids, Hydraulics)",
-                    "Elective (Industrial Robotics, Mechanical Engineering, Advanced Materials)",
-                    "Heat Transfer Lab",
-                    "CAD/CAM Lab",
-                    "Measurements & Metrology Lab",
-                    "Artificial Intelligence and Machine Learning Lab",
-                    "Research Methodology"
+                    "PCC-10 Heat Transfer",
+                    "PCC-11 Design of Machine Members-II",
+                    "PCC-12 Introduction to Artificial Intelligence and Machine Learning",
+                    "PE-2 Elective (Automobile Engineering, Smart Manufacturing, Mechanics of Solids, Hydraulics)",
+                    "OE-2 Elective (Industrial Robotics, Mechanical Engineering, Advanced Materials)",
+                    "PCC-L8 Heat Transfer Lab",
+                    "PCC-L9 CAD/CAM Lab",
+                    "PCC-L10 Measurements & Metrology Lab",
+                    "SOC-4 Artificial Intelligence and Machine Learning Lab",
+                    "MC-6 Research Methodology",
+                    "Honors"
                 ]
 
 
@@ -546,14 +558,15 @@ const syllabus = {
                     "Industrial/Research Internship 2 Months (Mandatory) after third year (to be evaluated during VII semester)"
                 ],
                 "CSE": [
-                    "Professional Elective - III",
-                    "Professional Elective - IV",
-                    "Professional Elective - V",
-                    "Open Elective - III",
-                    "Open Elective - IV",
-                    "Universal Human Values 2: Understanding Harmony",
-                    "Python: Deep Learning",
-                    "Industrial/Research Internship (Mandatory)"
+                    "R20PE4101 Professional Elective - III",
+                    "R20PE4102 Professional Elective - IV",
+                    "R20PE4103 Professional Elective - V",
+                    "R20OE4101 Open Elective - III",
+                    "R20OE4102 Open Elective - IV",
+                    "R20HSS4101 Universal Human Values 2: Understanding Harmony",
+                    "R20SO4101 Python: Deep Learning",
+                    "R20PR4101 Industrial/Research Internship (Mandatory)",
+                    "Honors"
                 ],
                 "EEE": [
                     "Professional Elective – III",
@@ -566,15 +579,16 @@ const syllabus = {
                     "Industrial / Research Internship 2 Months (Mandatory)"
                 ],
                 "Civil": [
-                    "Professional Elective – III",
-                    "Professional Elective – IV",
-                    "Open Elective – III",
-                    "Open Elective – IV",
-                    "IPR & Patents",
-                    "Professional Elective – V",
-                    "Remote Sensing & GIS Lab",
-                    "Industrial/ Research Internship",
-                    "Soft Skills"
+                    "PE4101 Professional Elective – III",
+                    "PE4102 Professional Elective – IV",
+                    "OE4101 Open Elective – III",
+                    "OE4102 Open Elective – IV",
+                    "HS4101 IPR & Patents",
+                    "PE4103 Professional Elective – V",
+                    "PE4104 Remote Sensing & GIS Lab",
+                    "IR4101 Industrial/ Research Internship",
+                    "SS4101 Soft Skills",
+                    "Honors"
                 ],
                 "Chemical": [
                     "Professional Elective – III",
@@ -595,13 +609,14 @@ const syllabus = {
                 ],
 
                 "Mechanical": [
-                    "Elective (Mechanical Vibrations, Operations Research, Fluid Dynamics)",
-                    "Elective (Automation, Power Plant Engineering, Data Engineering)",
-                    "Elective (Advanced Manufacturing, Mechatronics, Refrigeration)",
-                    "Elective (Additive Manufacturing, AI & ML)",
-                    "Elective (Optimization Techniques, Smart Manufacturing, TQM)",
-                    "Universal Human Values 2: Understanding Harmony",
-                    "Mechatronics Lab"
+                    "PE-3 Elective (Mechanical Vibrations, Operations Research, Fluid Dynamics)",
+                    "PE-4 Elective (Automation, Power Plant Engineering, Data Engineering)",
+                    "PE-5 Elective (Advanced Manufacturing, Mechatronics, Refrigeration)",
+                    "OE-3 Elective (Additive Manufacturing, AI & ML)",
+                    "OE-4 Elective (Optimization Techniques, Smart Manufacturing, TQM)",
+                    "HSC-3 Universal Human Values 2: Understanding Harmony",
+                    "SOC-5 Mechatronics Lab",
+                    "Honors"
                 ]
 
 
@@ -616,13 +631,13 @@ const syllabus = {
                     "Project work, seminar and internship in industry"
                 ],
                 "CSE": [
-                    "Project Work, Seminar, and Internship in Industry"
+                    "R20PR4201 Project Work, Seminar, and Internship in Industry"
                 ],
                 "EEE": [
                     "Project work, seminar and internship in industry (6 Months)"
                 ],
                 "Civil": [
-                    "Project Work, Seminar & Internship in Industry"
+                    "PC3101 Project Work, Seminar & Internship in Industry"
                 ],
 
                 "Chemical": [
@@ -646,62 +661,71 @@ const syllabus = {
 
 
 
-
-
-
-
         "R19": {
             "1-1": {
                 "CSE": [
-                    "Mathematics-I",
-                    "Communicative English",
-                    "Applied Chemistry",
-                    "Essentials of Electrical & Electronics Engineering",
-                    "Engineering Drawing",
-                    "English Communication Skills Lab-I",
-                    "Applied Chemistry Lab",
-                    "IT Workshop",
-                    "Essentials of Electrical & Electronics Engineering Lab",
-                    "Environmental Science",
-                    "Physical Fitness Activities"
+                    "BS1101 Mathematics-I",
+                    "HS1101 Communicative English",
+                    "BS1102 Applied Chemistry",
+                    "ES1101 Essentials of Electrical & Electronics Engineering",
+                    "ES1102 Engineering Drawing",
+                    "HS1102 English Communication Skills Lab-I",
+                    "BS1103 Applied Chemistry Lab",
+                    "ES1103 IT Workshop",
+                    "ES1104 Essentials of Electrical & Electronics Engineering Lab",
+                    "MC1101 Environmental Science",
+                    "MC1102 Physical Fitness Activities"
                 ],
                 "ECE": [
-                    "English",
-                    "Mathematics - I",
-                    "Applied Chemistry",
-                    "Programming for Problem Solving Using C",
-                    "Engineering Drawing",
-                    "English Lab",
-                    "Applied Chemistry Lab",
-                    "Programming for Problem Solving Using C Lab",
-                    "Environmental Science"
+                    "HS1101 English",
+                    "BS1101 Mathematics - I",
+                    "BS1106 Applied Chemistry",
+                    "ES1101 Programming for Problem Solving Using C",
+                    "ES1103 Engineering Drawing",
+                    "HS1102 English Lab",
+                    "BS1107 Applied Chemistry Lab",
+                    "ES1102 Programming for Problem Solving Using C Lab",
+                    "MC1101 Environmental Science"
                 ],
                 "Mechanical": [
-                    "Mathematics - I (Calculus)",
-                    "Engineering Physics",
-                    "Engineering Mechanics",
-                    "Problem Solving and Programming using C",
-                    "Engineering Graphics and Drafting",
-                    "Workshop Practice Lab",
-                    "Engineering Physics Lab",
-                    "Physics Virtual Lab",
-                    "Problem Solving and Programming using C Lab",
-                    "Environmental Science",
-                    "Physical Fitness Activities",
+                    "BS1101 Mathematics - I (Calculus)",
+                    "BS1101 Engineering Physics",
+                    "ES1102 Engineering Mechanics",
+                    "ES1101 Problem Solving and Programming using C",
+                    "ES1103 Engineering Graphics and Drafting",
+                    "ES1102 Workshop Practice Lab",
+                    "BS1109 Engineering Physics Lab",
+                    "BS1205 Physics Virtual Lab",
+                    "ES1104 Problem Solving and Programming using C Lab",
+                    "MC1101 Environmental Science",
+                    "MC1102 Physical Fitness Activities",
                 ],
                 "Civil": [
-                    "Mathematics - I",
-                    "Communicative English",
-                    "Engineering Chemistry",
-                    "Essentials of Electrical and Electronics Engineering",
-                    "Engineering Graphics",
-                    "English Communication Skills Lab - I",
-                    "Engineering Chemistry Lab",
-                    "Workshop Practice",
-                    "Essentials of Electrical & Electronics Engineering Lab",
-                    "Environmental Science",
-                    "Physical Fitness Activities",
+                    "BS1101 Mathematics - I",
+                    "HS1101 Communicative English",
+                    "BS1102 Engineering Chemistry",
+                    "ES1101 Essentials of Electrical and Electronics Engineering",
+                    "ES1102 Engineering Graphics",
+                    "HS1102 English Communication Skills Lab - I",
+                    "BS1103 Engineering Chemistry Lab",
+                    "ES1103 Workshop Practice",
+                    "ES1104 Essentials of Electrical & Electronics Engineering Lab",
+                    "MC1101 Environmental Science",
+                    "MC1102 Physical Fitness Activities",
+                ],
+                "EEE": [
+                    "BS1101 Mathematics - I ",
+                    "HS1101 Communicative English  ",
+                    "BS1203 Applied Chemistry",
+                    "ES1101 Fundamentals of Computers",
+                    "HS1102 English communication skills Lab - I",
+                    "BS1204 Applied Chemistry Lab",
+                    "ES1104 IT Workshop",
+                    "ES1105 Electrical Engineering Workshop",
+                    "MC1101 Environmental Science",
+                    "MC1102 Physical Fitness Activities ",
                 ]
+
 
 
 
@@ -709,71 +733,86 @@ const syllabus = {
             },
             "1-2": {
                 "CSE": [
-                    "Mathematics-II",
-                    "Mathematics-III",
-                    "Applied Physics",
-                    "Problem Solving and Programming Using C",
-                    "Digital Logic Design",
-                    "Applied Physics Lab",
-                    "English Communication Skills Lab-II",
-                    "Applied Physics Virtual Lab",
-                    "Problem Solving and Programming Using C Lab",
-                    "Engineering Exploration Project - Design Thinking",
-                    "Constitution of India"
+                    "BS1201 Mathematics-II",
+                    "BS1202 Mathematics-III",
+                    "BS1203 Applied Physics",
+                    "ES1201 Problem Solving and Programming Using C",
+                    "ES1202 Digital Logic Design",
+                    "BS1204 Applied Physics Lab",
+                    "HS1201 English Communication Skills Lab-II",
+                    "BS1205 Applied Physics Virtual Lab",
+                    "ES1203 Problem Solving and Programming Using C Lab",
+                    "HS1202 Engineering Exploration Project - Design Thinking",
+                    "MC1201 Constitution of India"
                 ],
                 "ECE": [
-                    "Mathematics - II",
-                    "Mathematics - III",
-                    "Applied Physics",
-                    "Network Analysis",
-                    "Basic Electrical Engineering",
-                    "Electronic Workshop",
-                    "Basic Electrical Engineering Lab",
-                    "Applied Physics Lab",
-                    "Communication Skills Lab",
-                    "Engineering Exploration Project"
+                    "BS1202 Mathematics - II",
+                    "BS1203 Mathematics - III",
+                    "BS1204 Applied Physics",
+                    "ES1209 Network Analysis",
+                    "ES1211 Basic Electrical Engineering",
+                    "ES1215 Electronic Workshop",
+                    "ES1208 Basic Electrical Engineering Lab",
+                    "BS1205 Applied Physics Lab",
+                    "HS1203 Communication Skills Lab",
+                    "PR1201 Engineering Exploration Project"
                 ],
                 "Mechanical": [
-                    "Mathematics - II (Linear Algebra and Numerical Methods)",
-                    "Engineering Chemistry",
-                    "Communicative English",
-                    "Basic Electrical & Electronics Engineering",
-                    "Engineering Chemistry Lab",
-                    "Computer Aided Engineering Drawing",
-                    "Basic Electrical Engineering Lab",
-                    "Basic Electronics Engineering Lab",
-                    "English Communication Skills Lab - I",
-                    "Constitution of India",
-                    "Professional Ethics & Human Values",
+                    "BS1201 Mathematics - II (Linear Algebra and Numerical Methods)",
+                    "BS1202 Engineering Chemistry",
+                    "HSS&MS1203 Communicative English",
+                    "ES1201 Basic Electrical & Electronics Engineering",
+                    "BS1204 Engineering Chemistry Lab",
+                    "ES1202 Computer Aided Engineering Drawing",
+                    "BS1205 Basic Electrical Engineering Lab",
+                    "BS1206 Basic Electronics Engineering Lab",
+                    "HSS&MS1204 English Communication Skills Lab - I",
+                    "MC1201 Constitution of India",
+                    "MC1202 Professional Ethics & Human Values",
                 ],
                 "Civil": [
-                    "Mathematics - II",
-                    "Mathematics – III",
-                    "Applied/ Engineering Physics",
-                    "Problem Solving & Programming Using C",
-                    "Engineering Mechanics",
-                    "Applied/ Engineering Physics Lab",
-                    "English Communication Skills Lab - II",
-                    "Physics Virtual Lab",
-                    "Problem Solving & Programming using C Lab",
-                    "Engineering Exploration Project & Design Thinking",
-                    "Constitution of India",
+                    "BS1201 Mathematics - II",
+                    "BS1202 Mathematics – III",
+                    "BS1203 Applied/ Engineering Physics",
+                    "ES1201 Problem Solving & Programming Using C",
+                    "ES1202 Engineering Mechanics",
+                    "BS1204 Applied/ Engineering Physics Lab",
+                    "HS1201 English Communication Skills Lab - II",
+                    "BS1205 Physics Virtual Lab",
+                    "ES1203 Problem Solving & Programming using C Lab",
+                    "PR1201 Engineering Exploration Project & Design Thinking",
+                    "MC1201 Constitution of India",
+                ],
+                "EEE": [
+                    "BS1201 Mathematics - II",
+                    "BS1202 Mathematics – III",
+                    "BS1102 Applied Physics",
+                    "ES1201 Problem Solving & Programming Using C",
+                    "ES1202 Electrical Circuit Analysis - I",
+                    "ES1103 Engineering Drawing ",
+                    "HS1103 English Communication Skills  Lab- II",
+                    "BS1103 Applied Physics Lab",
+                    "BS1205 Physics Virtual Lab",
+                    "ES1203 Problem Solving and Programming using C Lab ",
+                    "PR1201 Engineering Exploration Project Design Thinking",
                 ]
+
+
 
 
             },
             "2-1": {
                 "CSE": [
-                    "Mathematical Foundations of Computer Science",
-                    "Software Engineering",
-                    "OOP Through Java",
-                    "Data Structures through C",
-                    "Computer Organization",
-                    "Computer Graphics",
-                    "OOP Through Java Lab",
-                    "Data Structures through C Lab",
-                    "Essence of Indian Traditional Knowledge",
-                    "Employability Skills-I"
+                    "PCC2101 Mathematical Foundations of Computer Science",
+                    "PCC2102 Software Engineering",
+                    "PCC2103 OOP Through Java",
+                    "PCC2104 Data Structures through C",
+                    "ES2101 Computer Organization",
+                    "ES2102 Computer Graphics",
+                    "PCC2105 OOP Through Java Lab",
+                    "PCC2106 Data Structures through C Lab",
+                    "MC2101 Essence of Indian Traditional Knowledge",
+                    "MC2102 Employability Skills-I"
                 ],
                 "ECE": [
                     "Electronics Devices and Circuits",
@@ -787,43 +826,57 @@ const syllabus = {
                     "Object Oriented Design & Programming using Java Lab"
                 ],
                 "Mechanical": [
-                    "Mathematics - III (Vector Calculus, Transforms, and PDE)",
-                    "Mechanics of Solids",
-                    "Materials Science & Engineering",
-                    "Production Technology",
-                    "Thermodynamics",
-                    "Machine Drawing",
-                    "Materials Testing Lab",
-                    "Production Technology Lab",
-                    "Advanced Communication Skills Lab",
-                    "Socially Relevant Project",
+                    "BS2101 Mathematics - III (Vector Calculus, Transforms, and PDE)",
+                    "PCC-ME Mechanics of Solids",
+                    "PCC-ME Materials Science & Engineering",
+                    "PCC-ME Production Technology",
+                    "PCC-ME Thermodynamics",
+                    "PCC-ME Machine Drawing",
+                    "PCC-Lab1 Materials Testing Lab",
+                    "PCC-Lab2 Production Technology Lab",
+                    "HSS & MS Advanced Communication Skills Lab",
+                    "PROJ-2101 Socially Relevant Project",
                 ],
                 "Civil": [
-                    "Probability and Statistics/ M4",
-                    "Strength of Materials",
-                    "Fluid Mechanics",
-                    "Surveying",
-                    "Engineering Geology",
-                    "Building Materials and Construction",
-                    "Strength of Materials Lab",
-                    "Surveying Field Work – I",
-                    "Engineering Geology Lab",
+                    "BS2101 Probability and Statistics/ M4",
+                    "PC2101 Strength of Materials",
+                    "PC2102 Fluid Mechanics",
+                    "ES2101 Surveying",
+                    "ES2102 Engineering Geology",
+                    "PC2103 Building Materials and Construction",
+                    "PC2104 Strength of Materials Lab",
+                    "ES2103 Surveying Field Work – I",
+                    "ES2104 Engineering Geology Lab",
+                ],
+                "EEE": [
+                    "Electronic Devices and Circuits",
+                    "Thermal and Hydro Prime Movers ",
+                    "Digital Electronics",
+                    "Electrical Circuit Analysis - II",
+                    "Electrical Machines-I",
+                    "Electro Magnetic Fields",
+                    "Power System-I	",
+                    "Electrical Circuits Lab",
+                    "Thermal and Hydro Lab",
+                    "Essence of Indian Traditional Knowledge",
+                    "Employability Skills-I",
                 ]
+
 
 
             },
             "2-2": {
                 "CSE": [
-                    "Probability and Statistics",
-                    "Web Technologies",
-                    "Operating Systems",
-                    "Database Management Systems",
-                    "Formal Languages & Automata Theory",
-                    "Operating System & LINUX Lab",
-                    "Web Technologies Lab",
-                    "Database Management Systems Lab",
-                    "Environmental Science",
-                    "Professional Activities"
+                    "BS2201 Probability and Statistics",
+                    "PCC2201 Web Technologies",
+                    "PCC2202 Operating Systems",
+                    "PCC2203 Database Management Systems",
+                    "PCC2204 Formal Languages & Automata Theory",
+                    "PCC2205 Operating System & LINUX Lab",
+                    "PCC2206 Web Technologies Lab",
+                    "PCC2207 Database Management Systems Lab",
+                    "MC2201 Environmental Science",
+                    "1MC2202 Professional Activities"
                 ],
                 "ECE": [
                     "Mathematics - 4",
@@ -838,44 +891,58 @@ const syllabus = {
                     "Indian Traditional Knowledge / Employability Skills - 1 and 2 / PE & HV"
                 ],
                 "Mechanical": [
-                    "Mathematics - IV (Complex Variables and Statistical Methods)",
-                    "Kinematics of Machinery",
-                    "Applied Thermodynamics-I",
-                    "Fluid Mechanics & Hydraulic Machines",
-                    "Metal Cutting & Machine Tools",
-                    "Design of Machine Members-I",
-                    "Fluid Mechanics & Hydraulic Machines Lab",
-                    "Machine Tools Lab",
-                    "Engineering Exploration Project",
-                    "Essence of Indian Traditional Knowledge",
+                    "BS Mathematics - IV (Complex Variables and Statistical Methods)",
+                    "PCC-ME Kinematics of Machinery",
+                    "PCC-ME Applied Thermodynamics-I",
+                    "PCC-ME Fluid Mechanics & Hydraulic Machines",
+                    "PCC-ME Metal Cutting & Machine Tools",
+                    "PCC-ME Design of Machine Members-I",
+                    "PCC-Lab3 Fluid Mechanics & Hydraulic Machines Lab",
+                    "PCC-Lab4 Machine Tools Lab",
+                    "DT-PROJ-2201 Engineering Exploration Project",
+                    "MC2201 Essence of Indian Traditional Knowledge",
                 ],
                 "Civil": [
-                    "Transportation Engineering - I",
-                    "Hydraulics and Hydraulic Machinery",
-                    "Structural Analysis - I",
-                    "Building Planning and Drawing",
-                    "Concrete Technology",
-                    "Managerial Economics and Financial Analysis",
-                    "Surveying Field Work - II",
-                    "Fluid Mechanics Lab",
-                    "Socially Relevant Projects",
-                    "Essence of Indian Traditional Knowledge / Professional Ethics and Human Values",
+                    "PC2201 Transportation Engineering - I",
+                    "PC2202 Hydraulics and Hydraulic Machinery",
+                    "ES2201 Structural Analysis - I",
+                    "PC2203 Building Planning and Drawing",
+                    "PC2204 Concrete Technology",
+                    "PC2205 Managerial Economics and Financial Analysis",
+                    "ES2202 Surveying Field Work - II",
+                    "PC2206 Fluid Mechanics Lab",
+                    "MC2201 Socially Relevant Projects",
+                    "MC2202 Essence of Indian Traditional Knowledge / Professional Ethics and Human Values",
+                ],
+                "EEE": [
+                    "Signals and Systems",
+                    "Managerial Economics & Financial Analysis",
+                    "Electrical Machines-II ",
+                    "Control Systems ",
+                    "Electrical Measurements and Instrumentation",
+                    "Electrical Machines Lab -I ",
+                    "Electronic Devices & Circuits Lab ",
+                    "Electrical Simulation Lab ",
+                    "Professional Ethics and Human Values",
+                    "Socially Relevant Projects- I",
                 ]
+
+
 
 
             },
             "3-1": {
                 "CSE": [
-                    "Data Warehousing & Data Mining",
-                    "Computer Networks",
-                    "Compiler Design",
-                    "Artificial Intelligence",
-                    "Professional Elective - I",
-                    "IT Tools & Techniques Lab",
-                    "Data Warehousing & Data Mining Lab",
-                    "Socially Relevant Projects",
-                    "Employability Skills - II",
-                    "Physical Fitness Activities"
+                    "PCC3101 Data Warehousing & Data Mining",
+                    "PCC3102 Computer Networks",
+                    "PCC3103 Compiler Design",
+                    "PCC3104 Artificial Intelligence",
+                    "PE3101 Professional Elective - I",
+                    "PCC3105 IT Tools & Techniques Lab",
+                    "PCC3106 Data Warehousing & Data Mining Lab",
+                    "SC3107 Socially Relevant Projects",
+                    "MC3102 Employability Skills - II",
+                    "MC3102 Physical Fitness Activities"
                 ],
 
                 "ECE": [
@@ -890,42 +957,55 @@ const syllabus = {
                     "Socially Relevant Projects"
                 ],
                 "Mechanical": [
-                    "Dynamics of Machinery",
-                    "Design of Machine Members-II",
-                    "CAD/CAM",
-                    "Applied Thermodynamics-II",
-                    "Professional Elective - I",
-                    "Applied Thermodynamics Lab",
-                    "Theory of Machines Lab",
-                    "CAD Lab",
-                    "Socially Relevant Project",
-                    "Employability Skills - I",
+                    "PCC-ME Dynamics of Machinery",
+                    "PCC-ME Design of Machine Members-II",
+                    "PCC-ME CAD/CAM",
+                    "PCC-ME Applied Thermodynamics-II",
+                    "PE-ME1 Professional Elective - I",
+                    "PCC-Lab5 Applied Thermodynamics Lab",
+                    "PCC-Lab6 Theory of Machines Lab",
+                    "PCC-Lab7 CAD Lab",
+                    "PROJ-3101 Socially Relevant Project",
+                    "MC-3101 Employability Skills - I",
                 ],
                 "Civil": [
-                    "Structural Analysis - II",
-                    "Design of Reinforced Concrete Structures",
-                    "Environmental Engineering - I",
-                    "Geotechnical Engineering - I",
-                    "Water Resources Engineering - I",
-                    "Geotechnical Engineering Lab",
-                    "Concrete Technology Lab",
-                    "Hydraulic Machinery Lab",
-                    "Socially Relevant Projects",
+                    "PC3101 Structural Analysis - II",
+                    "PC3102 Design of Reinforced Concrete Structures",
+                    "PC3103 Environmental Engineering - I",
+                    "PC3104 Geotechnical Engineering - I",
+                    "PC3105 Water Resources Engineering - I",
+                    "PC3106 Geotechnical Engineering Lab",
+                    "PC3107 Concrete Technology Lab",
+                    "PC3108 Hydraulic Machinery Lab",
+                    "MC3101 Socially Relevant Projects",
+                ],
+                "EEE": [
+                    "Power Systems-II",
+                    "Power Electronics",
+                    "Linear IC Applications",
+                    "Digital Signal Processing",
+                    "Program Elective -I",
+                    "Electrical Machines –II Laboratory",
+                    "Control Systems Laboratory",
+                    "Electrical Measurements and Instrumentation Lab",
+                    "Socially Relevant Projects-II",
+                    "Employability Skills-II",
                 ]
+
 
 
             },
             "3-2": {
                 "CSE": [
-                    "Machine Learning using Python",
-                    "Design & Analysis of Algorithms",
-                    "Universal Human Values 2",
-                    "Professional Elective - II",
-                    "Professional Elective - III",
-                    "Open Elective - I",
-                    "Machine Learning using Python Lab",
-                    "Data Analytics using R Lab",
-                    "IPR & Patenting"
+                    "PCC3201 Machine Learning using Python",
+                    "PCC3202 Design & Analysis of Algorithms",
+                    "HS3201 Universal Human Values 2",
+                    "PE3201 Professional Elective - II",
+                    "PE3202 Professional Elective - III",
+                    "OE3201 Open Elective - I",
+                    "PCC3203 Machine Learning using Python Lab",
+                    "PCC3204 Data Analytics using R Lab",
+                    "MC3204 IPR & Patenting"
                 ],
                 "ECE": [
                     "Internet of Things",
@@ -939,27 +1019,39 @@ const syllabus = {
                     "Mandatory Course - Indian Traditional Knowledge / Life Sciences / PE & HV"
                 ],
                 "Mechanical": [
-                    "Operations Research",
-                    "Heat Transfer",
-                    "Finite Element Methods",
-                    "Open Elective - I",
-                    "Professional Elective - II",
-                    "Professional Elective - III",
-                    "Heat Transfer Lab",
-                    "CAM & CAE Lab",
-                    "Employability Skills - II",
+                    "PCC-ME Operations Research",
+                    "PCC-ME Heat Transfer",
+                    "PCC-ME Finite Element Methods",
+                    "OE-1 Open Elective - I",
+                    "PE-ME2 Professional Elective - II",
+                    "PE-ME3 Professional Elective - III",
+                    "PCC-Lab8 Heat Transfer Lab",
+                    "PCC-Lab9 CAM & CAE Lab",
+                    "MC-3201 Employability Skills - II",
                 ],
                 "Civil": [
-                    "Design of Steel Structures",
-                    "Geotechnical Engineering - II",
-                    "Transportation Engineering - II",
-                    "Professional Elective - I",
-                    "Environmental Engineering - II",
-                    "Open Elective - I",
-                    "Environmental Engineering Lab",
-                    "Transportation Engineering Lab",
-                    "Indian Traditional Knowledge / Research Methodology / Professional Ethics and Human Values",
+                    "PC3201 Design of Steel Structures",
+                    "PC3202 Geotechnical Engineering - II",
+                    "PC3203 Transportation Engineering - II",
+                    "PE3201 Professional Elective - I",
+                    "PC3204 Environmental Engineering - II",
+                    "OE3201 Open Elective - I",
+                    "PC3205 Environmental Engineering Lab",
+                    "PC3206 Transportation Engineering Lab",
+                    "PR3201 Indian Traditional Knowledge / Research Methodology / Professional Ethics and Human Values",
+                ],
+                "EEE": [
+                    "Electric Drives",
+                    "Power System Analysis  ",
+                    "Microprocessors and Microcontrollers ",
+                    "Open Elective-I",
+                    "Program Elective –II ",
+                    "Program Elective –III",
+                    "Power Electronics Laboratory ",
+                    "Linear  IC Applications Laboratory",
+                    "Value Education",
                 ]
+
 
 
 
@@ -968,15 +1060,15 @@ const syllabus = {
             },
             "4-1": {
                 "CSE": [
-                    "Cryptography & Network Security",
-                    "Big Data Analytics",
-                    "Professional Elective - IV",
-                    "Professional Elective - V",
-                    "Open Elective - II",
-                    "Big Data Analytics Lab",
-                    "Cryptography & Network Security Lab",
+                    "PCC4102 Cryptography & Network Security",
+                    "PCC4104 Big Data Analytics",
+                    "PE4101 Professional Elective - IV",
+                    "PE4102 Professional Elective - V",
+                    "OE4101 Open Elective - II",
+                    "PCC4103 Big Data Analytics Lab",
+                    "PCC4104 Cryptography & Network Security Lab",
                     "Major Project Phase - I",
-                    "Physical Fitness Activities"
+                    "MC4101 Physical Fitness Activities"
                 ],
                 "ECE": [
                     "Optical Communication",
@@ -990,27 +1082,40 @@ const syllabus = {
                     "Industrial Training / Skill Development Programmes / Research Project"
                 ],
                 "Mechanical": [
-                    "Mechanical Measurements & Metrology",
-                    "Managerial Economics and Financial Accounting",
-                    "Professional Elective - IV",
-                    "Professional Elective - V",
-                    "Open Elective - II",
-                    "Measurements & Metrology Lab",
-                    "Simulation Lab",
-                    "Project - I",
-                    "Summer Internship",
+                    "PCC-ME Mechanical Measurements & Metrology",
+                    "HSS&MS Managerial Economics and Financial Accounting",
+                    "PE-ME4 Professional Elective - IV",
+                    "PE-ME5 Professional Elective - V",
+                    "OE-2 Open Elective - II",
+                    "PCC-ME Lab10 Measurements & Metrology Lab",
+                    "PCC-ME Lab11 Simulation Lab",
+                    "PROJ-4101 Project - I",
+                    "PROJ-4102 Summer Internship",
                 ],
                 "Civil": [
-                    "Water Resources Engineering - II",
-                    "Professional Elective - II",
-                    "Professional Elective - III",
-                    "Professional Elective - IV",
-                    "Open Elective - II",
-                    "GIS & CAD Lab",
-                    "Design & Drawing of Concrete Structures and Steel Structures",
-                    "Industrial Training / Skill Development Programs / Research Project",
-                    "Project Work Phase-I",
+                    "PC4101 Water Resources Engineering - II",
+                    "PE4101 Professional Elective - II",
+                    "PE4102 Professional Elective - III",
+                    "PE4103 Professional Elective - IV",
+                    "OE4101 Open Elective - II",
+                    "PC4101 GIS & CAD Lab",
+                    "PC4102 Design & Drawing of Concrete Structures and Steel Structures",
+                    "IT4101 Industrial Training / Skill Development Programs / Research Project",
+                    "PR4101 Project Work Phase-I",
+                ],
+                "EEE": [
+                    "Switchgear and Protection",
+                    "Power System Operation and Control",
+                    "Program Elective -IV ",
+                    "Program Elective -V ",
+                    "Open Elective-II",
+                    "Microprocessors and Microcontrollers Lab",
+                    "Power Systems  and Simulation Lab",
+                    "Industrial Training /Skill Development Programmes / Research Project",
+                    "Project-Work Phase -I  Project ",
+                    "Universal Human Values 2: Understanding Harmony",
                 ]
+
 
 
 
@@ -1019,10 +1124,10 @@ const syllabus = {
             },
             "4-2": {
                 "CSE": [
-                    "Professional Elective-VI",
-                    "Professional Elective-VII",
-                    "Open Elective-II (Inter Disciplinary)",
-                    "Project-II"
+                    "PE4201 Professional Elective-VI",
+                    "PE4202 Professional Elective-VII",
+                    "OE4201 Open Elective-II (Inter Disciplinary)",
+                    "PR4201 Project-II"
                 ],
                 "ECE": [
                     "Professional Elective (PE6)",
@@ -1031,29 +1136,27 @@ const syllabus = {
                     "Project Work"
                 ],
                 "Mechanical": [
+                    "PE-6 Professional Elective - VI",
+                    "PE-7 Professional Elective - VII",
+                    "OE-3 Open Elective - III",
+                    "PROJ-4201 Project - II",
+                ],
+                "Civil": [
+                    "PE4201 Professional Elective - V",
+                    "PE4202 Professional Elective - VI",
+                    "PE4203 Professional Elective - VII",
+                    "PR4201 Project Work Phase-II",
+                ],
+                "EEE": [
                     "Professional Elective - VI",
                     "Professional Elective - VII",
                     "Open Elective - III",
                     "Project - II",
-                ],
-                "Civil": [
-                    "Professional Elective - V",
-                    "Professional Elective - VI",
-                    "Professional Elective - VII",
-                    "Project Work Phase-II",
                 ]
             }
         },
 
 
-
-
-        /*    "R19": {
-
-               "EEE": {
-                   "1-1": []
-               }
-           }*/
 
 
         "R23": {
@@ -1420,7 +1523,7 @@ const syllabus = {
         },
     },
 
-    "Mtech": {
+    "MTech": {
         "R23": {
             "1-1": {
                 "AI&ML": [
@@ -1563,7 +1666,7 @@ const syllabus = {
                     "Mini Project with Seminar",
                     "Audit Course-2"
                 ],
-                "CIVIL": [
+                "Civil": [
                     "Finite Element method",
                     "Stability of Structures",
                     "Elective III",
@@ -1759,7 +1862,62 @@ const syllabus = {
                 ]
             }
         }
+    },
+
+
+    "MCA": {
+        "R20": {
+            "1-1": {
+                "MCA": [
+                    "R20MCA1101 Data Structures",
+                    "R20MCA1102 Computer Organization",
+                    "R20MCA1103 Database Management Systems ",
+                    "R20MCA1104 Operating Systems",
+                    "R20MCA1105 Mathematical and Statistical Foundations ",
+                    "R20MCA1106 Data Base Management Systems Lab ",
+                    "R20MCA1107 Data Structures using C Lab",
+                    "R20MCA1108 Operating Systems and Linux Lab"
+                ]
+            },
+            "1-2": {
+                "MCA": [
+                    "R20MCA1201 Computer Networks ",
+                    "R20MCA1202 Principles of Cryptography and Network Security ",
+                    "R20MCA1203 Object oriented Programming using JAVA ",
+                    "R20MCA1204 Software Engineering ",
+                    "R20MCA1205 Design and Analysis of Algorithm ",
+                    "R20MCA1206 Program Elective-1 ",
+                    "R20MCA1207 Object Oriented Programming using JAVA Lab ",
+                    "R20MCA1208 Networks and Security lab",
+                    "R20MCA1209 Employability Skills-1",
+                    "R20MCA1210 Physical Fitness Activities"
+                ]
+            },
+            "2-1": {
+                "MCA": [
+                    "R20MCA2101 Machine Learning with Python ",
+                    "R20MCA2102 Web Technologies",
+                    "R20MCA2103 Unified Modeling Languages ",
+                    "R20MCA2104 Program Elective-2 ",
+                    "R20MCA2105 Human Resource Management ",
+                    "R20MCA2106 Web Technologies Lab ",
+                    "R20MCA2107 Machine Learning with Python Lab ",
+                    "R20MCA2108 Unified Modeling Languages Lab ",
+                    "R20MCA2109 Employability Skills – 2",
+                    "R20MCA2110 Internship / Industry Oriented Mini Project"
+                ]
+            },
+            "2-2": {
+                "MCA": [
+                    "R20MCA2201 Program Elective-3 ",
+                    "R20MCA2202 Program Elective-4 ",
+                    "R20MCA2203 Project Work/ Dissertation "
+                ]
+            },
+        }
+
     }
+
 };
 
 
