@@ -68,7 +68,7 @@
                                     <!-- Download Hall Ticket Button (Only for Accepted applications) -->
                                     <% if (exam.status_of_application === "accepted") { %>
                                         <div class="text-end mt-4">
-                                            <a href="/exams/generate-hall-ticket/<%= currUser._id %>/<%= exam.examId %>" class="btn btn-outline-success btn-sm">
+                                            <a href="/exams/generate-hall-ticket/<%=currUser._id%>/<%=exam.examId._id%>" class="btn btn-outline-success btn-sm">
                                                 <i class="bi bi-download me-1"></i> Download Hall Ticket
                                             </a>
                                         </div>
