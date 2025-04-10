@@ -31,7 +31,10 @@ const examSchema = Schema({
     year: {
         type: String,
     },
-    //TODO
+    isRegistrationOpen: {
+        type: Boolean,
+        default: true
+    },
     isHallTicketIssued: {
         type: Boolean,
         default: false,

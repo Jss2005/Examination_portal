@@ -37,7 +37,7 @@ router.get("/signup", (req, res) => {
 
 router.post("/signup", upload_images.single("image"), wrapAsync(async(req, res) => {
     try {
-        let { username, rollNumber, password } = req.body;
+        let { username, rollNumber, password, course } = req.body;
         console.log(req.body);
 
         if (req.file) {
@@ -100,6 +100,7 @@ router.post("/signup", upload_images.single("image"), wrapAsync(async(req, res) 
              console.log(uri)*/
 
         newSignUp.image = uri;
+        newSignUp.course = course
 
         const s = await newSignUp.save();
         req.flash("success", "Your credientials will be verified");
@@ -124,13 +125,14 @@ router.post("/validate_student_signups", authorizedRoles("clerk"), wrapAsync(asy
     console.log(req.body.selectedUsers);
     const verifyed_students = req.body.selectedUsers;
     verifyed_students.forEach(async(student) => {
-        let [username, rollNumber, password, image] = student.split("|");
+        let [username, rollNumber, password, image, course] = student.split("|");
         console.log(username, rollNumber, password, image);
 
         const studentRecord = await SignUp.findOne({ username, rollNumber });
 
         const newUser = new User({ username, rollNumber });
         newUser.image = image;
+        newUser.course = course
         password = decrypt(password);
         console.log(password)
 

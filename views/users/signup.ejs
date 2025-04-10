@@ -12,6 +12,16 @@
                         <input name="username" id="username" type="text" class="form-control" required autocomplete="off" />
                         <div class="invalid-feedback">Please enter a username.</div>
                     </div>
+                    <div class="mb-3">
+                        <label for="course" class="form-label">Course</label>
+                        <select name="course" id="course" class="form-select" required>
+                            <option value="" disabled selected>Select your course</option>
+                            <option value="BTech">BTech</option>
+                            <option value="MTech">MTech</option>
+                            <option value="MCA">MCA</option>
+                        </select>
+                        <div class="valid-feedback">Course looks good</div>
+                    </div>
 
                     <!-- Roll Number Field -->
                     <div class="mb-3">
@@ -35,7 +45,7 @@
                     </div>
 
                     <!-- Submit Button -->
-                    <button class="btn btn-success w-100">Sign Up</button>
+                    <button class="btn btn-success w-100 mb-4">Sign Up</button>
                 </form>
             </div>
         </div>

@@ -42,12 +42,19 @@ const userSchema = new Schema({
         type: String,
         default: "Student"
     },
+    //Newly added---------------------------------------------------------------
+
+    course: { type: String },
+    //----------------------------------------------------------
 
     examRegistrations: [{
         examId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Exam",
             required: true,
+        },
+        semester: {
+            type: String
         },
         status_of_application: {
             type: String,

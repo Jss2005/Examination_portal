@@ -20,7 +20,8 @@ const puppeteer = require('puppeteer');
 
 
 const { upload_exam_notifications, multipleUpload, upload_exam_results } = require("../storage.js")
-const { s3Uploadv3ExamNotifications, getObjectSignedUrl, s3Uploadv3Signature, s3Uploadv3Challan, s3Uploadv3Results } = require("../s3service.js")
+const { s3Uploadv3ExamNotifications, getObjectSignedUrl, s3Uploadv3Signature, s3Uploadv3Challan, s3Uploadv3Results } = require("../s3service.js");
+const exam = require('../models/exam');
 
 
 const router = express.Router();
@@ -43,7 +44,16 @@ const monthOrder = {
 
 //GET Route
 router.get("/", wrapAsync(async(req, res) => {
-    const availableExams = await Exam.find({});
+    let availableExams;
+    if (req.user && req.user.role === "Student") {
+        availableExams = await Exam.find({ course: req.user.course, isRegistrationOpen: true })
+    } else if (req.user && req.user.role === "Admin" || req.user && req.user.role === "clerk") {
+        availableExams = await Exam.find({});
+    } else {
+        availableExams = await Exam.find({ isRegistrationOpen: true });
+    }
+
+
     availableExams.sort((a, b) => {
         const yearDiff = parseInt(b.year) - parseInt(a.year);
         if (yearDiff !== 0) return yearDiff;
@@ -52,6 +62,7 @@ router.get("/", wrapAsync(async(req, res) => {
     });
     res.render("exams/index.ejs", { availableExams });
 }))
+
 
 //NEW Route
 router.get("/new", authorizedRoles("Admin"), isLoggedIn, (req, res) => {
@@ -118,6 +129,15 @@ router.delete("/:id", isLoggedIn, authorizedRoles("Admin"), wrapAsync(async(req,
 
     res.redirect(`/exams`);
 }))
+
+
+router.post('/:id/stop-registration', isLoggedIn, authorizedRoles("Admin"), wrapAsync(async(req, res) => {
+
+    await Exam.findByIdAndUpdate(req.params.id, { isRegistrationOpen: false });
+    req.flash('success', 'Registrations have been stopped for this exam.');
+    res.redirect('/exams');
+}))
+
 
 router.get("/:id/registrations", isLoggedIn, authorizedRoles("clerk"), wrapAsync(async(req, res) => {
     const { id } = req.params;
@@ -326,6 +346,8 @@ router.post("/:id/students/:studentId", isLoggedIn, multipleUpload, wrapAsync(as
 
     //console.log(subjects);
     const student = await User.findByIdAndUpdate(studentId, { name, fatherName, email, branch, DOB, gender });
+    const exam = await Exam.findById(id);
+    let semester = exam.semester
 
     //student.role = "Student";
     let alreadyRegistered = false;
@@ -364,7 +386,9 @@ router.post("/:id/students/:studentId", isLoggedIn, multipleUpload, wrapAsync(as
             challanNumber,
             station,
             dateOfPayment,
-            appliedAt
+            appliedAt,
+            semester
+
 
         })
 
@@ -828,5 +852,32 @@ router.get('/generate-hall-ticket/:userId/:examId', async(req, res) => {
         res.status(500).send('Error generating hall ticket');
     }
 });
+
+
+
+
+
+
+router.get('/:studentId/dashboard', isLoggedIn, authorizedRoles("Student"), wrapAsync(async(req, res) => {
+
+        const { studentId } = req.params;
+
+
+        // Find user and exam data
+        const student = await User.findById(studentId).populate({
+            path: 'examRegistrations.examId', // Populate the examId field in examRegistrations
+            // select: 'isResultsDeclared semester month year' // Select fields you need from the Exam model
+        });
+
+        // return res.json(student.examRegistrations)
+        const exams = student.examRegistrations
+
+        return res.render("users/dashboard.ejs", { examData: exams, student })
+
+
+    }
+
+));
+
 
 module.exports = router;

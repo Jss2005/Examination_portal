@@ -12,7 +12,7 @@ module.exports.validateExam = (req, res, next) => {
 }
 
 module.exports.isLoggedIn = (req, res, next) => {
-    console.log(req.user);
+
     //post login page
     console.log(req.path, "...", req.originalUrl); //   /new ... /listings/new
     if (!req.isAuthenticated()) {

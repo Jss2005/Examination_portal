@@ -22,12 +22,19 @@
 
             <!-- Authentication Links -->
             <div class="navbar-nav ms-auto">
-                <% if(!currUser){ %>
+                <% if (!currUser) { %>
                     <a class="nav-link btn btn-outline-primary px-3 py-1 mx-1" href="/signup">Sign Up</a>
                     <a class="nav-link btn btn-primary text-white px-3 py-1 mx-1" href="/login">Log in</a>
                     <% } else { %>
-                        <a class="nav-link btn btn-danger text-white px-3 py-1 mx-1" href="/logout">Log out</a>
-                        <% } %>
+                        <% if (currUser.role === "Student" ) { %>
+
+                            <a class="nav-link btn btn-info text-white px-3 py-1 mx-1" href="/exams/<%= currUser._id %>/dashboard">
+                            My Dashboard <i class="bi bi-arrow-up-right"></i>
+                        </a>
+                            <% } %>
+                                <a class="nav-link btn btn-danger text-white px-3 py-1 mx-1" href="/logout">Log out</a>
+                                <% } %>
+
             </div>
         </div>
     </div>

@@ -89,7 +89,7 @@ async function main() {
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
-    res.locals.currUser = req.user; //current logged in user
+    res.locals.currUser = req.user || null; //current logged in user
 
     console.log(res.locals.success)
     next();

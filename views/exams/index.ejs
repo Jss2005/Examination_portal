@@ -41,7 +41,7 @@
                                                         </div>
                                                         <% } %>
 
-                                                            <% if(currUser && currUser.role=="Student" && !exam.isResultsDeclared){ %>
+                                                            <% if(currUser && currUser.role=="Student" && !exam.isResultsDeclared && exam.isRegistrationOpen){ %>
                                                                 <% let found = false %>
                                                                     <% if(currUser.examRegistrations) { %>
                                                                         <% currUser.examRegistrations.forEach((reg) => { %>
