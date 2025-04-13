@@ -781,6 +781,7 @@ catch (error) {
 
 module.exports = router */
 
+
 router.get('/generate-hall-ticket/:userId/:examId', async(req, res) => {
     try {
         const { userId, examId } = req.params;
@@ -852,8 +853,6 @@ router.get('/generate-hall-ticket/:userId/:examId', async(req, res) => {
         res.status(500).send('Error generating hall ticket');
     }
 });
-
-
 
 
 
