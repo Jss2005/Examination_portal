@@ -20,7 +20,7 @@
                         <th>Image</th>
                         <th>Attachments</th>
                         <th>Signature</th>
-                        <th>Revaluation Subjects</th>
+                        <!-- <th>Revaluation Subjects</th> -->
                         <th class="text-center">Approve/Disapprove</th>
                     </tr>
                 </thead>
@@ -56,6 +56,7 @@
                                                 <span class="text-muted">Not Available</span>
                                                 <% } %>
                                     </td>
+                                    <!-- 
                                     <td>
                                         <% if (examReg && examReg.reEvaluationSubjects && examReg.reEvaluationSubjects.length > 0) { %>
                                             <table class="table table-sm table-bordered">
@@ -94,6 +95,7 @@
                                                 <span class="text-muted">No subjects applied</span>
                                                 <% } %>
                                     </td>
+                                    -->
                                     <td class="text-center">
                                         <input type="hidden" name="studentIds[]" value="<%= student._id %>">
                                         <div class="d-flex flex-column align-items-center">

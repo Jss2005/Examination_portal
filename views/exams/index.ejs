@@ -29,10 +29,13 @@
                                                     </h5>
                                                     <p class="card-text">
                                                         Notification for
-                                                        <b> <%=exam.semester%> </b> semester,
-                                                        <b> <%=exam.regulation%></b> regulation, is out!
+                                                        <b> <%=exam.semester%> </b> semester, to be held in
+                                                        <b>
+                                                        <%=exam.month %> ,
+                                                            <%=exam.year %>
+                                                        </b> is out!
                                                     </p>
-
+                                                    <p class="card-text"> Regulation:<b> <%=exam.regulation%></b> </p>
                                                     <% if (exam.notification) { %>
                                                         <div>
                                                             <a href="<%= exam.notification %>" class="btn btn-sm btn-success mb-3 mt-3" download>
