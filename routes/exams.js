@@ -5,6 +5,7 @@ const wrapAsync = require("../utils/wrapAsync.js");
 const { validateExam, isLoggedIn, authorizedRoles, schema } = require("../middleware.js");
 const ExpressError = require('../utils/ExpressError.js');
 const readxlsxFile = require("read-excel-file/node");
+const Certificates = require("../models/certificate.js")
 
 const path = require('path');
 const pdf = require('html-pdf');
@@ -14,7 +15,7 @@ const axios = require("axios");
 const fs = require("fs").promises;
 const fs1 = require("fs");
 
-const puppeteer = require('puppeteer');
+
 
 
 
@@ -295,9 +296,6 @@ router.post("/:id/registrations", isLoggedIn, authorizedRoles("clerk"), wrapAsyn
     res.redirect(`/exams/${id}/registrations`);
 
 }))
-
-
-
 
 router.post("/:id/revaluation_registrations", isLoggedIn, authorizedRoles("clerk"), wrapAsync(async(req, res) => {
     const { id } = req.params;
@@ -706,82 +704,6 @@ async function fetchImageBase64(imageUrl) {
 
 
 
-/*router.get('/generate-hall-ticket/:userId/:examId', async(req, res) => {
-    try {
-        const { userId, examId } = req.params;
-
-        // Fetch user and exam data
-        const user = await User.findById(userId);
-        const exam = await Exam.findById(examId);
-
-        if (!user || !exam) {
-            return res.status(404).send('User or Exam not found');
-        }
-
-        // Find the specific exam registration
-        const registration = user.examRegistrations.find(
-            reg => reg.examId.toString() === examId
-        );
-
-        if (!registration) {
-            return res.status(404).send('Exam registration not found');
-        }
-
-        // Set a placeholder image if user image is missing
-        const base64Image = user.image || "https://images.pexels.com/photos/31346411/pexels-photo-31346411/free-photo-of-mountain-goat-standing-on-rocky-cliff-in-alps.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load";
-
-        // Render EJS template into HTML
-        const templatePath = path.join(__dirname, '../views/users/hall-ticket.ejs');
-        const html = await ejs.renderFile(templatePath, { user, exam, registration, base64Image });
-
-        // Launch Puppeteer in headless mode
-        const browser = await puppeteer.launch({
-            headless: "new", // Use "new" instead of true/false
-            // executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/google-chrome-stable',
-            args: [
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-                '--disable-gpu',
-                '--disable-dev-shm-usage',
-                '--single-process',
-                '--no-zygote'
-            ]
-        });
-
-        const page = await browser.newPage();
-        await page.setContent(html, { waitUntil: 'networkidle0' });
-
-        // Generate PDF with proper styling
-        const pdfBuffer = await page.pdf({
-            format: 'A4',
-            printBackground: true, // Ensures styles are applied
-            margin: { top: '10mm', right: '10mm', bottom: '10mm', left: '10mm' },
-            timeout: 60000 // Ensures Puppeteer doesn't exit too soon
-        });
-
-        console.log("PDF Buffer Size:", pdfBuffer.length);
-
-        await browser.close();
-
-
-
-// Send PDF as response
-res.setHeader('Content-Type', 'application/pdf');
-res.setHeader('Content-Disposition', `inline; filename="Hall_Ticket_${user.name}.pdf"`);
-
-res.end(pdfBuffer);
-
-}
-catch (error) {
-    console.error('Error generating hall ticket:', error);
-    res.status(500).send('Error generating hall ticket');
-}
-});
-
-
-module.exports = router */
-
-
 router.get('/generate-hall-ticket/:userId/:examId', async(req, res) => {
     try {
         const { userId, examId } = req.params;
@@ -862,7 +784,7 @@ router.get('/:studentId/dashboard', isLoggedIn, authorizedRoles("Student"), wrap
         const { studentId } = req.params;
 
 
-        // Find user and exam data
+
         const student = await User.findById(studentId).populate({
             path: 'examRegistrations.examId', // Populate the examId field in examRegistrations
             // select: 'isResultsDeclared semester month year' // Select fields you need from the Exam model
@@ -871,9 +793,18 @@ router.get('/:studentId/dashboard', isLoggedIn, authorizedRoles("Student"), wrap
         // return res.json(student.examRegistrations)
         const exams = student.examRegistrations
 
-        return res.render("users/dashboard.ejs", { examData: exams, student })
+        const bonafideCertificate = await Certificates.findOne({ student: studentId, typeOfCertificate: "Bonafide" });
+        const custodianCertificate = await Certificates.findOne({ student: studentId, typeOfCertificate: "Custodian" });
+        const courseCompletionCertificate = await Certificates.findOne({ student: studentId, typeOfCertificate: "Course Completion" });
+        console.log(bonafideCertificate, custodianCertificate, courseCompletionCertificate)
 
-
+        return res.render("users/dashboard.ejs", {
+            examData: exams,
+            student,
+            bonafideCertificate,
+            custodianCertificate,
+            courseCompletionCertificate
+        });
     }
 
 ));

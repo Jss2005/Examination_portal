@@ -9,7 +9,7 @@ const userSchema = new Schema({
     },
     image: {
         type: String,
-        //filename: String
+
     },
 
     email: {

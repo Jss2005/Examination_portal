@@ -122,7 +122,51 @@ router.get("/validate_student_signups", authorizedRoles("clerk"), wrapAsync(asyn
 }))
 
 router.post("/validate_student_signups", authorizedRoles("clerk"), wrapAsync(async(req, res) => {
-    console.log(req.body.selectedUsers);
+
+    const { username, action } = req.body;
+
+    console.log(`Action received: ${action} for username: ${username}`);
+
+    const signupRecord = await SignUp.findOne({ username });
+
+    if (!signupRecord) {
+        console.log("No signup found for username:", username);
+        return res.status(404).send("Signup not found");
+    }
+
+    if (action === "accept") {
+        // Register the student as a new user
+        const newUser = new User({
+            username: signupRecord.username,
+            rollNumber: signupRecord.rollNumber,
+            course: signupRecord.course,
+            image: signupRecord.image
+        });
+
+        const decryptedPassword = decrypt(signupRecord.password);
+
+
+        await User.register(newUser, decryptedPassword);
+
+        // Remove from SignUp collection
+        await SignUp.deleteOne({ username: signupRecord.username });
+
+        console.log(`User ${username} accepted and moved to Users collection.`);
+        res.status(200).send("Student accepted successfully");
+
+    } else if (action === "reject") {
+        // Only delete from SignUp collection
+        await SignUp.deleteOne({ username: signupRecord.username });
+
+        console.log(`User ${username} rejected and deleted from SignUps.`);
+        res.status(200).send("Student rejected successfully");
+
+    } else {
+        res.status(400).send("Invalid action");
+    }
+
+
+    /* console.log(req.body.selectedUsers);
     const verifyed_students = req.body.selectedUsers;
     verifyed_students.forEach(async(student) => {
         let [username, rollNumber, password, image, course] = student.split("|");
@@ -143,32 +187,9 @@ router.post("/validate_student_signups", authorizedRoles("clerk"), wrapAsync(asy
 
     })
     res.redirect("/exams")
-
+*/
 }))
 
-/*router.post("/signup", wrapAsync(async(req, res) => {
-    try {
-        let { username, rollNumber, password } = req.body;
-        console.log(req.body)
-
-        const newUser = new User({ username, rollNumber });
-
-        const registeredUser = await User.register(newUser, password);
-        //Login automatically after signup and log in the user
-        req.login(registeredUser, (err) => {
-            if (err) return next(err);
-            req.flash("success", "Welcome to the website ");
-            res.redirect("/exams");
-        })
-
-
-    } catch (e) {
-        req.flash("error", e.message);
-        res.redirect("/signup");
-    }
-
-
-}));*/
 
 router.get("/login", (req, res) => {
 
@@ -200,3 +221,34 @@ router.get("/logout", (req, res, next) => {
 
 
 module.exports = router;
+
+
+
+
+
+
+
+
+/*router.post("/signup", wrapAsync(async(req, res) => {
+    try {
+        let { username, rollNumber, password } = req.body;
+        console.log(req.body)
+
+        const newUser = new User({ username, rollNumber });
+
+        const registeredUser = await User.register(newUser, password);
+        //Login automatically after signup and log in the user
+        req.login(registeredUser, (err) => {
+            if (err) return next(err);
+            req.flash("success", "Welcome to the website ");
+            res.redirect("/exams");
+        })
+
+
+    } catch (e) {
+        req.flash("error", e.message);
+        res.redirect("/signup");
+    }
+
+
+}));*/

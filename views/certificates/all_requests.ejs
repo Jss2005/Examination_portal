@@ -1,0 +1,65 @@
+<% layout("/layouts/boilerplate") -%>
+
+    <div class="container mt-5">
+        <h3 class="text-center mb-4">Pending Certificate Requests</h3>
+
+        <% if (allRequests.length === 0) { %>
+            <p class="text-center">No pending requests.</p>
+            <% } else { %>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Roll Number</th>
+
+                            <th>Type of Certificate</th>
+                            <th>Purpose</th>
+                            <th>Comments</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% allRequests.forEach(request => { %>
+                            <% if (request.status === 'pending') { %>
+                                <tr>
+                                    <td>
+                                        <%= request.student.name %>
+                                    </td>
+                                    <td>
+                                        <%= request.student.rollNumber %>
+                                    </td>
+
+                                    <td>
+                                        <%= request.typeOfCertificate %>
+                                    </td>
+                                    <td>
+                                        <%= request.purpose %>
+                                    </td>
+                                    <td>
+                                        <%= request.request %>
+                                    </td>
+                                    <td>
+
+
+                                        <!-- Button Container with Flexbox -->
+                                        <div class="d-flex gap-2">
+                                            <!-- Accept Button -->
+                                            <form action="/certificates/request/accept/<%= request._id %>" method="POST">
+                                                <button type="submit" class="btn btn-success btn-sm mb-3">Accept</button>
+                                            </form>
+
+                                            <!-- Reject Button -->
+                                            <form action="/certificates/request/reject/<%= request._id %>" method="POST">
+                                                <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                                            </form>
+                                        </div>
+
+
+                                    </td>
+                                </tr>
+                                <% } %>
+                                    <% }); %>
+                    </tbody>
+                </table>
+                <% } %>
+    </div>

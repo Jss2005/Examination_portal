@@ -3,94 +3,74 @@
     <h2 class="text-center mt-4">Registered Students</h2>
     <div class="d-flex justify-content-end mt-3">
         <a href="/exams/<%= exam._id %>/registrations/subjects" class="btn btn-success px-4">
-            View Registrations
-        </a>
+    View Registrations
+</a>
     </div>
 
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered mt-3">
+            <thead class="table-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Roll Number</th>
+                    <th>Branch</th>
+                    <th>Date</th>
+                    <th>Image</th>
+                    <th>Challan</th>
+                    <th>Signature</th>
+                    <!--<th>Subjects</th>-->
+                    <th class="text-center">Release Hall Ticket</th>
+                </tr>
+            </thead>
+            <tbody id="studentTableBody">
+                <% students.forEach(student => { %>
+                    <% if(student.status_of_application === "pending") { %>
+                        <tr id="student_<%= student._id %>" data-student-id="<%= student._id %>">
+                            <td>
+                                <%= student.name %>
+                            </td>
+                            <td>
+                                <%= student.rollNumber %>
+                            </td>
+                            <td>
+                                <%= student.branch %>
+                            </td>
+                            <td>
+                                <%= student.appliedAt %>
+                            </td>
+                            <td class="text-center">
+                                <img src="<%= student.image %>" alt="Student Image" class="student-img">
+                            </td>
+                            <td class="text-center">
+                                <% if (student.challan_pdf) { %>
+                                    <a href="<%= student.challan_pdf %>" target="_blank" class="btn btn-sm btn-info">View Challan</a>
+                                    <% } else { %>
+                                        <span class="text-muted">Not Available</span>
+                                        <% } %>
+                            </td>
+                            <td class="text-center">
+                                <% if (student.signature) { %>
+                                    <a href="<%= student.signature %>" target="_blank" class="btn btn-sm btn-info">View Signature</a>
+                                    <% } else { %>
+                                        <span class="text-muted">Not Available</span>
+                                        <% } %>
+                            </td>
+                            <td class="text-center">
+                                <input type="hidden" name="studentIds[]" value="<%= student._id %>">
+                                <div class="d-flex flex-column align-items-center action-buttons">
+                                    <input type="radio" class="btn-check accept-btn" name="status_<%= student._id %>" id="accept_<%= student._id %>" value="accepted" required>
+                                    <label class="btn btn-outline-success w-100 mb-2" for="accept_<%= student._id %>">Accept</label>
 
-    <form action="/exams/<%= exam._id %>/registrations" method="POST">
-        <div class="table-responsive">
-            <table class="table table-striped table-bordered mt-3">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Name</th>
-                        <th>Roll Number</th>
-                        <th>Branch</th>
-                        <th>Date</th>
-                        <th>Image</th>
-                        <th>Challan</th>
-                        <th>Signature</th>
-                        <!--<th>Subjects</th>-->
-                        <th class="text-center">Release Hall Ticket</th>
-                    </tr>
-                </thead>
-                <tbody id="studentTableBody">
-                    <% students.forEach(student => { %>
-                        <% if(student.status_of_application === "pending") { %>
-                            <tr>
-                                <td>
-                                    <%= student.name %>
-                                </td>
-                                <td>
-                                    <%= student.rollNumber %>
-                                </td>
-                                <td>
-                                    <%= student.branch %>
-                                </td>
-                                <td>
-                                    <%= student.appliedAt %>
-                                </td>
-                                <td class="text-center">
-                                    <img src="<%= student.image %>" alt="Student Image" class="student-img">
-                                </td>
-                                <td class="text-center">
-                                    <% if (student.challan_pdf) { %>
-                                        <a href="<%= student.challan_pdf %>" target="_blank" class="btn btn-sm btn-info">View Challan</a>
-                                        <% } else { %>
-                                            <span class="text-muted">Not Available</span>
-                                            <% } %>
-                                </td>
-                                <td class="text-center">
-                                    <% if (student.signature) { %>
-                                        <a href="<%= student.signature %>" target="_blank" class="btn btn-sm btn-info">View Signature</a>
-                                        <% } else { %>
-                                            <span class="text-muted">Not Available</span>
-                                            <% } %>
-                                </td>
-                                <!--
-                                <td>
-                                    <% if (student.subjects && student.subjects.length > 0) { %>
-                                        <ul class="subject-list">
-                                            <% student.subjects.forEach(subject => { %>
-                                                <li><strong><%= subject %></strong></li>
-                                                <% }) %>
-                                        </ul>
-                                        <% } else { %>
-                                            <span class="text-muted">No Subjects</span>
-                                            <% } %>
-                                </td> -->
-                                <td class="text-center">
-                                    <input type="hidden" name="studentIds[]" value="<%= student._id %>">
-                                    <div class="d-flex flex-column align-items-center action-buttons">
-                                        <input type="radio" class="btn-check" name="status_<%= student._id %>" id="accept_<%= student._id %>" value="accepted" required>
-                                        <label class="btn btn-outline-success w-100 mb-2" for="accept_<%= student._id %>">Accept</label>
-
-                                        <input type="radio" class="btn-check" name="status_<%= student._id %>" id="reject_<%= student._id %>" value="rejected" required>
-                                        <label class="btn btn-outline-danger w-100" for="reject_<%= student._id %>">Reject</label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <% } %>
-                                <% }) %>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="text-center mt-3">
-            <button type="submit" class="btn btn-primary px-4">Submit</button>
-        </div>
-    </form>
-
+                                    <input type="radio" class="btn-check reject-btn" name="status_<%= student._id %>" id="reject_<%= student._id %>" value="rejected" required>
+                                    <label class="btn btn-outline-danger w-100" for="reject_<%= student._id %>">Reject</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <% } %>
+                            <% }) %>
+            </tbody>
+        </table>
+    </div>
 
 
     <!-- Pagination Controls -->
@@ -152,7 +132,7 @@
         }
     </style>
 
-    <!-- JavaScript for Pagination -->
+    <!-- JavaScript for Pagination and Acceptance -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const rowsPerPage = 20; // Number of students per page
@@ -186,5 +166,63 @@
             });
 
             showPage(currentPage); // Show the first page on load
+
+            // Handle "Reject" button click
+            document.querySelectorAll('.reject-btn').forEach(button => {
+                button.addEventListener('click', function(event) {
+                    const studentRow = event.target.closest('tr');
+                    const studentId = studentRow.dataset.studentId;
+
+                    // Send rejection status to backend
+                    fetch(`/exams/<%= exam._id %>/registrations`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            studentIds: [studentId],
+                            [`status_${studentId}`]: "rejected"
+                        })
+                    }).then(response => {
+                        if (response.ok) {
+                            // Remove the row immediately after rejection
+                            studentRow.remove();
+                        } else {
+                            alert("Error rejecting student registration");
+                        }
+                    }).catch(error => {
+                        console.error('Error:', error);
+                    });
+                });
+            });
+
+            // Handle "Accept" button click
+            document.querySelectorAll('.accept-btn').forEach(button => {
+                button.addEventListener('click', function(event) {
+                    const studentRow = event.target.closest('tr');
+                    const studentId = studentRow.dataset.studentId;
+
+                    // Send acceptance status to backend
+                    fetch(`/exams/<%= exam._id %>/registrations`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            studentIds: [studentId],
+                            [`status_${studentId}`]: "accepted"
+                        })
+                    }).then(response => {
+                        if (response.ok) {
+                            // Remove the row immediately after acceptance
+                            studentRow.remove();
+                        } else {
+                            alert("Error accepting student registration");
+                        }
+                    }).catch(error => {
+                        console.error('Error:', error);
+                    });
+                });
+            });
         });
     </script>

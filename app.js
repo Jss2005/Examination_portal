@@ -27,6 +27,7 @@ const User = require("./models/user.js");
 
 const examRouter = require("./routes/exams.js")
 const UserRouter = require("./routes/users.js")
+const CertificatesRouter = require("./routes/certificates.js")
 
 
 
@@ -40,7 +41,7 @@ app.use(express.static(path.join(__dirname, "/public")));
 app.use('/uploads', express.static('uploads'));
 app.use(cors())
 const dbURI = process.env.ATLASDB_URL;
-console.log(dbURI)
+
 
 const store = MongoStore.create({
     mongoUrl: dbURI,
@@ -98,6 +99,7 @@ app.use((req, res, next) => {
 
 app.use("/exams", examRouter);
 app.use("/", UserRouter);
+app.use("/certificates", CertificatesRouter)
 
 app.all("*", (req, res, next) => {
     next(new ExpressError(404, "page not found"));

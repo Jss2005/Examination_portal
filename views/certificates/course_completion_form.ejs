@@ -1,0 +1,58 @@
+<% layout("/layouts/boilerplate") -%>
+
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <h1 class="text-center mb-4">Apply for Certificate</h1>
+            <div class="col-lg-6 col-md-8 col-sm-10 col-12">
+                <form action="/certificates/request/custodian" method="POST" class="needs-validation" novalidate>
+
+                    <!-- Type of Certificate -->
+                    <div class="mb-3">
+                        <label for="typeOfCertificate" class="form-label">Type of Certificate</label>
+                        <select name="typeOfCertificate" id="typeOfCertificate" class="form-select" required>
+                            <option value="Custodian" disabled>Custodian</option>
+                            <option value="Course Completion" selected>Course Completion</option>
+                            <option value="Bonafide" disabled>Bonafide</option>
+                        </select>
+                        <div class="invalid-feedback">Please select a certificate type.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="semester" class="form-label">Semester</label>
+                        <input name="semester" id="semester" type="text" class="form-control" required placeholder="e.g., IV-I" autocomplete="off" />
+                        <div class="invalid-feedback">Please enter your semester</div>
+                    </div>
+
+                    <!-- Academic Years -->
+                    <div class="mb-3">
+                        <label for="academic_years" class="form-label">Academic Years</label>
+                        <input name="academic_years" id="academic_years" type="text" class="form-control" required placeholder="e.g., 2020-2024" autocomplete="off" />
+                        <div class="invalid-feedback">Please enter your academic years.</div>
+                    </div>
+
+
+                    <!-- Purpose -->
+                    <div class="mb-3">
+                        <label for="purpose" class="form-label">Purpose</label>
+                        <input name="purpose" id="purpose" type="text" class="form-control" required autocomplete="off" placeholder="eg.., on-boarding-the-job , applying passport" />
+                        <div class="invalid-feedback">Please enter the purpose.</div>
+                    </div>
+
+                    <!-- Request (optional detailed request) -->
+                    <div class="mb-3">
+                        <label for="request" class="form-label">Additional Request Details (Optional)</label>
+                        <textarea name="request" id="request" class="form-control" rows="4"></textarea>
+                    </div>
+
+
+
+
+                    <!-- Submit Button -->
+                    <div class="text-center">
+                        <button class="btn btn-primary mb-3">Submit Request</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>

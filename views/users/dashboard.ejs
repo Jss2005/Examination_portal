@@ -96,15 +96,139 @@
                 </div>
                 <% }) %>
 
+
+
         </div>
+
+
+        <div class="row mt-5">
+            <div class="col-12 text-center">
+                <h4 class="text-primary fw-bold mb-4">Apply for Certificates</h4>
+            </div>
+
+            <!-- Custodian Certificate -->
+            <div class="col-md-4 mb-4 d-flex">
+                <div class="card shadow-sm border-0 rounded-4 custom-card w-100">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center p-4">
+                        <i class="bi bi-journal-text fs-1 text-primary mb-3"></i>
+                        <h5 class="card-title mb-3 fw-semibold text-center">Custodian Certificate</h5>
+
+                        <% if (!custodianCertificate) { %>
+                            <a href="/certificates/request/custodian" class="btn btn-outline-primary btn-sm mt-auto">
+                                Apply Now
+                            </a>
+                            <% } else { %>
+                                <span class="fw-bold">
+                                Status: 
+                                <% if (custodianCertificate.status === 'pending') { %>
+                                    <span class="text-warning">Pending</span>
+                                <% } else if (custodianCertificate.status === 'approved') { %>
+                                    <span class="text-success">Approved</span>
+                                    <div>
+                                        <a href="/certificates/custodian/" class="btn btn-outline-primary btn-sm mt-3">
+                                            <i class="bi bi-eye me-1"></i> View Certificate
+                                        </a>
+                                    </div>
+                                    <% } else if (custodianCertificate.status === 'rejected') { %>
+                                        <span class="text-danger">Rejected</span>
+                                        <% } %>
+                                            </span>
+
+
+                                            <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course Completion Certificate -->
+            <div class="col-md-4 mb-4 d-flex">
+                <div class="card shadow-sm border-0 rounded-4 custom-card w-100">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center p-4">
+                        <i class="bi bi-award fs-1 text-success mb-3"></i>
+                        <h5 class="card-title mb-3 fw-semibold text-center">Course Completion Certificate</h5>
+
+                        <% if (!courseCompletionCertificate) { %>
+                            <a href="/certificates/request/course_completion" class="btn btn-outline-success btn-sm mt-auto">
+                                Apply Now
+                            </a>
+                            <% } else { %>
+                                <span class="fw-bold">
+                                Status: 
+                                <% if (courseCompletionCertificate.status === 'pending') { %>
+                                    <span class="text-warning">Pending</span>
+                                <% } else if (courseCompletionCertificate.status === 'approved') { %>
+                                    <span class="text-success">Approved</span>
+                                    <div>
+                                        <a href="/certificates/course_completion/" class="btn btn-outline-primary btn-sm mt-3">
+                                            <i class="bi bi-eye me-1"></i> View Certificate
+                                        </a>
+                                    </div>
+                                    <% } else if (courseCompletionCertificate.status === 'rejected') { %>
+                                        <span class="text-danger">Rejected</span>
+                                        <% } %>
+                                            </span>
+                                            <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bonafide Certificate -->
+            <div class="col-md-4 mb-4 d-flex">
+                <div class="card shadow-sm border-0 rounded-4 custom-card w-100">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center p-4">
+                        <i class="bi bi-file-earmark-person fs-1 text-secondary mb-3"></i>
+                        <h5 class="card-title mb-3 fw-semibold text-center">Bonafide Certificate</h5>
+
+                        <% if (!bonafideCertificate) { %>
+                            <a href="/certificates/request/bonafide" class="btn btn-outline-secondary btn-sm mt-auto">
+                                Apply Now
+                            </a>
+                            <% } else { %>
+                                <span class="fw-bold">
+                                Status: 
+                                <% if (bonafideCertificate.status === 'pending') { %>
+                                    <span class="text-warning">Pending</span>
+                                <% } else if (bonafideCertificate.status === 'approved') { %>
+                                    <span class="text-success">Approved</span>
+                                    <div>
+                                        <a href="/certificates/bonafide/" class="btn btn-outline-primary btn-sm mt-3">
+                                            <i class="bi bi-eye me-1"></i> View Certificate
+                                        </a>
+                                    </div>
+                                    <% } else if (bonafideCertificate.status === 'rejected') { %>
+                                        <span class="text-danger">Rejected</span>
+                                        <% } %>
+                                            </span>
+                                            <% } %>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
     </div>
 
-    <script>
-        console.log(window.location.href); // Logs the current URL in the browser console
-    </script>
 
     <!-- Custom Styles -->
     <style>
+        .certificate-btn {
+            min-height: 80px;
+            /* Good size for desktop */
+            font-size: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 12px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        
+        .certificate-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+        }
+        
         .card {
             border-radius: 10px;
             background-color: #f9f9f9;

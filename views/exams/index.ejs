@@ -1,11 +1,16 @@
 <% layout("/layouts/boilerplate") -%>
 
     <div class="container">
+
+
         <% if(currUser && currUser.role=="Admin"){ %>
             <div class="text-end">
                 <form method="GET" action="/exams/new" novalidate class="needs-validation">
                     <button class="btn btn-dark add-btn mt-3 idx-btn">Add a new Exam</button>
                 </form>
+                <div class="text-end">
+                    <a href="/certificates/requests" class="btn btn-info add-btn mt-3 idx-btn ">Verify Certificate Requests</a>
+                </div>
             </div>
             <% } %>
 
@@ -14,6 +19,8 @@
                         <a href="validate_student_signups" class="btn btn-info add-btn mt-3 idx-btn btn-lg">Verify Student Signups</a>
                     </div>
                     <% } %>
+
+
 
                         <h3 class="allExams text-center mt-4">Available Exams</h3>
                         <div class="container-fluid">
