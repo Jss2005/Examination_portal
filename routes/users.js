@@ -12,6 +12,7 @@ const fs = require('fs');
 const path = require('path');
 const CryptoJS = require("crypto-js");
 const { s3Uploadv3Image, getObjectSignedUrl } = require('../s3service.js');
+const { signupSchema, validateInput } = require("../serverside_validation.js")
 
 const router = express.Router();
 
@@ -37,8 +38,15 @@ router.get("/signup", (req, res) => {
 
 router.post("/signup", upload_images.single("image"), wrapAsync(async(req, res) => {
     try {
-        let { username, rollNumber, password, course } = req.body;
-        console.log(req.body);
+
+        const { error, value } = signupSchema.validate(req.body);
+        if (error) {
+            throw new Error("Invalid form data: " + error.details[0].message);
+        }
+
+        let { username, rollNumber, password, course } = value;
+        //let { username, rollNumber, password, course } = req.body;
+
 
         if (req.file) {
             console.log(`Image uploaded: ${req.file.filename}`);
@@ -88,7 +96,7 @@ router.post("/signup", upload_images.single("image"), wrapAsync(async(req, res) 
 
         const newSignUp = new SignUp({ username, rollNumber, password: encryptedPassword });
 
-        console.log(req.file);
+        //console.log(req.file);
 
 
         const results = await s3Uploadv3Image(req.file);
@@ -123,7 +131,16 @@ router.get("/validate_student_signups", authorizedRoles("clerk"), wrapAsync(asyn
 
 router.post("/validate_student_signups", authorizedRoles("clerk"), wrapAsync(async(req, res) => {
 
-    const { username, action } = req.body;
+    //const { username, action } = req.body;
+
+    const { error, value } = validateInput.validate(req.body);
+
+    if (error) {
+        console.error("Validation error:", error.details[0].message);
+        return res.status(400).send("Invalid input");
+    }
+
+    const { username, action } = value;
 
     console.log(`Action received: ${action} for username: ${username}`);
 

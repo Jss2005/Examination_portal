@@ -4,10 +4,14 @@ const Exam = require("../models/exam.js");
 const User = require("../models/user.js");
 const Certificates = require("../models/certificate.js")
 const wrapAsync = require("../utils/wrapAsync.js");
+const { mongoose } = require("mongoose")
 
 const { validateExam, isLoggedIn, authorizedRoles, schema } = require("../middleware.js");
 const { upload_images } = require('../storage.js');
+const Joi = require("joi")
 const router = express.Router();
+
+
 
 
 router.get("/requests", isLoggedIn, authorizedRoles("Admin"), wrapAsync(async(req, res) => {
@@ -19,6 +23,11 @@ router.get("/requests", isLoggedIn, authorizedRoles("Admin"), wrapAsync(async(re
 
 router.post("/request/accept/:requestId", isLoggedIn, authorizedRoles("Admin"), wrapAsync(async(req, res) => {
     const { requestId } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(requestId)) {
+        req.flash("error", "Invalid certificate request ID.");
+        return res.redirect("/certificates/requests");
+    }
 
     // Find the request by ID and update its status to 'approved'
     const request = await Certificates.findById(requestId);
@@ -42,6 +51,11 @@ router.post("/request/accept/:requestId", isLoggedIn, authorizedRoles("Admin"), 
 
 router.post("/request/reject/:requestId", isLoggedIn, authorizedRoles("Admin"), wrapAsync(async(req, res) => {
     const { requestId } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(requestId)) {
+        req.flash("error", "Invalid certificate request ID.");
+        return res.redirect("/certificates/requests");
+    }
+
 
     // Find the request by ID and update its status to 'rejected'
     const request = await Certificates.findById(requestId);
@@ -78,10 +92,28 @@ router.get("/request/course_completion", isLoggedIn, authorizedRoles("Student"),
 }))
 
 
+const schema1 = Joi.object({
+    typeOfCertificate: Joi.string().required(),
+    academic_years: Joi.string().required(),
+    purpose: Joi.string().max(500).required(),
+    request: Joi.string().max(500).required(),
+    semester: Joi.string().required()
+});
+
+
 router.post("/request/bonafide", isLoggedIn, authorizedRoles("Student"), wrapAsync(async(req, res) => {
     console.log(req.user._id);
+    if (!mongoose.Types.ObjectId.isValid(req.user._id)) {
+        req.flash("error", "Invalid user ID.");
+        return res.redirect(`/exams/${req.user._id}/dashboard`);
+    }
+    const { error, value } = schema1.validate(req.body);
+    if (error) {
+        req.flash("error", error.details[0].message);
+        return res.redirect(`/exams/${req.user._id}/dashboard`);
+    }
 
-    const { typeOfCertificate, academic_years, purpose, request, semester } = req.body;
+    const { typeOfCertificate, academic_years, purpose, request, semester } = value;
 
     const newRequest = new Certificates({
         student: req.user._id,
@@ -103,7 +135,20 @@ router.post("/request/bonafide", isLoggedIn, authorizedRoles("Student"), wrapAsy
 router.post("/request/custodian", isLoggedIn, authorizedRoles("Student"), wrapAsync(async(req, res) => {
     console.log(req.user._id);
 
-    const { typeOfCertificate, academic_years, purpose, request, semester } = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(req.user._id)) {
+        req.flash("error", "Invalid user ID.");
+        return res.redirect(`/exams/${req.user._id}/dashboard`);
+    }
+    const { error, value } = schema1.validate(req.body);
+    if (error) {
+        req.flash("error", error.details[0].message);
+        return res.redirect(`/exams/${req.user._id}/dashboard`);
+    }
+
+    const { typeOfCertificate, academic_years, purpose, request, semester } = value;
+
+
 
     const newRequest = new Certificates({
         student: req.user._id,
@@ -126,7 +171,19 @@ router.post("/request/custodian", isLoggedIn, authorizedRoles("Student"), wrapAs
 router.post("/request/course_completion", isLoggedIn, authorizedRoles("Student"), wrapAsync(async(req, res) => {
     console.log(req.user._id);
 
-    const { typeOfCertificate, academic_years, purpose, request, semester } = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(req.user._id)) {
+        req.flash("error", "Invalid user ID.");
+        return res.redirect(`/exams/${req.user._id}/dashboard`);
+    }
+    const { error, value } = schema1.validate(req.body);
+    if (error) {
+        req.flash("error", error.details[0].message);
+        return res.redirect(`/exams/${req.user._id}/dashboard`);
+    }
+
+    const { typeOfCertificate, academic_years, purpose, request, semester } = value;
+
 
     const newRequest = new Certificates({
         student: req.user._id,
@@ -146,6 +203,10 @@ router.post("/request/course_completion", isLoggedIn, authorizedRoles("Student")
 
 router.get("/bonafide", isLoggedIn, authorizedRoles("Student"), wrapAsync(async(req, res) => {
     const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(req.user._id)) {
+        req.flash("error", "Invalid user ID.");
+        return res.redirect(`/exams/${req.user._id}/dashboard`);
+    }
 
     const certificate = await Certificates.findOne({ student: req.user._id, typeOfCertificate: "Bonafide", status: "approved" }).populate("student", "name rollNumber branch course");
 
@@ -187,6 +248,10 @@ router.get("/bonafide", isLoggedIn, authorizedRoles("Student"), wrapAsync(async(
 router.get("/custodian", isLoggedIn, authorizedRoles("Student"), wrapAsync(async(req, res) => {
     const { id } = req.params;
 
+    if (!mongoose.Types.ObjectId.isValid(req.user._id)) {
+        req.flash("error", "Invalid user ID.");
+        return res.redirect(`/exams/${req.user._id}/dashboard`);
+    }
     const certificate = await Certificates.findOne({ student: req.user._id, typeOfCertificate: "Custodian", status: "approved" }).populate("student", "name rollNumber branch course");
 
     if (!certificate) {
@@ -203,6 +268,10 @@ router.get("/custodian", isLoggedIn, authorizedRoles("Student"), wrapAsync(async
 
 router.get("/course_completion", isLoggedIn, authorizedRoles("Student"), wrapAsync(async(req, res) => {
     const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(req.user._id)) {
+        req.flash("error", "Invalid user ID.");
+        return res.redirect(`/exams/${req.user._id}/dashboard`);
+    }
 
     const certificate = await Certificates.findOne({ student: req.user._id, typeOfCertificate: "Course Completion", status: "approved" }).populate("student", "name rollNumber branch course");
 

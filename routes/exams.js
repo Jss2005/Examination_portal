@@ -6,6 +6,7 @@ const { validateExam, isLoggedIn, authorizedRoles, schema } = require("../middle
 const ExpressError = require('../utils/ExpressError.js');
 const readxlsxFile = require("read-excel-file/node");
 const Certificates = require("../models/certificate.js")
+const { mongoose } = require("mongoose")
 
 const path = require('path');
 const pdf = require('html-pdf');
@@ -16,13 +17,14 @@ const fs = require("fs").promises;
 const fs1 = require("fs");
 
 
-
+const qs = require('qs');
 
 
 
 const { upload_exam_notifications, multipleUpload, upload_exam_results } = require("../storage.js")
 const { s3Uploadv3ExamNotifications, getObjectSignedUrl, s3Uploadv3Signature, s3Uploadv3Challan, s3Uploadv3Results } = require("../s3service.js");
 const exam = require('../models/exam');
+const { examSchemaJoi } = require('../serverside_validation.js');
 
 
 const router = express.Router();
@@ -43,7 +45,7 @@ const monthOrder = {
     December: 12
 };
 
-//GET Route
+//GET Route  - DONE
 router.get("/", wrapAsync(async(req, res) => {
     let availableExams;
     if (req.user && req.user.role === "Student") {
@@ -65,18 +67,23 @@ router.get("/", wrapAsync(async(req, res) => {
 }))
 
 
-//NEW Route
+//NEW Route - DONE
 router.get("/new", authorizedRoles("Admin"), isLoggedIn, (req, res) => {
     console.log(res.locals.currUser)
     res.render("exams/new.ejs");
 })
 
-//CREATE ROUTE
+//CREATE ROUTE -DONE
 router.post("/", isLoggedIn, authorizedRoles("Admin"), upload_exam_notifications.single("notification"), wrapAsync(async(req, res) => {
 
+    const { error, value } = examSchemaJoi.validate(req.body.exam);
+    if (error) {
+        req.flash("error", `Validation Error: ${error.details[0].message}`);
+        return res.redirect("/exams/new");
+    }
 
-    let exam = req.body.exam;
-    console.log(exam)
+    /*let exam = req.body.exam;
+    console.log(exam)*/
 
 
     const resp = await s3Uploadv3ExamNotifications(req.file);
@@ -88,7 +95,7 @@ router.post("/", isLoggedIn, authorizedRoles("Admin"), upload_exam_notifications
 
 
     // console.log(url, +"   ", filename);
-    const newExam = new Exam(exam);
+    const newExam = new Exam(value);
     newExam.notification = uri;
 
     await newExam.save();
@@ -98,24 +105,46 @@ router.post("/", isLoggedIn, authorizedRoles("Admin"), upload_exam_notifications
 
 
 
-//Show Route
+//Show Route -DONE
 router.get("/:id", isLoggedIn, authorizedRoles("Admin", "clerk"), wrapAsync(async(req, res) => {
     let { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        req.flash("error", "Invalid Exam ID");
+        return res.redirect("/exams"); // or a 400 response
+    }
     const exam = await Exam.findById(id);
+    if (!exam) {
+        req.flash("error", "Exam not found");
+        return res.redirect("/exams");
+    }
     res.render('exams/show.ejs', { exam });
 }))
 
 
-//EDIT ROUTE
+//EDIT ROUTE - DONE
 router.get("/:id/edit", isLoggedIn, authorizedRoles("Admin"), wrapAsync(async(req, res) => {
     let { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        // Invalid id, respond with 400 or render error page
+        req.flash("error", "Invalid exam ID");
+        return res.redirect("/exams");
+    }
+
     const exam = await Exam.findById(id);
+    if (!exam) {
+        req.flash("error", "Exam not found");
+        return res.redirect("/exams");
+    }
     res.render('exams/edit.ejs', { exam });
 }))
 
-//UPDATE ROUTE
-router.put("/:id", isLoggedIn, authorizedRoles("Admin"), validateExam, wrapAsync(async(req, res) => {
+//UPDATE ROUTE -DONE
+router.put("/:id", isLoggedIn, authorizedRoles("Admin"), wrapAsync(async(req, res) => {
     let { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        req.flash("error", "Invalid exam ID");
+        return res.redirect("/exams");
+    }
 
     await Exam.findByIdAndUpdate(id, {...req.body.exam });
 
@@ -123,25 +152,44 @@ router.put("/:id", isLoggedIn, authorizedRoles("Admin"), validateExam, wrapAsync
 }))
 
 
-//DELETE ROUTE
+//DELETE ROUTE  -DONE
 router.delete("/:id", isLoggedIn, authorizedRoles("Admin"), wrapAsync(async(req, res) => {
     let { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        req.flash("error", "Invalid exam ID");
+        return res.redirect("/exams");
+    }
     let deletedExam = await Exam.findByIdAndDelete(id);
+    if (!deletedExam) {
+        req.flash("error", "Exam not found");
+        return res.redirect("/exams");
+    }
 
     res.redirect(`/exams`);
 }))
 
 
+//DONE
 router.post('/:id/stop-registration', isLoggedIn, authorizedRoles("Admin"), wrapAsync(async(req, res) => {
+    const { id } = req.params;
 
-    await Exam.findByIdAndUpdate(req.params.id, { isRegistrationOpen: false });
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        req.flash('error', 'Invalid exam ID');
+        return res.redirect('/exams');
+    }
+    await Exam.findByIdAndUpdate(id, { isRegistrationOpen: false });
     req.flash('success', 'Registrations have been stopped for this exam.');
     res.redirect('/exams');
 }))
 
 
+//DONE
 router.get("/:id/registrations", isLoggedIn, authorizedRoles("clerk"), wrapAsync(async(req, res) => {
     const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        req.flash('error', 'Invalid Exam ID');
+        return res.redirect('/exams');
+    }
     const exam = await Exam.findById(id).populate("registeredStudents.studentId");
 
     const currStudents = exam.registeredStudents.map(s => {
@@ -186,8 +234,13 @@ router.get("/:id/registrations", isLoggedIn, authorizedRoles("clerk"), wrapAsync
 
 
 
+//done
 router.get("/:id/registrations/subjects", isLoggedIn, authorizedRoles("clerk"), wrapAsync(async(req, res) => {
     const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        req.flash('error', 'Invalid Exam ID');
+        return res.redirect('/exams');
+    }
     const exam = await Exam.findById(id).populate("registeredStudents.studentId");
 
     const currStudents = exam.registeredStudents.map(s => {
@@ -222,8 +275,13 @@ router.get("/:id/registrations/subjects", isLoggedIn, authorizedRoles("clerk"), 
 
 
 
+//done
 router.get("/:id/revaluation_registrations", isLoggedIn, authorizedRoles("clerk"), wrapAsync(async(req, res) => {
     const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        req.flash('error', 'Invalid Exam ID');
+        return res.redirect('/exams');
+    }
 
     // Find all students who have registered for this exam and applied for revaluation
     const students = await User.find({
@@ -248,8 +306,14 @@ router.get("/:id/revaluation_registrations", isLoggedIn, authorizedRoles("clerk"
 
 
 
+//done
 router.get("/:id/revaluation_registrations/subjects", isLoggedIn, authorizedRoles("clerk"), wrapAsync(async(req, res) => {
     const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        req.flash('error', 'Invalid Exam ID');
+        return res.redirect('/exams');
+    }
+
 
     // Find all students who have registered for this exam and applied for revaluation
     const students = await User.find({
@@ -273,10 +337,20 @@ router.get("/:id/revaluation_registrations/subjects", isLoggedIn, authorizedRole
 }))
 
 
-
+//done
 router.post("/:id/registrations", isLoggedIn, authorizedRoles("clerk"), wrapAsync(async(req, res) => {
     const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        req.flash("error", "Invalid Exam ID");
+        return res.redirect("/exams");
+    }
+
     const { studentIds } = req.body; // Array of student IDs
+
+    if (!Array.isArray(studentIds) || studentIds.some(sid => !mongoose.Types.ObjectId.isValid(sid))) {
+        req.flash("error", "Invalid student ID(s) in submission.");
+        return res.redirect(`/exams/${id}/registrations`);
+    }
 
     // Extract statuses for each student
     let updatedRegistrations = studentIds.map(studentId => {
@@ -297,9 +371,21 @@ router.post("/:id/registrations", isLoggedIn, authorizedRoles("clerk"), wrapAsyn
 
 }))
 
+
+//done
 router.post("/:id/revaluation_registrations", isLoggedIn, authorizedRoles("clerk"), wrapAsync(async(req, res) => {
     const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        req.flash("error", "Invalid Exam ID");
+        return res.redirect("/exams");
+    }
+
     const { studentIds } = req.body; // Array of student IDs
+
+    if (!Array.isArray(studentIds) || studentIds.some(sid => !mongoose.Types.ObjectId.isValid(sid))) {
+        req.flash("error", "Invalid Student ID(s)");
+        return res.redirect("/exams");
+    }
 
     // Extract statuses for each student
     let updatedRegistrations = studentIds.map(studentId => {
@@ -321,13 +407,22 @@ router.post("/:id/revaluation_registrations", isLoggedIn, authorizedRoles("clerk
 }))
 
 
+
+//done
 router.get("/:id/students/:studentId", isLoggedIn, wrapAsync(async(req, res) => {
     const { id, studentId } = req.params;
 
+    if (!mongoose.Types.ObjectId.isValid(id) || !mongoose.Types.ObjectId.isValid(studentId)) {
+        req.flash('error', 'Invalid Exam or Student ID');
+        return res.redirect('/exams');
+    }
 
     const student = await User.findById(studentId);
     const exam = await Exam.findById(id);
-
+    if (!exam || !student) {
+        req.flash('error', 'Exam or Student not found');
+        return res.redirect('/exams');
+    }
 
     return res.render("users/registration_form.ejs", { exam, student });
 }))
@@ -336,15 +431,30 @@ router.get("/:id/students/:studentId", isLoggedIn, wrapAsync(async(req, res) => 
 
 
 
-
+//done
 router.post("/:id/students/:studentId", isLoggedIn, multipleUpload, wrapAsync(async(req, res) => {
 
     const { id, studentId } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id) || !mongoose.Types.ObjectId.isValid(studentId)) {
+        req.flash('error', 'Invalid Exam or Student ID');
+        return res.redirect('/exams');
+    }
+
     const { name, fatherName, email, branch, rollNumber, DOB, gender, yearOfExam, monthOfExam, totalSubjects, subjects, amountPaid, challanNumber, dateOfPayment, image, station, appliedAt } = req.body.student;
 
     //console.log(subjects);
     const student = await User.findByIdAndUpdate(studentId, { name, fatherName, email, branch, DOB, gender });
+    if (!student) {
+        req.flash('error', 'Student not found');
+        return res.redirect('/exams');
+    }
+
     const exam = await Exam.findById(id);
+    if (!exam) {
+        req.flash('error', 'Exam not found');
+        return res.redirect('/exams');
+    }
+
     let semester = exam.semester
 
     //student.role = "Student";
@@ -406,9 +516,13 @@ router.post("/:id/students/:studentId", isLoggedIn, multipleUpload, wrapAsync(as
 }))
 
 
-
+//done
 router.get("/:id/postresults", authorizedRoles("Admin"), wrapAsync(async(req, res) => {
     const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        req.flash('error', 'Invalid Exam ID');
+        return res.redirect('/exams');
+    }
 
     // Find the exam with populated student details and exam registrations
     const exam = await Exam.findById(id)
@@ -420,8 +534,14 @@ router.get("/:id/postresults", authorizedRoles("Admin"), wrapAsync(async(req, re
     res.render("results/postresults.ejs", { exam: exam });
 }))
 
+
+//done
 router.post("/:id/postresults", authorizedRoles("Admin"), upload_exam_results.single("exam[results]"), wrapAsync(async(req, res) => {
     const { id } = req.params; // Exam ID from the route parameter
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        req.flash('error', 'Invalid Exam ID');
+        return res.redirect('/exams');
+    }
 
     const exam = await Exam.findById(id);
     if (!exam) {
@@ -457,11 +577,20 @@ async function downloadFromS3(s3Url, outputFile) {
     return outputFile;
 }
 
-
+//done
 router.get("/:id/results/:studentId", isLoggedIn, authorizedRoles("Student"), wrapAsync(async(req, res) => {
     const { id, studentId } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id) || !mongoose.Types.ObjectId.isValid(studentId)) {
+        req.flash("error", "Invalid Exam or Student ID");
+        return res.redirect("/exams");
+    }
+
     const student = await User.findById(studentId);
     const exam = await Exam.findById(id);
+    if (!student || !exam) {
+        req.flash("error", "Exam or Student not found");
+        return res.redirect("/exams");
+    }
 
     if (exam.isResultsDeclared) {
 
@@ -533,12 +662,21 @@ router.get("/:id/results/:studentId", isLoggedIn, authorizedRoles("Student"), wr
 }))
 
 
+//done
 router.get("/:id/re_evaluation/:studentId", isLoggedIn, authorizedRoles("Student"), wrapAsync(async(req, res) => {
     const { id, studentId } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id) || !mongoose.Types.ObjectId.isValid(studentId)) {
+        req.flash("error", "Invalid Exam or Student ID");
+        return res.redirect("/exams");
+    }
+
     const student = await User.findById(studentId).populate("examRegistrations", "subjects");
     const exam = await Exam.findById(id);
 
-
+    if (!student || !exam) {
+        req.flash("error", "Exam or Student not found");
+        return res.redirect("/exams");
+    }
 
     if (exam.isResultsDeclared) {
         return res.render("results/apply_for_re_evaluation.ejs", { exam, student });
@@ -551,10 +689,16 @@ router.get("/:id/re_evaluation/:studentId", isLoggedIn, authorizedRoles("Student
 
 
 
-
+//done
 router.post("/:id/re_evaluation/:studentId", isLoggedIn, authorizedRoles("Student"), multipleUpload, wrapAsync(async(req, res) => {
     //return res.json(req.body)
     const { id, studentId } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id) || !mongoose.Types.ObjectId.isValid(studentId)) {
+        req.flash("error", "Invalid Exam or Student ID");
+        return res.redirect("/exams");
+    }
+
+
     const { student } = req.body;
 
 
@@ -607,10 +751,14 @@ router.post("/:id/re_evaluation/:studentId", isLoggedIn, authorizedRoles("Studen
 }));
 
 
+//done
 router.get("/:id/postrevaluationResults", authorizedRoles("Admin"), wrapAsync(async(req, res) => {
     const { id } = req.params;
 
-
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        req.flash("error", "Invalid Exam ID");
+        return res.redirect("/exams");
+    }
     const exam = await Exam.findById(id);
 
     if (!exam) {
@@ -622,9 +770,14 @@ router.get("/:id/postrevaluationResults", authorizedRoles("Admin"), wrapAsync(as
     res.render("results/postrevaluationresults.ejs", { exam: exam })
 }));
 
+
+//done
 router.post("/:id/postrevaluationresults", authorizedRoles("Admin"), upload_exam_results.single("exam[revaluationResults]"), wrapAsync(async(req, res) => {
     const { id } = req.params; // Exam ID from the route parameter
-
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        req.flash("error", "Invalid Exam ID");
+        return res.redirect("/exams");
+    }
     const exam = await Exam.findById(id);
     if (!exam) {
         return res.status(404).send({ message: "Exam not found." });
@@ -649,11 +802,19 @@ router.post("/:id/postrevaluationresults", authorizedRoles("Admin"), upload_exam
 }));
 
 
-
+//done
 router.get("/:id/revaluation_results/:studentId", isLoggedIn, authorizedRoles("Student"), wrapAsync(async(req, res) => {
     const { id, studentId } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id) || !mongoose.Types.ObjectId.isValid(studentId)) {
+        req.flash("error", "Invalid Exam or Student ID");
+        return res.redirect("/exams");
+    }
     const student = await User.findById(studentId);
     const exam = await Exam.findById(id);
+    if (!student || !exam) {
+        req.flash("error", "Exam or Student not found");
+        return res.redirect("/exams");
+    }
 
     if (exam.isRevaluationResultsDeclared) {
         const s3Url = exam.reEvaluationResults_excel_sheet; // Ensure this is a signed S3 URL
@@ -703,10 +864,15 @@ async function fetchImageBase64(imageUrl) {
 }
 
 
+//done
 
 router.get('/generate-hall-ticket/:userId/:examId', async(req, res) => {
     try {
         const { userId, examId } = req.params;
+        if (!mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(examId)) {
+            return res.status(400).send('Invalid User ID or Exam ID');
+        }
+
 
         // Find user and exam data
         const user = await User.findById(userId);
@@ -782,7 +948,11 @@ router.get('/generate-hall-ticket/:userId/:examId', async(req, res) => {
 router.get('/:studentId/dashboard', isLoggedIn, authorizedRoles("Student"), wrapAsync(async(req, res) => {
 
         const { studentId } = req.params;
-
+        // Validate student ID if you want (optional)
+        if (!mongoose.Types.ObjectId.isValid(studentId)) {
+            req.flash('error', 'Invalid student ID');
+            return res.redirect('/login'); // or wherever makes sense
+        }
 
 
         const student = await User.findById(studentId).populate({

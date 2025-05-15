@@ -17,6 +17,7 @@ const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const expressLayouts = require('express-ejs-layouts');
 const cors = require("cors")
+const rateLimit = require('express-rate-limit');
 
 
 
@@ -40,24 +41,24 @@ app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 app.use('/uploads', express.static('uploads'));
 app.use(cors())
-const dbURI = process.env.ATLASDB_URL;
+    /*const dbURI = process.env.ATLASDB_URL;
 
 
-const store = MongoStore.create({
-    mongoUrl: dbURI,
-    crypto: {
-        secret: process.env.SECRET
-    },
-    touchAfter: 24 * 3600
-})
+    const store = MongoStore.create({
+        mongoUrl: dbURI,
+        crypto: {
+            secret: process.env.SECRET
+        },
+        touchAfter: 24 * 3600
+    })
 
-store.on("error", () => {
-    console.log("ERROR in MONGO SESSION STORE ", err)
-})
+    store.on("error", () => {
+        console.log("ERROR in MONGO SESSION STORE ", err)
+    })*/
 
 
 const sessionOptions = {
-    store,
+    // store,
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
@@ -68,8 +69,19 @@ const sessionOptions = {
     }
 };
 
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // limit each IP to 100 requests per windowMs
+    standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+    legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+    message: "Too many requests from this IP, please try again after 15 minutes"
+});
+
 app.use(session(sessionOptions));
 app.use(flash());
+
+
+app.use(limiter);
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -83,7 +95,7 @@ const MONGO_URL = "mongodb://127.0.0.1:27017/examination";
 main().then(() => console.log('Connection successful'))
     .catch(err => console.log(err));
 async function main() {
-    await mongoose.connect(dbURI);
+    await mongoose.connect(MONGO_URL);
 }
 
 
